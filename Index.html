@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PrintLab 3D – Enlaces</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(to bottom right, #a1e3ff, #ffe29a);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+    }
+    .logo {
+      width: 150px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #ff5e5e;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 16px;
+      margin-bottom: 25px;
+    }
+    .button {
+      display: block;
+      width: 90%;
+      max-width: 400px;
+      padding: 15px;
+      margin: 10px auto;
+      background-color: #ffb347;
+      color: white;
+      font-size: 18px;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 12px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+    }
+    .button:hover {
+      background-color: #ffa726;
+    }
+    #promo-msg {
+      display: none;
+      background: white;
+      border: 2px solid #ff5e5e;
+      color: #333;
+      padding: 20px;
+      margin-top: 15px;
+      border-radius: 10px;
+      max-width: 400px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <img src="https://i.imgur.com/REPLACE_WITH_YOUR_LOGO.png" alt="PrintLab 3D Logo" class="logo">
+  <h1>¡Bienvenidos a PrintLab 3D!</h1>
+  <p class="subtitle">Regalos increíbles hechos con impresión 3D, personalizados para cada ocasión.</p>
+
+  <a href="https://wa.me/5492954218753" class="button">📲 Pedidos por WhatsApp</a>
+  <a href="https://instagram.com/printlab3d.lp" class="button">📸 Seguinos en Instagram</a>
+  <a href="javascript:void(0)" class="button" onclick="document.getElementById('promo-msg').style.display='block';">🎁 Promo Día de la Infancia</a>
+
+  <div id="promo-msg">
+    🎈 ¡Muy pronto te vas a sorprender con los regalos más divertidos del Día de la Infancia!
+  </div>
+</body>
+</html>
