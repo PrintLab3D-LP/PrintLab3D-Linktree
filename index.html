@@ -3,113 +3,75 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Promos Día de la Infancia - PrintLab 3D</title>
+  <title>PrintLab 3D – Enlaces</title>
   <style>
     body {
-      font-family: sans-serif;
-      background-color: #fef6e4;
       margin: 0;
-      padding: 2rem;
-      color: #333;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(to bottom right, #a1e3ff, #ffe29a);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+    }
+    .logo {
+      width: 150px;
+      height: auto;
+      margin-bottom: 20px;
     }
     h1 {
       text-align: center;
-      color: #ff6f61;
+      color: #ff5e5e;
+      font-size: 24px;
+      margin-bottom: 10px;
     }
-    .producto {
-      margin-bottom: 3rem;
-    }
-    .producto img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    .descripcion {
-      margin-top: 1rem;
-      background: #fff6ea;
-      padding: 1rem;
-      border-radius: 8px;
-    }
-    .volver {
+    .subtitle {
       text-align: center;
-      margin-top: 3rem;
+      font-size: 16px;
+      margin-bottom: 25px;
     }
-    .volver a {
-      background: #ff6f61;
+    .button {
+      display: block;
+      width: 90%;
+      max-width: 400px;
+      padding: 15px;
+      margin: 10px auto;
+      background-color: #ffb347;
       color: white;
-      padding: 0.8rem 1.5rem;
-      border-radius: 5px;
+      font-size: 18px;
+      text-align: center;
       text-decoration: none;
-      font-weight: bold;
+      border-radius: 12px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+      transition: background-color 0.3s ease;
+    }
+    .button:hover {
+      background-color: #ffa726;
+    }
+    #promo-msg {
+      display: none;
+      background: white;
+      border: 2px solid #ff5e5e;
+      color: #333;
+      padding: 20px;
+      margin-top: 15px;
+      border-radius: 10px;
+      max-width: 400px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <h1>🎁 Promos Día de la Infancia</h1>
+  <img src="https://i.imgur.com/REPLACE_WITH_YOUR_LOGO.png" alt="PrintLab 3D Logo" class="logo">
+  <h1>¡Bienvenidos a PrintLab 3D!</h1>
+  <p class="subtitle">Regalos increíbles hechos con impresión 3D, personalizados para cada ocasión.</p>
 
-  <div class="producto">
-    <img src="ajedrez1.png" alt="Ajedrez Enrollable">
-    <div class="descripcion">
-      <h2>♟️ Ajedrez Enrollable 3D</h2>
-      ¡Tablero y piezas con diseño geométrico, enrollable y super fácil de guardar!<br>
-      🧠 Estimula la estrategia y concentración.<br>
-      📦 ¡Se guarda en su propio tubo!
-    </div>
-  </div>
+  <a href="https://wa.me/5492954218753" class="button">📲 Pedidos por WhatsApp</a>
+  <a href="https://instagram.com/printlab3d.lp" class="button">📸 Seguinos en Instagram</a>
+  <a href="javascript:void(0)" class="button" onclick="document.getElementById('promo-msg').style.display='block';">🎁 Promo Día de la Infancia</a>
 
-  <div class="producto">
-    <img src="iglu11.png" alt="Igloo Mania">
-    <div class="descripcion">
-      <h2>❄️ Igloo Mania</h2>
-      Juego de equilibrio y suspenso. Sacá los bloques sin tirar al esquimal.<br>
-      🧩 Desarrolla precisión y paciencia.<br>
-      🎯 Ideal para jugar en familia.
-    </div>
-  </div>
-
-  <div class="producto">
-    <img src="avion3d.png" alt="Avión Tomcat">
-    <div class="descripcion">
-      <h2>✈️ Avión F14 Tomcat</h2>
-      Avión armable en piezas planas con estilo profesional.<br>
-      💥 Inspirado en jets reales, ¡una experiencia para armar y jugar!<br>
-      🎨 Colores vibrantes.
-    </div>
-  </div>
-
-  <div class="producto">
-    <img src="Dino3D.png" alt="Dino Puzzle 3D">
-    <div class="descripcion">
-      <h2>🦖 Dino Puzzle T-Rex 3D</h2>
-      Un esqueleto de dinosaurio para armar y aprender.<br>
-      🦴 Incluye todas las piezas encastrables.<br>
-      📚 Perfecto para los fanáticos de los dinosaurios.
-    </div>
-  </div>
-
-  <div class="producto">
-    <img src="helice1.png" alt="Hélice Voladora">
-    <div class="descripcion">
-      <h2>🚀 Hélice Voladora</h2>
-      Insertá la varilla y lanzá. ¡Vuelo largo y divertido!<br>
-      🌬️ Seguro, liviano y colorido.<br>
-      ✨ ¡Horas de diversión al aire libre!
-    </div>
-  </div>
-
-  <div class="producto">
-    <img src="WhatsApp Image 2025-07-29 at 19.21.42.jpeg" alt="Juego Gonggi Squid Game">
-    <div class="descripcion">
-      <h2>🟠 Juego Gonggi - Edición Squid Game</h2>
-      5 fichas con formas y colores, ¡jugá al estilo de la serie!<br>
-      🎯 Mejorá puntería, coordinación y reflejos.<br>
-      💡 Presentación en caja redonda temática.
-    </div>
-  </div>
-
-  <div class="volver">
-    <a href="index.html">⬅ Volver al Linktree</a>
+  <div id="promo-msg">
+    🎈 ¡Muy pronto te vas a sorprender con los regalos más divertidos del Día de la Infancia!
   </div>
 </body>
 </html>
