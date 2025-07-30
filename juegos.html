@@ -24,15 +24,42 @@
       max-width: 800px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-    .producto img {
-      display: block;
-      max-width: 100%;
-      height: auto;
-      margin: 0 auto 1rem;
+    .carousel {
+      position: relative;
+      display: flex;
+      overflow: hidden;
+      max-width: 300px;
+      margin: auto;
+    }
+    .carousel img {
+      width: 100%;
       border-radius: 8px;
+      display: none;
+    }
+    .carousel img.active {
+      display: block;
+    }
+    .carousel-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      padding: 0.5rem;
+      cursor: pointer;
+      font-size: 1.2rem;
+      border-radius: 50%;
+    }
+    .carousel-button.prev {
+      left: 5px;
+    }
+    .carousel-button.next {
+      right: 5px;
     }
     .descripcion {
       font-size: 0.95rem;
+      margin-top: 1rem;
     }
     .whatsapp-boton {
       text-align: center;
@@ -67,8 +94,14 @@
 <body>
   <h1>🎮 Juegos - Catálogo PrintLab 3D</h1>
 
+  <!-- Producto 1 -->
   <div class="producto">
-    <img src="ajedrez1.png" alt="Ajedrez Enrollable 3D">
+    <div class="carousel">
+      <img src="ajedrez1.png" alt="Ajedrez Enrollable" class="active">
+       <img src="ajedrez2.png" alt="Ajedrez Enrollable" class="active">
+       <img src="ajedrez3.png" alt="Ajedrez Enrollable" class="active">
+       <img src="ajedrez4.png" alt="Ajedrez Enrollable" class="active">
+    </div>
     <div class="descripcion">
       <h2>♟️ Ajedrez Enrollable 3D</h2>
       Tablero con piezas geométricas que se enrolla y guarda en tubo.<br>
@@ -76,12 +109,15 @@
       📦 Muy práctico y portátil.
     </div>
     <div class="whatsapp-boton">
-      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Ajedrez%20Enrollable%203D%20de%20PrintLab%203D.%20¿Cuánto%20sale?">📲 Pedilo por WhatsApp</a>
+      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Ajedrez%20Enrollable%203D%20de%20PrintLab%203D.%20%C2%BFCu%C3%A1nto%20sale%3F">📲 Pedilo por WhatsApp</a>
     </div>
   </div>
 
+  <!-- Producto 2 -->
   <div class="producto">
-    <img src="iglu11.png" alt="Igloo Mania">
+    <div class="carousel">
+      <img src="iglu11.png" alt="Igloo Mania" class="active">
+    </div>
     <div class="descripcion">
       <h2>❄️ Igloo Mania</h2>
       Juego de equilibrio: sacá bloques sin que caiga el esquimal.<br>
@@ -89,72 +125,87 @@
       🎯 Mejora precisión y paciencia.
     </div>
     <div class="whatsapp-boton">
-      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Igloo%20Mania%20de%20PrintLab%203D.%20¿Cuánto%20sale?">📲 Pedilo por WhatsApp</a>
+      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Igloo%20Mania%20de%20PrintLab%203D.%20%C2%BFCu%C3%A1nto%20sale%3F">📲 Pedilo por WhatsApp</a>
     </div>
   </div>
 
+  <!-- Producto 3 -->
   <div class="producto">
-    <img src="tetris3d.png" alt="Tetris Balance 3D">
+    <div class="carousel">
+      <img src="tetris3d.png" alt="Tetris Balance" class="active">
+    </div>
     <div class="descripcion">
       <h2>🟥 Tetris Balance 3D</h2>
-      Bloques encastrables multicolor para armar estructuras.<br>
-      🧠 Mejora lógica espacial.<br>
-      🌈 Juego portátil y entretenido.
+      Bloques encastrables para desarrollar lógica y equilibrio.<br>
+      🌈 Colores vibrantes y formas desafiantes.<br>
+      🧠 Excelente para todas las edades.
     </div>
     <div class="whatsapp-boton">
-      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Tetris%20Balance%203D%20de%20PrintLab%203D.%20¿Cuánto%20sale?">📲 Pedilo por WhatsApp</a>
+      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Tetris%20Balance%203D%20de%20PrintLab%203D.%20%C2%BFCu%C3%A1nto%20sale%3F">📲 Pedilo por WhatsApp</a>
     </div>
   </div>
 
+  <!-- Producto 4 -->
   <div class="producto">
-    <img src="Baloncesto arcade.png" alt="Baloncesto Arcade 3D">
+    <div class="carousel">
+      <img src="Baloncesto arcade.png" alt="Baloncesto Arcade" class="active">
+    </div>
     <div class="descripcion">
-      <h2>🏀 Baloncesto Arcade 3D</h2>
-      Juego con mini pelotas y sistema de lanzamiento.<br>
-      🕹️ Desarrolla coordinación y puntería.<br>
-      🎉 Ideal para competencias entre amigos.
+      <h2>🏀 Mini Baloncesto Arcade</h2>
+      Lanzá la pelota al aro con precisión.<br>
+      🧠 Mejora puntería y coordinación.<br>
+      🎮 Ideal para jugar solo o en familia.
     </div>
     <div class="whatsapp-boton">
-      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Baloncesto%20Arcade%203D%20de%20PrintLab%203D.%20¿Cuánto%20sale?">📲 Pedilo por WhatsApp</a>
+      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Mini%20Baloncesto%20Arcade%20de%20PrintLab%203D.%20%C2%BFCu%C3%A1nto%20sale%3F">📲 Pedilo por WhatsApp</a>
     </div>
   </div>
 
+  <!-- Producto 5 -->
   <div class="producto">
-    <img src="ta-te-ti-llavero.png" alt="Ta-Te-Ti Llavero 3D">
+    <div class="carousel">
+      <img src="ta-te-ti-llavero.png" alt="Ta-Te-Ti Llavero" class="active">
+    </div>
     <div class="descripcion">
-      <h2>❌ Ta-Te-Ti Llavero 3D</h2>
-      Juego clásico en formato mini y portátil.<br>
-      🔁 Ideal como llavero o regalo.<br>
-      💡 Divertido para todas las edades.
+      <h2>⭕❌ Ta-Te-Ti Llavero 3D</h2>
+      Juego de tres en línea compacto y portátil.<br>
+      🔗 Ideal para llevar a todos lados.<br>
+      🎁 Incluye fichas temáticas y cajita.
     </div>
     <div class="whatsapp-boton">
-      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Ta-Te-Ti%20Llavero%203D%20de%20PrintLab%203D.%20¿Cuánto%20sale?">📲 Pedilo por WhatsApp</a>
+      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Ta-Te-Ti%20Llavero%203D%20de%20PrintLab%203D.%20%C2%BFCu%C3%A1nto%20sale%3F">📲 Pedilo por WhatsApp</a>
     </div>
   </div>
 
+  <!-- Producto 6 -->
   <div class="producto">
-    <img src="pinball.png" alt="Mini Pinball de Mesa 3D">
+    <div class="carousel">
+      <img src="pinball1.png" alt="Mini Pinball 3D" class="active">
+    </div>
     <div class="descripcion">
-      <h2>🎯 Mini Pinball de Mesa 3D</h2>
-      Juego mecánico con lanzador y obstáculos de colores.<br>
-      🌀 Estimula reflejos y coordinación.<br>
-      🎠 Diseño divertido y desafiante.
+      <h2>🎰 Mini Pinball de Mesa</h2>
+      Disfrutá este juego clásico en versión de escritorio.<br>
+      🎯 Desafiá tu coordinación.<br>
+      🕹️ Estilo retro en tamaño mini.
     </div>
     <div class="whatsapp-boton">
-      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Mini%20Pinball%20de%20Mesa%203D%20de%20PrintLab%203D.%20¿Cuánto%20sale?">📲 Pedilo por WhatsApp</a>
+      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Mini%20Pinball%20de%20Mesa%20de%20PrintLab%203D.%20%C2%BFCu%C3%A1nto%20sale%3F">📲 Pedilo por WhatsApp</a>
     </div>
   </div>
 
+  <!-- Producto 7 -->
   <div class="producto">
-    <img src="bolos-cohete.png" alt="Juego de Bolos a Cohete 3D">
+    <div class="carousel">
+      <img src="bolos1.png" alt="Juego de Bolos Cohete" class="active">
+    </div>
     <div class="descripcion">
-      <h2>🚀 Juego de Bolos a Cohete 3D</h2>
-      Lanza misiles y derribá los bolos con precisión.<br>
-      🎳 Ideal para jugar en el piso con amigos.<br>
-      🧨 Diversión asegurada para todas las edades.
+      <h2>🚀 Juego de Bolos Cohete</h2>
+      Lanzá y derribá los bolos con el cohete impulsado.<br>
+      💡 Súper dinámico y divertido.<br>
+      👨‍👩‍👧‍👦 Ideal para todas las edades.
     </div>
     <div class="whatsapp-boton">
-      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Juego%20de%20Bolos%20a%20Cohete%203D%20de%20PrintLab%203D.%20¿Cuánto%20sale?">📲 Pedilo por WhatsApp</a>
+      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Juego%20de%20Bolos%20Cohete%20de%20PrintLab%203D.%20%C2%BFCu%C3%A1nto%20sale%3F">📲 Pedilo por WhatsApp</a>
     </div>
   </div>
 
@@ -162,5 +213,38 @@
     <a href="catalogo.html">⬅ Volver al Catálogo</a>
   </div>
 
+  <script>
+    document.querySelectorAll('.carousel').forEach(carousel => {
+      const images = carousel.querySelectorAll('img');
+      let current = 0;
+      if (images.length > 0) images[0].classList.add('active');
+
+      const showImage = index => {
+        images.forEach((img, i) => img.classList.toggle('active', i === index));
+      };
+
+      const btnPrev = document.createElement('button');
+      btnPrev.innerText = '<';
+      btnPrev.classList.add('carousel-button', 'prev');
+      btnPrev.onclick = () => {
+        current = (current - 1 + images.length) % images.length;
+        showImage(current);
+      };
+
+      const btnNext = document.createElement('button');
+      btnNext.innerText = '>';
+      btnNext.classList.add('carousel-button', 'next');
+      btnNext.onclick = () => {
+        current = (current + 1) % images.length;
+        showImage(current);
+      };
+
+      if (images.length > 1) {
+        carousel.appendChild(btnPrev);
+        carousel.appendChild(btnNext);
+      }
+    });
+  </script>
 </body>
 </html>
+
