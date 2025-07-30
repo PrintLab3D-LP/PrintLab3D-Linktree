@@ -30,14 +30,14 @@
       overflow: hidden;
       max-width: 300px;
       margin: auto;
+      height: 200px;
     }
-   .carousel img {
-    width: 100%;
-    height: 200px;
-    object-fit: contain;
-    border-radius: 8px;
-    display: none;
-}
+    .carousel img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+      display: none;
     }
     .carousel img.active {
       display: block;
@@ -53,6 +53,7 @@
       cursor: pointer;
       font-size: 1.2rem;
       border-radius: 50%;
+      z-index: 2;
     }
     .carousel-button.prev {
       left: 5px;
