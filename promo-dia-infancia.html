@@ -17,6 +17,22 @@
       text-align: center;
       color: #ff6f61;
     }
+    .promo-alerta {
+      background-color: #ffe066;
+      color: #d62828;
+      padding: 1rem;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1rem;
+      animation: parpadeo 1.2s infinite;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+    @keyframes parpadeo {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
     .producto {
       margin-bottom: 2.5rem;
     }
@@ -39,6 +55,7 @@
       padding: 1rem;
       border-radius: 8px;
       font-size: 0.95rem;
+      text-align: center;
     }
     .volver {
       text-align: center;
@@ -52,118 +69,106 @@
       border-radius: 5px;
       font-weight: bold;
     }
+    .whatsapp-btn {
+      display: inline-block;
+      background: #25D366;
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
   </style>
 </head>
 <body>
-  <h1>🎁 Promos Día de la Infancia</h1>
 
-  <div class="producto">
-    <div class="img-container">
-      <img src="ajedrez1.png" alt="Ajedrez Enrollable 3D">
-    </div>
-    <div class="descripcion">
-      <h2>♟️ Ajedrez Enrollable 3D</h2>
-      Tablero con piezas geométricas que se enrolla y guarda en tubo.<br>
-      🧠 Estimula estrategia y concentración.<br>
-      📦 Muy práctico y portátil.
-      <div style="text-align:center; margin-top: 1rem;">
-        <a href="https://wa.me/5492954218753?text=Hola%2C%20quiero%20el%20producto%20Ajedrez%20Enrollable%203D.%20Cuanto%20cuesta%3F" target="_blank" style="background:#25D366;color:white;padding:0.6rem 1rem;border-radius:6px;text-decoration:none;font-weight:bold;">📲 Pedir por WhatsApp</a>
-      </div>
-    </div>
-  </div>
+<div class="promo-alerta">
+  🎉 Promo: Comprás 2 juegos y el segundo lo pagás a mitad de precio 🎉
+</div>
 
-  <div class="producto">
-    <div class="img-container">
-      <img src="iglu11.png" alt="Igloo Mania">
-    </div>
-    <div class="descripcion">
-      <h2>❄️ Igloo Mania</h2>
-      Juego de equilibrio: sacá bloques sin que caiga el esquimal.<br>
-      🧩 Ideal para jugar en familia.<br>
-      🎯 Mejora precisión y paciencia.
-      <div style="text-align:center; margin-top: 1rem;">
-        <a href="https://wa.me/5492954218753?text=Hola%2C%20quiero%20el%20producto%20Igloo%20Mania.%20Cuanto%20cuesta%3F" target="_blank" style="background:#25D366;color:white;padding:0.6rem 1rem;border-radius:6px;text-decoration:none;font-weight:bold;">📲 Pedir por WhatsApp</a>
-      </div>
-    </div>
-  </div>
+<h1>🎁 Promos Día de la Infancia</h1>
 
-  <div class="producto">
-    <div class="img-container">
-      <img src="avion3d.png" alt="Avión Tomcat F14">
-    </div>
-    <div class="descripcion">
-      <h2>✈️ Avión F14 Tomcat</h2>
-      Piezas planas para armar un jet realista.<br>
-      💥 Montaje fácil y divertido.<br>
-      🎨 Con estilo profesional y colores vivos.
-      <div style="text-align:center; margin-top: 1rem;">
-        <a href="https://wa.me/5492954218753?text=Hola%2C%20quiero%20el%20producto%20Avi%C3%B3n%20F14%20Tomcat.%20Cuanto%20cuesta%3F" target="_blank" style="background:#25D366;color:white;padding:0.6rem 1rem;border-radius:6px;text-decoration:none;font-weight:bold;">📲 Pedir por WhatsApp</a>
-      </div>
-    </div>
+<!-- 🔽 Ajedrez -->
+<div class="producto">
+  <div class="img-container">
+    <img src="ajedrez1.png" alt="Ajedrez Enrollable 3D">
   </div>
+  <div class="descripcion">
+    <h2>Ajedrez Enrollable 3D</h2>
+    <a href="https://wa.me/5492954218753?text=Hola%2C%20quiero%20el%20producto%20Ajedrez%20Enrollable%203D.%20Cuanto%20cuesta%3F" class="whatsapp-btn" target="_blank">📲 Pedir por WhatsApp</a>
+  </div>
+</div>
 
-  <div class="producto">
-    <div class="img-container">
-      <img src="Dino3D.png" alt="Dino Puzzle T‑Rex">
-    </div>
-    <div class="descripcion">
-      <h2>🦖 Dino Puzzle T‑Rex 3D</h2>
-      Esqueleto armable para aprender jugando.<br>
-      🦴 Piezas encastrables y educativas.<br>
-      📚 Perfecto para amantes de los dinosaurios.
-      <div style="text-align:center; margin-top: 1rem;">
-        <a href="https://wa.me/5492954218753?text=Hola%2C%20quiero%20el%20producto%20Dino%20Puzzle%20T%E2%80%91Rex%203D.%20Cuanto%20cuesta%3F" target="_blank" style="background:#25D366;color:white;padding:0.6rem 1rem;border-radius:6px;text-decoration:none;font-weight:bold;">📲 Pedir por WhatsApp</a>
-      </div>
-    </div>
+<!-- 🔽 Igloo -->
+<div class="producto">
+  <div class="img-container">
+    <img src="iglu11.png" alt="Igloo Mania">
   </div>
+  <div class="descripcion">
+    <h2>Igloo Mania</h2>
+    <a href="https://wa.me/5492954218753?text=Hola%2C%20quiero%20el%20producto%20Igloo%20Mania.%20Cuanto%20cuesta%3F" class="whatsapp-btn" target="_blank">📲 Pedir por WhatsApp</a>
+  </div>
+</div>
 
-  <div class="producto">
-    <div class="img-container">
-      <img src="helice1.png" alt="Hélice Voladora">
-    </div>
-    <div class="descripcion">
-      <h2>🚀 Hélice Voladora</h2>
-      Insertá la varilla y lanzá: ¡vuelo alto y seguro!<br>
-      🌬️ Ligero y resistente.<br>
-      ✨ Ideal para jugar al aire libre.
-      <div style="text-align:center; margin-top: 1rem;">
-        <a href="https://wa.me/5492954218753?text=Hola%2C%20quiero%20el%20producto%20H%C3%A9lice%20Voladora.%20Cuanto%20cuesta%3F" target="_blank" style="background:#25D366;color:white;padding:0.6rem 1rem;border-radius:6px;text-decoration:none;font-weight:bold;">📲 Pedir por WhatsApp</a>
-      </div>
-    </div>
+<!-- 🔽 Avión -->
+<div class="producto">
+  <div class="img-container">
+    <img src="avion3d.png" alt="Avión F14 Tomcat">
   </div>
+  <div class="descripcion">
+    <h2>Avión F14 Tomcat</h2>
+    <a href="https://wa.me/5492954218753?text=Hola%2C%20quiero%20el%20producto%20Avi%C3%B3n%20F14%20Tomcat.%20Cuanto%20cuesta%3F" class="whatsapp-btn" target="_blank">📲 Pedir por WhatsApp</a>
+  </div>
+</div>
 
-  <div class="producto">
-    <div class="img-container">
-      <img src="tetris3d.png" alt="Tetris 3D Multicolor">
-    </div>
-    <div class="descripcion">
-      <h2>🟥 Tetris 3D Multicolor</h2>
-      Bloques encastrables que se combinan en estructuras.<br>
-      🧠 Mejora lógica espacial.<br>
-      🌈 Diseñado para armar y jugar en cualquier lugar.
-      <div style="text-align:center; margin-top: 1rem;">
-        <a href="https://wa.me/5492954218753?text=Hola%2C%20quiero%20el%20producto%20Tetris%203D%20Multicolor.%20Cuanto%20cuesta%3F" target="_blank" style="background:#25D366;color:white;padding:0.6rem 1rem;border-radius:6px;text-decoration:none;font-weight:bold;">📲 Pedir por WhatsApp</a>
-      </div>
-    </div>
+<!-- 🔽 Dino -->
+<div class="producto">
+  <div class="img-container">
+    <img src="Dino3D.png" alt="Dino Puzzle T‑Rex 3D">
   </div>
+  <div class="descripcion">
+    <h2>Dino Puzzle T‑Rex 3D</h2>
+    <a href="https://wa.me/5492954218753?text=Hola%2C%20quiero%20el%20producto%20Dino%20Puzzle%20T%E2%80%91Rex%203D.%20Cuanto%20cuesta%3F" class="whatsapp-btn" target="_blank">📲 Pedir por WhatsApp</a>
+  </div>
+</div>
 
-  <div class="producto">
-    <div class="img-container">
-      <img src="WhatsApp Image 2025-07-29 at 19.21.42.jpeg" alt="Juego Gonggi Squid Game">
-    </div>
-    <div class="descripcion">
-      <h2>🔴🟢 Juego Gonggi – Edición Squid Game</h2>
-      Cinco fichas de colores estilo serie.<br>
-      🎯 Mejora reflejos y coordinación.<br>
-      💡 Presentación temática redonda.
-      <div style="text-align:center; margin-top: 1rem;">
-        <a href="https://wa.me/5492954218753?text=Hola%2C%20quiero%20el%20producto%20Juego%20Gonggi%20%E2%80%93%20Edici%C3%B3n%20Squid%20Game.%20Cuanto%20cuesta%3F" target="_blank" style="background:#25D366;color:white;padding:0.6rem 1rem;border-radius:6px;text-decoration:none;font-weight:bold;">📲 Pedir por WhatsApp</a>
-      </div>
-    </div>
+<!-- 🔽 Hélice -->
+<div class="producto">
+  <div class="img-container">
+    <img src="helice1.png" alt="Hélice Voladora">
   </div>
+  <div class="descripcion">
+    <h2>Hélice Voladora</h2>
+    <a href="https://wa.me/5492954218753?text=Hola%2C%20quiero%20el%20producto%20H%C3%A9lice%20Voladora.%20Cuanto%20cuesta%3F" class="whatsapp-btn" target="_blank">📲 Pedir por WhatsApp</a>
+  </div>
+</div>
 
-  <div class="volver">
-    <a href="index.html">⬅ Volver al Linktree</a>
+<!-- 🔽 Tetris -->
+<div class="producto">
+  <div class="img-container">
+    <img src="tetris3d.png" alt="Tetris 3D Multicolor">
   </div>
+  <div class="descripcion">
+    <h2>Tetris 3D Multicolor</h2>
+    <a href="https://wa.me/5492954218753?text=Hola%2C%20quiero%20el%20producto%20Tetris%203D%20Multicolor.%20Cuanto%20cuesta%3F" class="whatsapp-btn" target="_blank">📲 Pedir por WhatsApp</a>
+  </div>
+</div>
+
+<!-- 🔽 Gonggi -->
+<div class="producto">
+  <div class="img-container">
+    <img src="WhatsApp Image 2025-07-29 at 19.21.42.jpeg" alt="Juego Gonggi Squid Game">
+  </div>
+  <div class="descripcion">
+    <h2>Juego Gonggi – Edición Squid Game</h2>
+    <a href="https://wa.me/5492954218753?text=Hola%2C%20quiero%20el%20producto%20Juego%20Gonggi%20%E2%80%93%20Edici%C3%B3n%20Squid%20Game.%20Cuanto%20cuesta%3F" class="whatsapp-btn" target="_blank">📲 Pedir por WhatsApp</a>
+  </div>
+</div>
+
+<div class="volver">
+  <a href="index.html">⬅ Volver al Linktree</a>
+</div>
+
 </body>
 </html>
