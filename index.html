@@ -2,52 +2,79 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PrintLab 3D - Enlaces</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PrintLab 3D</title>
   <style>
     body {
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      background: linear-gradient(to bottom, #ccefff, #fdf6e3);
+      font-family: 'Comic Sans MS', sans-serif;
+      background: linear-gradient(to bottom, #cdefff, #fdfbe4);
       text-align: center;
       padding: 2rem;
     }
-    img {
-      width: 150px;
+    img.logo {
+      max-width: 150px;
       margin-bottom: 1rem;
     }
     h1 {
-      color: #ff4d4d;
-      font-size: 1.8rem;
+      color: #ff3e57;
     }
     p {
-      font-size: 1rem;
+      font-size: 1.1rem;
+      color: #222;
       margin-bottom: 2rem;
     }
     .boton {
-      background-color: #ffb347;
-      color: white;
-      padding: 1rem 2rem;
-      text-decoration: none;
-      border-radius: 10px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      display: inline-block;
+      margin: 0.8rem auto;
       width: 90%;
-      max-width: 300px;
-      margin: 0.5rem 0;
+      max-width: 400px;
+    }
+    .boton a {
+      display: block;
+      background-color: #ffb347;
+      padding: 1rem;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      font-size: 1.1rem;
       box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      transition: background 0.3s;
+    }
+    .boton a:hover {
+      background-color: #ffa726;
+    }
+    .boton span {
+      margin-right: 10px;
     }
   </style>
 </head>
 <body>
-  <img src="logo.png" alt="PrintLab 3D Logo">
+  <img src="logo.png" alt="PrintLab 3D" class="logo" />
   <h1>¡Bienvenidos a PrintLab 3D!</h1>
   <p>Regalos increíbles hechos con impresión 3D, personalizados para cada ocasión.</p>
 
-  <a href="https://wa.me/5492954218753" class="boton">📲 Pedidos por WhatsApp</a><br>
-  <a href="https://www.instagram.com/printlab3d.lp" class="boton">📸 Seguinos en Instagram</a><br>
-  <a href="catalogo.html" class="boton">🛍️ Catálogo</a>
-  <a href="promo-dia-infancia.html" class="boton">🎁 Promo Día de la Infancia</a><br>
-  
+  <div class="boton">
+    <a href="https://wa.me/5492954218753" target="_blank">
+      <span>📲</span> Pedidos por WhatsApp
+    </a>
+  </div>
+
+  <div class="boton">
+    <a href="https://www.instagram.com/printlab3d.lp" target="_blank">
+      <span>📷</span> Seguinos en Instagram
+    </a>
+  </div>
+
+  <div class="boton">
+    <a href="catalogo.html">
+      <span>🛍️</span> Catálogo
+    </a>
+  </div>
+
+  <div class="boton">
+    <a href="promo-infancia.html">
+      <span>🎁</span> Promo Día de la Infancia
+    </a>
+  </div>
 </body>
 </html>
