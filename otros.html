@@ -7,44 +7,39 @@
   <title>Otros - PrintLab 3D</title>
   <style>
     body {
-      font-family: sans-serif;
-      background-color: #fffacd;
+      font-family: Arial, sans-serif;
+      background-color: #fffacd; /* Amarillo pastel */
       margin: 0;
       padding: 2rem;
-      color: #333;
       text-align: center;
     }
     h1 {
-      color: #ff6f61;
+      font-size: 1.8rem;
       margin-bottom: 2rem;
     }
-    h2 {
-      color: #444;
-      font-size: 1.6rem;
-      margin-top: 2.5rem;
+    .categoria {
+      display: block;
+      margin: 1rem auto;
+      padding: 0.5rem 1rem;
+      width: fit-content;
+      background-color: #ffa726;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
     }
-    .subcategoria {
-      background-color: #fddfa3;
-      padding: 1.5rem;
-      margin: 2rem auto;
-      border-radius: 12px;
-      width: 90%;
-      max-width: 800px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    .volver {
+      margin-top: 3rem;
     }
     .volver a {
-      font-size: 0.9rem;
-      padding: 0.4rem 0.8rem;
-      border-radius: 6px;
-    /* estilo heredado */
-
       display: inline-block;
-      margin-top: 3rem;
-      padding: 0.8rem 1.6rem;
+      padding: 0.4rem 1rem;
       background-color: #ffa726;
       color: white;
       text-decoration: none;
-      border-radius: 8px;
+      border-radius: 6px;
+      font-size: 0.95rem;
       font-weight: bold;
     }
   </style>
@@ -52,29 +47,11 @@
 <body>
   <h1>🧩 Otros</h1>
 
-  <div class="subcategoria">
-    <h2>🔌 Gadget</h2>
-    <!-- Productos gadget -->
-  </div>
+  <a class="categoria" href="gadgets.html">🔌 Ver Gadgets</a>
+  <a class="categoria" href="letreros.html">🔤 Ver Letreros</a>
+  <a class="categoria" href="adornos.html">🕯️ Ver Adornos</a>
 
-  <div class="subcategoria">
-    <h2>🔤 Letreros</h2>
-    <!-- Productos letreros -->
-  </div>
-
-  <div class="subcategoria">
-    <h2>🕯️ Adornos</h2>
-    <!-- Productos adornos -->
-  </div>
-
-  
   <div class="volver">
-    <a href="gadgets.html">🔌 Ver Gadgets</a>
-    <a href="letreros.html">🔤 Ver Letreros</a>
-    <a href="adornos.html">🕯️ Ver Adornos</a>
-  </div>
-
-<div class="volver">
     <a href="index.html">⬅️ Volver al Catálogo</a>
   </div>
 </body>
