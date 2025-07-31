@@ -1,39 +1,146 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Llaveros 3D – PrintLab 3D</title>
+  <title>🔑 Llaveros | PrintLab 3D</title>
   <style>
-    body { font-family: sans-serif; background: #fef6e4; padding: 2rem; color: #333; }
-    h1 { text-align: center; color: #00796b; }
-    .modelo { display: flex; align-items: center; margin-bottom: 2rem; }
-    .modelo img { max-width: 120px; margin-right: 1rem; border-radius: 8px; }
-    .volver { text-align: center; margin-top: 2rem; }
-    .volver a { background: #00796b; color: white; padding: 0.8rem 1.5rem; border-radius: 5px; text-decoration: none; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffe0f0; /* rosa pastel */
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #a8326d;
+    }
+    .juego {
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      padding: 15px;
+      max-width: 500px;
+    }
+    .juego h2 {
+      text-align: center;
+      color: #a8326d;
+    }
+    .slider {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: white;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slider img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: none;
+    }
+    .slider img.active {
+      display: block;
+    }
+    .nav-buttons {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .nav-buttons button {
+      margin: 0 5px;
+      padding: 5px 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #d16b97;
+      color: white;
+      cursor: pointer;
+    }
+    .whatsapp {
+      display: block;
+      margin-top: 10px;
+      text-align: center;
+    }
+    .whatsapp a {
+      text-decoration: none;
+      background-color: #25d366;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      display: inline-block;
+    }
+    .volver {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .volver a {
+      text-decoration: none;
+      color: #a8326d;
+      font-weight: bold;
+      background: #ffd6e8;
+      padding: 10px 20px;
+      border-radius: 10px;
+    }
   </style>
 </head>
 <body>
-  <h1>🔑 Llaveros 3D – PrintLab 3D</h1>
-  <p>Diseñá tu propio llavero con nombre, escudo o figura infanto‑regional.</p>
 
-  <div class="modelo">
-    <img src="escudo_argentina.png" alt="Escudo Argentina 3D">
-    <div><strong>Escudo de Argentina</strong><br>Ideal como souvenir o accesorio nacional.</div>
-  </div>
+  <h1>🔑 Llaveros</h1>
 
-  <div class="modelo">
-    <img src="llavero_nombre.png" alt="Llavero con nombre">
-    <div><strong>Nombre personalizado</strong><br>Tu nombre en 3D, tipografía divertida.</div>
-  </div>
-
-  <div class="modelo">
-    <img src="llavero_jugador.png" alt="Llavero estilo jugador">
-    <div><strong>Figura estilo jugador</strong><br>Representa tu pasión en miniatura.</div>
+  <div class="juego">
+    <h2>✨ Llavero Personalizado</h2>
+    <div class="slider" id="slider1">
+      <img src="llavero1.png" class="active" />
+      <img src="llavero2.png" />
+    </div>
+    <p style="text-align:center; margin-top:10px; color:#555;">
+      🖌️ Elegí el diseño, color y nombre<br>
+      💕 Ideal para regalos o souvenirs<br>
+      🎁 Hecho con impresión 3D de alta calidad
+    </p>
+    <div class="nav-buttons">
+      <button onclick="prevSlide(1)">◀</button>
+      <button onclick="nextSlide(1)">▶</button>
+    </div>
+    <div class="whatsapp">
+      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20un%20llavero%20personalizado.%20¿Cuánto%20cuesta%3F" target="_blank">Pedilo por WhatsApp</a>
+    </div>
   </div>
 
   <div class="volver">
-    <a href="index.html">⬅ Volver al Linktree</a>
+    <a href="index.html">⬅ Volver al Catálogo</a>
   </div>
+
+  <script>
+    function nextSlide(sliderId) {
+      const slider = document.getElementById("slider" + sliderId);
+      const images = slider.querySelectorAll("img");
+      let current = [...images].findIndex(img => img.classList.contains("active"));
+      if (current !== -1) {
+        images[current].classList.remove("active");
+        let next = (current + 1) % images.length;
+        images[next].classList.add("active");
+      }
+    }
+
+    function prevSlide(sliderId) {
+      const slider = document.getElementById("slider" + sliderId);
+      const images = slider.querySelectorAll("img");
+      let current = [...images].findIndex(img => img.classList.contains("active"));
+      if (current !== -1) {
+        images[current].classList.remove("active");
+        let prev = (current - 1 + images.length) % images.length;
+        images[prev].classList.add("active");
+      }
+    }
+  </script>
+
 </body>
 </html>
