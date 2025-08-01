@@ -162,6 +162,22 @@
     <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Exprimidor de Pasta Dental 🦷">Pedilo por WhatsApp</a>
   </div>
 </div>
+<!-- Producto: Porta Lata con Asa -->
+<div class="juego">
+  <h2>🍻 Porta Lata con Asa</h2>
+  <div class="slider">
+    <img id="img-porta-lata" src="porta lata bebida.png" alt="Porta Lata con Tapa y Asa" />
+    <div class="nav-buttons">
+      <button onclick="cambiarImagenPortaLata(-1)">▶</button>
+      <button onclick="cambiarImagenPortaLata(1)">▶</button>
+    </div>
+  </div>
+  <p>🍺 Mantené tu bebida fresca y cómoda de sostener con este Porta Lata 3D con tapa y asa.<br>
+  Ideal para mantener la temperatura, proteger la lata y evitar derrames. 🧊</p>
+  <div class="whatsapp">
+    <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Porta Lata con Asa 🍻">Pedilo por WhatsApp</a>
+  </div>
+</div>
 
 
 <div class="volver">
@@ -201,6 +217,15 @@ function cambiarImagenExprimidor(dir) {
   iExprimidor = (iExprimidor + dir + imagenesExprimidor.length) % imagenesExprimidor.length;
   document.getElementById("img-exprimidor").src = imagenesExprimidor[iExprimidor];
 }
+<script>
+const imagenesPortaLata = ["porta lata bebida.png", "porta lata bebida2.png", "porta lata bebida3.png"];
+let iPortaLata = 0;
+function cambiarImagenPortaLata(dir) {
+  iPortaLata = (iPortaLata + dir + imagenesPortaLata.length) % imagenesPortaLata.length;
+  document.getElementById("img-porta-lata").src = imagenesPortaLata[iPortaLata];
+}
+</script>
+
 </script>
 </body>
 </html>
