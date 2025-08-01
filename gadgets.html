@@ -33,11 +33,6 @@
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
     .juego img {
-      width: 100%;
-      max-width: 600px;
-      height: auto;
-      aspect-ratio: 4 / 3;
-      object-fit: contain;
       max-width: 100%;
       height: auto;
       border-radius: 12px;
@@ -47,7 +42,7 @@
     }
     .nav-buttons button {
       padding: 0.5rem 1rem;
-      font-size: 1.5rem;
+      font-size: 1rem;
       margin: 0 0.5rem;
       background-color: #ffa726;
       color: white;
@@ -82,32 +77,22 @@
 <body>
   <h1>🔌 Gadgets 3D</h1>
 
-  <!-- Producto: Porta Huevos -->
-  <div class="juego">
-    <h2>🥚 Porta Huevos Automático</h2>
-    <img id="img-porta" src="porta huevos.png" alt="Porta Huevos Automático" />
-    <div class="nav-buttons">
-      <button onclick="cambiarImagenPorta(-1)">◀</button>
-      <button onclick="cambiarImagenPorta(1)">▶</button>
-    </div>
-    <p>🥚 ¡Organizá tu heladera con estilo! Este Porta Huevos impreso en 3D permite que los huevos bajen automáticamente a medida que usás uno. 🧳 Práctico, moderno y muy útil para la cocina.</p>
-    <div class="whatsapp">
-      <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Porta Huevos Automático 🥚">Pedilo por WhatsApp</a>
-    </div>
-  </div>
+  <!-- Aquí se insertarán los productos -->
 
   
-  <!-- Producto: Cortador de Tomates -->
+  <!-- Producto: Lavador de Frutas -->
   <div class="juego">
-    <h2>🍅 Cortador de Tomates</h2>
-    <img id="img-tomate" src="tomate1.png" alt="Cortador de Tomates" />
+    <h2>🍋 Lavador de Frutas</h2>
+    <img id="img-lavador" src="lavador frutas.png" alt="Lavador de Frutas" />
     <div class="nav-buttons">
-      <button onclick="cambiarImagenTomate(-1)">◀</button>
-      <button onclick="cambiarImagenTomate(1)">▶</button>
+      <button onclick="cambiarImagenLavador(-1)">◀</button>
+      <button onclick="cambiarImagenLavador(1)">▶</button>
     </div>
-    <p>🍅 Cortá varios tomates de manera rápida, pareja y segura con este práctico gadget 3D. Ideal para ensaladas, guarniciones y más.</p>
+    <p>🍋 Ideal para enjuagar frutas y verduras pequeñas. Su diseño curvo y ranurado permite un escurrido rápido y eficiente. ¡Práctico, moderno y útil!</p>
+    <p>💧 <strong>Así funciona:</strong><br>
+    Una entrada de agua lateral dirige el flujo a una estructura interior en espiral. El agua comienza a girar, arrastrando la fruta en la rotación y proporcionando una limpieza eficaz y uniforme. El agua drena por finas ranuras en el fondo; la fruta permanece dentro, la suciedad se elimina.</p>
     <div class="whatsapp">
-      <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Cortador de Tomates 🍅">Pedilo por WhatsApp</a>
+      <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Lavador de Frutas 🍋">Pedilo por WhatsApp</a>
     </div>
   </div>
 
@@ -115,32 +100,5 @@
   <div class="volver">
     <a href="otros.html">⬅️ Volver a la sección Otros</a>
   </div>
-
-  <script>
-    const imagenesPorta = [
-      "porta huevos.png",
-      "porta huevos1.png",
-      "porta huevos2.png"
-    ];
-    let iPorta = 0;
-
-    function cambiarImagenPorta(dir) {
-      iPorta = (iPorta + dir + imagenesPorta.length) % imagenesPorta.length;
-      document.getElementById("img-porta").src = imagenesPorta[iPorta];
-    }
-  
-    const imagenesTomate = [
-      "tomate1.png",
-      "tomate2.png",
-      "tomate3.png"
-    ];
-    let iTomate = 0;
-
-    function cambiarImagenTomate(dir) {
-      iTomate = (iTomate + dir + imagenesTomate.length) % imagenesTomate.length;
-      document.getElementById("img-tomate").src = imagenesTomate[iTomate];
-    }
-
-  </script>
 </body>
 </html>
