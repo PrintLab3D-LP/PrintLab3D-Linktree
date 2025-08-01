@@ -183,6 +183,20 @@
 <div class="volver">
 <a href="otros.html">⬅️ Volver a la sección Otros</a>
 </div>
+    <!-- Producto: Recolector de Polvo para Taladro -->
+<div class="otros">
+  <h2>🧹 Recolector de Polvo para Taladro</h2>
+  <img id="img-polvo" src="recolector polvo agujero.png" alt="Recolector de Polvo para Taladro" />
+  <div class="nav-buttons">
+    <button onclick="cambiarImagenPolvo(-1)">▶</button>
+    <button onclick="cambiarImagenPolvo(1)">▶</button>
+  </div>
+  <p>🧹 Este accesorio 3D se coloca fácilmente entre la pared y el taladro, capturando el polvo de la perforación y evitando suciedad innecesaria. Ideal para mantener todo limpio mientras trabajás.</p>
+  <div class="whatsapp">
+    <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Recolector de Polvo para Taladro 🧹">Pedilo por WhatsApp</a>
+  </div>
+</div>
+
 <script>
     const imagenesPorta = ["porta huevos.png", "porta huevos1.png", "porta huevos2.png"];
     let iPorta = 0;
@@ -223,7 +237,21 @@ function cambiarImagenPortaLata(dir) {
   iPortaLata = (iPortaLata + dir + imagenesPortaLata.length) % imagenesPortaLata.length;
   document.getElementById("img-porta-lata").src = imagenesPortaLata[iPortaLata];
 }
+ const imagenesPolvo = [
+    "recolector polvo agujero.png"
+     "recolector polvo agujero2.png"
+    "recolector polvo agujero3.png"
+  ];
+  let iPolvo = 0;
+
+  function cambiarImagenPolvo(dir) {
+    iPolvo = (iPolvo + dir + imagenesPolvo.length) % imagenesPolvo.length;
+    document.getElementById("img-polvo").src = imagenesPolvo[iPolvo];
+  }
     
+  
+
+   
  </script>
 </body>
 </html>
