@@ -132,6 +132,23 @@
 <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Lavador de Frutas 🍋">Pedilo por WhatsApp</a>
 </div>
 </div>
+
+<!-- Producto: Clips tipo Ladrillo -->
+<div class="juego">
+  <h2>🧱 Clips para Bolsas tipo Ladrillo</h2>
+  <img id="img-clips" src="clips ladrillo.png" alt="Clips para Bolsas tipo Ladrillo" />
+  <div class="nav-buttons">
+    <button onclick="cambiarImagenClips(-1)">◀</button>
+    <button onclick="cambiarImagenClips(1)">▶</button>
+  </div>
+  <p>🧱 Los clips para bolsas tipo ladrillo son la solución inteligente para sellar de forma segura y hermética los envases de alimentos abiertos.<br>
+  ➕ Su característica especial es su capacidad de apilamiento: los clips, inspirados en bloques de construcción, se pueden apilar uno encima del otro junto con las bolsas selladas para ahorrar espacio y mantener cajones y armarios ordenados.</p>
+  <div class="whatsapp">
+    <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio de los Clips para Bolsas tipo Ladrillo 🧱">Pedilo por WhatsApp</a>
+  </div>
+</div>
+
+
 <div class="volver">
 <a href="otros.html">⬅️ Volver a la sección Otros</a>
 </div>
@@ -156,6 +173,14 @@
       iLavador = (iLavador + dir + imagenesLavador.length) % imagenesLavador.length;
       document.getElementById("img-lavador").src = imagenesLavador[iLavador];
     }
-  </script>
+  
+const imagenesClips = ["clips ladrillo.png", "clips ladrillo2.png", "clips ladrillo3.png"];
+let iClips = 0;
+function cambiarImagenClips(dir) {
+  iClips = (iClips + dir + imagenesClips.length) % imagenesClips.length;
+  document.getElementById("img-clips").src = imagenesClips[iClips];
+}
+
+</script>
 </body>
 </html>
