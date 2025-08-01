@@ -147,6 +147,21 @@
     <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio de los Clips para Bolsas tipo Ladrillo 🧱">Pedilo por WhatsApp</a>
   </div>
 </div>
+<!-- Producto: Exprimidor de Pasta Dental -->
+<div class="juego">
+  <h2>🦷 Exprimidor de Pasta Dental</h2>
+  <img id="img-exprimidor" src="exprimidor pasta diente.png" alt="Exprimidor de Pasta Dental" />
+  <div class="nav-buttons">
+    <button onclick="cambiarImagenExprimidor(-1)">▶</button>
+    <button onclick="cambiarImagenExprimidor(1)">▶</button>
+  </div>
+  <p>🦷 Este gadget te permite aprovechar cada gota del tubo de pasta dental sin esfuerzo.<br>
+  Girá la manija lateral y el tubo se enrolla de forma ordenada.<br>
+  🧼 Práctico, higiénico y sin desperdicios.</p>
+  <div class="whatsapp">
+    <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Exprimidor de Pasta Dental 🦷">Pedilo por WhatsApp</a>
+  </div>
+</div>
 
 
 <div class="volver">
@@ -180,7 +195,12 @@ function cambiarImagenClips(dir) {
   iClips = (iClips + dir + imagenesClips.length) % imagenesClips.length;
   document.getElementById("img-clips").src = imagenesClips[iClips];
 }
-
+const imagenesExprimidor = ["exprimidor pasta diente.png","exprimidor pasta diente2.png", "exprimidor pasta diente3.png"];
+let iExprimidor = 0;
+function cambiarImagenExprimidor(dir) {
+  iExprimidor = (iExprimidor + dir + imagenesExprimidor.length) % imagenesExprimidor.length;
+  document.getElementById("img-exprimidor").src = imagenesExprimidor[iExprimidor];
+}
 </script>
 </body>
 </html>
