@@ -217,13 +217,15 @@ function cambiarImagenExprimidor(dir) {
   iExprimidor = (iExprimidor + dir + imagenesExprimidor.length) % imagenesExprimidor.length;
   document.getElementById("img-exprimidor").src = imagenesExprimidor[iExprimidor];
 }
-<script>
 const imagenesPortaLata = ["porta lata bebida.png", "porta lata bebida2.png", "porta lata bebida3.png"];
 let iPortaLata = 0;
 function cambiarImagenPortaLata(dir) {
   iPortaLata = (iPortaLata + dir + imagenesPortaLata.length) % imagenesPortaLata.length;
   document.getElementById("img-porta-lata").src = imagenesPortaLata[iPortaLata];
 }
+    
+ <script>
+
 </script>
 
 </script>
