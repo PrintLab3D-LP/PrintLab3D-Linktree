@@ -91,6 +91,22 @@
     </div>
   </div>
 
+  
+  <!-- Producto: Cortador de Tomates -->
+  <div class="juego">
+    <h2>🍅 Cortador de Tomates</h2>
+    <img id="img-tomate" src="tomate1.png" alt="Cortador de Tomates" />
+    <div class="nav-buttons">
+      <button onclick="cambiarImagenTomate(-1)">◀</button>
+      <button onclick="cambiarImagenTomate(1)">▶</button>
+    </div>
+    <p>🍅 Cortá varios tomates de manera rápida, pareja y segura con este práctico gadget 3D. Ideal para ensaladas, guarniciones y más.</p>
+    <div class="whatsapp">
+      <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Cortador de Tomates 🍅">Pedilo por WhatsApp</a>
+    </div>
+  </div>
+
+
   <div class="volver">
     <a href="otros.html">⬅️ Volver a la sección Otros</a>
   </div>
@@ -107,6 +123,19 @@
       iPorta = (iPorta + dir + imagenesPorta.length) % imagenesPorta.length;
       document.getElementById("img-porta").src = imagenesPorta[iPorta];
     }
+  
+    const imagenesTomate = [
+      "tomate1.png",
+      "tomate2.png",
+      "tomate3.png"
+    ];
+    let iTomate = 0;
+
+    function cambiarImagenTomate(dir) {
+      iTomate = (iTomate + dir + imagenesTomate.length) % imagenesTomate.length;
+      document.getElementById("img-tomate").src = imagenesTomate[iTomate];
+    }
+
   </script>
 </body>
 </html>
