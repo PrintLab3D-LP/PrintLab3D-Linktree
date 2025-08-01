@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -77,10 +76,33 @@
 <body>
   <h1>🔌 Gadgets 3D</h1>
 
-  <!-- Aquí se insertarán los productos -->
+  <!-- Producto: Porta Huevos -->
+  <div class="juego">
+    <h2>🥚 Porta Huevos Automático</h2>
+    <img id="img-porta" src="img/porta-huevos1.png" alt="Porta Huevos Automático" />
+    <div class="nav-buttons">
+      <button onclick="cambiarImagenPorta(-1)">⬅</button>
+      <button onclick="cambiarImagenPorta(1)">➡</button>
+    </div>
+    <p> 🥚¡Organizá tu heladera con estilo! Este Porta Huevos impreso en 3D permite que los huevos bajen automáticamente a medida que usás uno. 🧳 Práctico, moderno y muy útil para la cocina.</p>
+    <div class="whatsapp">
+      <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Porta Huevos Automático 🧳">Pedilo por WhatsApp</a>
+    </div>
+  </div>
 
   <div class="volver">
     <a href="otros.html">⬅️ Volver a la sección Otros</a>
   </div>
+
+  <script>
+    const imagenesPorta = ["img/porta-huevos1.png"];
+    let iPorta = 0;
+
+    function cambiarImagenPorta(dir) {
+      iPorta = (iPorta + dir + imagenesPorta.length) % imagenesPorta.length;
+      document.getElementById("img-porta").src = imagenesPorta[iPorta];
+    }
+  </script>
 </body>
 </html>
+
