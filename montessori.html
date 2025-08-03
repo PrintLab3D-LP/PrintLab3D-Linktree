@@ -87,13 +87,33 @@
       padding: 10px 20px;
       border-radius: 10px;
     }
-  </style>
+  
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(82, 183, 136, 0.8);
+  border: none;
+  color: white;
+  padding: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 2;
+}
+.arrow.left {
+  left: 10px;
+}
+.arrow.right {
+  right: 10px;
+}
+</style>
 </head>
 <body>
 <h1>🧩 Juegos Montessori</h1>
 <div class="juego">
 <h2>🟥 Encastre Geométrico</h2>
-<div class="slider" id="slider3">
+<div class="slider" id="slider3"><button class="arrow left" onclick="prevSlide(3)">◀</button><button class="arrow right" onclick="nextSlide(3)">▶</button>
 <img class="active" src="juego educativo montessori.png"/>
 <img class="active" src="juego educativo montessori1.png"/>
 <img class="active" src="juego educativo montessori2.png"/>
@@ -105,16 +125,13 @@
     🧠 Favorece la coordinación mano-ojo y la motricidad fina<br/>
     ✨ Método Montessori para aprender jugando
   </p>
-<div class="nav-buttons">
-<button onclick="prevSlide(3)">◀</button>
-<button onclick="nextSlide(3)">▶</button>
-</div>
+
 <div class="whatsapp">
 <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20el%20juego%20Montessori%20Clasificador%20de%20Formas%20y%20Colores.%20¿Cuánto%20cuesta%3F" target="_blank">Pedilo por WhatsApp</a>
 </div>
 </div><div class="juego">
 <h2>🦕 Rompecabezas Dinosaurio Numérico</h2>
-<div class="slider" id="slider4">
+<div class="slider" id="slider4"><button class="arrow left" onclick="prevSlide(4)">◀</button><button class="arrow right" onclick="nextSlide(4)">▶</button>
 <img class="active" src="rompecabezas dinosaurio.png"/>
 <img class="active" src="rompecabezas dinosaurio1.png"/>
 <!-- Podés agregar más imágenes si querés -->
@@ -124,16 +141,13 @@
     🧩 Ideal para desarrollar pensamiento lógico y paciencia<br/>
     🌱 Hecho con el enfoque Montessori: aprender jugando
   </p>
-<div class="nav-buttons">
-<button onclick="prevSlide(4)">◀</button>
-<button onclick="nextSlide(4)">▶</button>
-</div>
+
 <div class="whatsapp">
 <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20el%20Rompecabezas%20Dinosaurio%20Montessori.%20¿Cuánto%20cuesta%3F" target="_blank">Pedilo por WhatsApp</a>
 </div>
 </div><div class="juego">
 <h2>😁 Figuras Apilables Sonrientes</h2>
-<div class="slider" id="slider5">
+<div class="slider" id="slider5"><button class="arrow left" onclick="prevSlide(5)">◀</button><button class="arrow right" onclick="nextSlide(5)">▶</button>
 <img class="active" src="figuras apilables.png"/>
 <img class="active" src="figuras apilables1.png"/>
 <img class="active" src="figuras apilables2.png"/>
@@ -143,16 +157,13 @@
     🎨 Estimula la motricidad fina y la imaginación<br/>
     😃 Caritas felices que invitan al juego libre y creativo
   </p>
-<div class="nav-buttons">
-<button onclick="prevSlide(5)">◀</button>
-<button onclick="nextSlide(5)">▶</button>
-</div>
+
 <div class="whatsapp">
 <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20las%20Figuras%20Apilables%20Montessori.%20¿Cuánto%20cuestan%3F" target="_blank">Pedilo por WhatsApp</a>
 </div>
 </div><div class="juego">
 <h2>🍔 Hamburguesa Apilable Montessori</h2>
-<div class="slider" id="slider6">
+<div class="slider" id="slider6"><button class="arrow left" onclick="prevSlide(6)">◀</button><button class="arrow right" onclick="nextSlide(6)">▶</button>
 <img class="active" src="hamburguesa montesori.png"/>
 <img class="active" src="hamburguesa montesori1.png"/>
 <img class="active" src="hamburguesa montesori2.png"/>
@@ -163,16 +174,13 @@
     🧠 Practicá el orden, la motricidad y la creatividad<br/>
     🍅 Armá tu propia hamburguesa ¡ingrediente por ingrediente!
   </p>
-<div class="nav-buttons">
-<button onclick="prevSlide(6)">◀</button>
-<button onclick="nextSlide(6)">▶</button>
-</div>
+
 <div class="whatsapp">
 <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20la%20Hamburguesa%20Montessori.%20¿Cuánto%20cuesta%3F" target="_blank">Pedila por WhatsApp</a>
 </div>
 </div><div class="juego">
 <h2>🐾 Animales Apilables con Dado</h2>
-<div class="slider" id="slider7">
+<div class="slider" id="slider7"><button class="arrow left" onclick="prevSlide(7)">◀</button><button class="arrow right" onclick="nextSlide(7)">▶</button>
 <img class="active" src="animales apilables.png"/>
 <img class="active" src="animales apilables1.png"/>
 <img class="active" src="animales apilables2.png"/>
@@ -182,17 +190,13 @@
     🎲 Incluye dado para jugar por turnos<br/>
     🧠 Ideal para concentración, equilibrio y juego grupal
   </p>
-<div class="nav-buttons">
-<button onclick="prevSlide(7)">◀</button>
-<button onclick="nextSlide(7)">▶</button>
-</div>
+
 <div class="whatsapp">
 <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20el%20juego%20Montessori%20Animales%20Apilables.%20¿Cuánto%20cuesta%3F" target="_blank">Pedilo por WhatsApp</a>
 </div>
-
 </div><div class="juego">
 <h2>🔢 Tablero Numérico Montessori</h2>
-<div class="slider" id="slider8">
+<div class="slider" id="slider8"><button class="arrow left" onclick="prevSlide(8)">◀</button><button class="arrow right" onclick="nextSlide(8)">▶</button>
 <img class="active" src="tablero numerico.png"/>
 <img class="active" src="tablero numerico1.png"/>
 <img class="active" src="tablero numerico2.png"/>
@@ -202,10 +206,7 @@
     🌈 Colores llamativos que ayudan a la concentración<br/>
     🖐️ Ideal para aprender jugando con piezas encastrables
   </p>
-<div class="nav-buttons">
-<button onclick="prevSlide(8)">◀</button>
-<button onclick="nextSlide(8)">▶</button>
-</div>
+
 <div class="whatsapp">
 <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20el%20Tablero%20Numérico%20Montessori.%20¿Cuánto%20cuesta%3F" target="_blank">Pedilo por WhatsApp</a>
 </div>
