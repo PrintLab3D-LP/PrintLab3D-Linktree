@@ -192,7 +192,33 @@
     <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Recolector de Polvo para Taladro 🧹">Pedilo por WhatsApp</a>
   </div>
 </div>
+<!-- Producto: Tapa Protectora para Lata de Bebida -->
+<div class="otros">
+  <h2>🥤 Tapa Protectora para Lata</h2>
+  <img id="img-tapalata" src="tapa-lata-1.png" alt="Tapa protectora para lata" />
+  <div class="nav-buttons">
+    <button onclick="cambiarImagenTapa(-1)">◀</button>
+    <button onclick="cambiarImagenTapa(1)">▶</button>
+  </div>
+  <p>🥤 Esta práctica tapa se coloca sobre la boquilla de la lata y ayuda a proteger el contenido de suciedad, insectos o derrames. Ideal para usar en picnics, salidas o en casa.</p>
+  <div class="whatsapp">
+    <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio de la Tapa Protectora para Lata 🥤">Pedilo por WhatsApp</a>
+  </div>
+</div>
 
+<script>
+  const imagenesTapa = [
+    "tapa-lata-1.png",
+    "tapa-lata-2.png",
+    "tapa-lata-3.png"
+  ];
+  let iTapa = 0;
+
+  function cambiarImagenTapa(dir) {
+    iTapa = (iTapa + dir + imagenesTapa.length) % imagenesTapa.length;
+    document.getElementById("img-tapalata").src = imagenesTapa[iTapa];
+  }
+</script>
 <script>
     const imagenesPorta = ["porta huevos.png", "porta huevos1.png", "porta huevos2.png"];
     let iPorta = 0;
