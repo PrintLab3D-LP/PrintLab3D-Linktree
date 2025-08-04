@@ -264,7 +264,6 @@ function cambiarImagenPortaLata(dir) {
 
    
  </script>
-
 <!-- Producto: Organizador de Cables USB -->
 <div class="juego">
 <h2>🔋 Organizador Modular de Cables USB</h2>
@@ -280,16 +279,40 @@ function cambiarImagenPortaLata(dir) {
 <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Organizador de Cables USB 🔋">Pedilo por WhatsApp</a>
 </div>
 </div>
+
+<!-- Producto: Soporte Plegable para Celular -->
+<div class="juego">
+<h2>📱 Soporte Plegable para Celular</h2>
+<img alt="Soporte Plegable para Celular" id="img-soporte" src="soporte plegable celu.png"/>
+<div class="nav-buttons">
+<button onclick="cambiarImagenSoporte(-1)">◀</button>
+<button onclick="cambiarImagenSoporte(1)">▶</button>
+</div>
+<p>📱 Un soporte compacto, plegable y práctico para tu celular.<br/>
+  🧲 Ideal para ver videos, trabajar o simplemente tener el teléfono a la vista sin ocupar espacio.<br/>
+  🔁 Se pliega tipo navaja para llevar como llavero o en el bolsillo.</p>
+<div class="whatsapp">
+<a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Soporte Plegable para Celular 📱">Pedilo por WhatsApp</a>
+</div>
+</div>
 <div class="volver">
 <a href="otros.html">⬅️ Volver a la sección Otros</a>
 </div>
-
 <script>
-const imagenesOrganizador = ["organizador cable usb.png", "organizador cable usb1.png", "organizador cable usb2.png"];
+const imagenesOrganizador = ["organizador cable usb.png"];
 let iOrganizador = 0;
 function cambiarImagenOrganizador(dir) {
   iOrganizador = (iOrganizador + dir + imagenesOrganizador.length) % imagenesOrganizador.length;
   document.getElementById("img-organizador").src = imagenesOrganizador[iOrganizador];
+}
+</script>
+
+<script>
+const imagenesSoporte = ["soporte plegable celu.png"];
+let iSoporte = 0;
+function cambiarImagenSoporte(dir) {
+  iSoporte = (iSoporte + dir + imagenesSoporte.length) % imagenesSoporte.length;
+  document.getElementById("img-soporte").src = imagenesSoporte[iSoporte];
 }
 </script>
 </body>
