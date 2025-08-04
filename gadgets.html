@@ -312,7 +312,6 @@ function cambiarImagenAmplificador(dir) {
   document.getElementById("img-amplificador").src = imagenesAmplificador[iAmplificador];
 }
 </script>
-
 <script>
 const imagenesPorta = ["porta huevos.png", "porta huevos1.png", "porta huevos2.png"];
 let iPorta = 0;
@@ -321,13 +320,25 @@ function cambiarImagenPorta(dir) {
   document.getElementById("img-porta").src = imagenesPorta[iPorta];
 }
 </script>
-
 <script>
 const imagenesPortaLata = ["porta lata bebida.png", "porta lata bebida2.png", "porta lata bebida3.png"];
 let iPortaLata = 0;
 function cambiarImagenPortaLata(dir) {
   iPortaLata = (iPortaLata + dir + imagenesPortaLata.length) % imagenesPortaLata.length;
   document.getElementById("img-porta-lata").src = imagenesPortaLata[iPortaLata];
+}
+</script>
+
+<script>
+const imagenesPolvo = [
+  "recolector polvo agujero.png",
+  "recolector polvo agujero2.png",
+  "recolector polvo agujero3.png"
+];
+let iPolvo = 0;
+function cambiarImagenPolvo(dir) {
+  iPolvo = (iPolvo + dir + imagenesPolvo.length) % imagenesPolvo.length;
+  document.getElementById("img-polvo").src = imagenesPolvo[iPolvo];
 }
 </script>
 </body>
