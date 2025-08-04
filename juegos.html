@@ -244,6 +244,26 @@
 <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Juego%20de%20Bolos%20Cohete%20de%20PrintLab%203D.%20%C2%BFCu%C3%A1nto%20sale%3F">📲 Pedilo por WhatsApp</a>
 </div>
 </div>
+<!-- Producto 8 -->
+<div class="producto">
+<div class="carousel">
+<img alt="Mini Mesa de Fútbol" class="active" src="mesa de futbol mini.png"/>
+
+<div class="nav-buttons">
+<button onclick="cambiarImagenMiniFutbol(-1)">◀</button>
+<button onclick="cambiarImagenMiniFutbol(1)">▶</button>
+</div>
+</div>
+<div class="descripcion">
+<h2>⚽ Mini Mesa de Fútbol de Sobremesa</h2>
+      Un metegol compacto ideal para jugar arriba de cualquier mesa.<br/>
+      🎯 Perfecto para partidas rápidas entre amigos, en familia o en la oficina.<br/>
+      🧩 Fácil de armar, resistente y muy divertido. ¡No ocupa lugar y garantiza risas!
+    </div>
+<div class="whatsapp-boton">
+<a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio de la Mini Mesa de Fútbol de Sobremesa ⚽">📲 Pedilo por WhatsApp</a>
+</div>
+</div>
 <div class="volver">
 <a href="catalogo.html">⬅ Volver al Catálogo</a>
 </div>
@@ -279,5 +299,17 @@
       }
     });
   </script>
+
+<script>
+const imagenesMiniFutbol = [
+  "mesa de futbol mini.png"
+];
+let iMiniFutbol = 0;
+function cambiarImagenMiniFutbol(dir) {
+  iMiniFutbol = (iMiniFutbol + dir + imagenesMiniFutbol.length) % imagenesMiniFutbol.length;
+  const img = document.querySelector('img[alt="Mini Mesa de Fútbol"]');
+  img.src = imagenesMiniFutbol[iMiniFutbol];
+}
+</script>
 </body>
 </html>
