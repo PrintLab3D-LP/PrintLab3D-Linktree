@@ -208,62 +208,7 @@
     document.getElementById("img-tapalata").src = imagenesTapa[iTapa];
   }
 </script>
-<script>
-    const imagenesPorta = ["porta huevos.png", "porta huevos1.png", "porta huevos2.png"];
-    let iPorta = 0;
-    function cambiarImagenPorta(dir) {
-      iPorta = (iPorta + dir + imagenesPorta.length) % imagenesPorta.length;
-      document.getElementById("img-porta").src = imagenesPorta[iPorta];
-    }
 
-    const imagenesTomate = ["tomate1.png", "tomate2.png", "tomate3.png"];
-    let iTomate = 0;
-    function cambiarImagenTomate(dir) {
-      iTomate = (iTomate + dir + imagenesTomate.length) % imagenesTomate.length;
-      document.getElementById("img-tomate").src = imagenesTomate[iTomate];
-    }
-
-    const imagenesLavador = ["lavador frutas.png", "lavador frutas2.png", "lavador frutas1.png"];
-    let iLavador = 0;
-    function cambiarImagenLavador(dir) {
-      iLavador = (iLavador + dir + imagenesLavador.length) % imagenesLavador.length;
-      document.getElementById("img-lavador").src = imagenesLavador[iLavador];
-    }
-  
-const imagenesClips = ["clips ladrillo.png", "clips ladrillo2.png", "clips ladrillo3.png"];
-let iClips = 0;
-function cambiarImagenClips(dir) {
-  iClips = (iClips + dir + imagenesClips.length) % imagenesClips.length;
-  document.getElementById("img-clips").src = imagenesClips[iClips];
-}
-const imagenesExprimidor = ["exprimidor pasta diente.png","exprimidor pasta diente2.png", "exprimidor pasta diente3.png"];
-let iExprimidor = 0;
-function cambiarImagenExprimidor(dir) {
-  iExprimidor = (iExprimidor + dir + imagenesExprimidor.length) % imagenesExprimidor.length;
-  document.getElementById("img-exprimidor").src = imagenesExprimidor[iExprimidor];
-}
-const imagenesPortaLata = ["porta lata bebida.png", "porta lata bebida2.png", "porta lata bebida3.png"];
-let iPortaLata = 0;
-function cambiarImagenPortaLata(dir) {
-  iPortaLata = (iPortaLata + dir + imagenesPortaLata.length) % imagenesPortaLata.length;
-  document.getElementById("img-porta-lata").src = imagenesPortaLata[iPortaLata];
-}
- const imagenesPolvo = [
-    "recolector polvo agujero.png",
-    "recolector polvo agujero2.png",
-    "recolector polvo agujero3.png"
-  ];
-  let iPolvo = 0;
-
-  function cambiarImagenPolvo(dir) {
-    iPolvo = (iPolvo + dir + imagenesPolvo.length) % imagenesPolvo.length;
-    document.getElementById("img-polvo").src = imagenesPolvo[iPolvo];
-  }
-    
-  
-
-   
- </script>
 <!-- Producto: Organizador de Cables USB -->
 <div class="juego">
 <h2>🔋 Organizador Modular de Cables USB</h2>
@@ -279,7 +224,6 @@ function cambiarImagenPortaLata(dir) {
 <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Organizador de Cables USB 🔋">Pedilo por WhatsApp</a>
 </div>
 </div>
-
 <!-- Producto: Soporte Plegable para Celular -->
 <div class="juego">
 <h2>📱 Soporte Plegable para Celular</h2>
@@ -307,8 +251,45 @@ function cambiarImagenOrganizador(dir) {
 }
 </script>
 
+
 <script>
-const imagenesSoporte = ["soporte plegable celu.png"];
+const imagenesTomate = ["tomate1.png", "tomate2.png", "tomate3.png"];
+let iTomate = 0;
+function cambiarImagenTomate(dir) {
+  iTomate = (iTomate + dir + imagenesTomate.length) % imagenesTomate.length;
+  document.getElementById("img-tomate").src = imagenesTomate[iTomate];
+}
+</script>
+
+<script>
+const imagenesLavador = ["lavador frutas.png", "lavador frutas2.png", "lavador frutas1.png"];
+let iLavador = 0;
+function cambiarImagenLavador(dir) {
+  iLavador = (iLavador + dir + imagenesLavador.length) % imagenesLavador.length;
+  document.getElementById("img-lavador").src = imagenesLavador[iLavador];
+}
+</script>
+
+<script>
+const imagenesClips = ["clips ladrillo.png", "clips ladrillo2.png", "clips ladrillo3.png"];
+let iClips = 0;
+function cambiarImagenClips(dir) {
+  iClips = (iClips + dir + imagenesClips.length) % imagenesClips.length;
+  document.getElementById("img-clips").src = imagenesClips[iClips];
+}
+</script>
+
+<script>
+const imagenesExprimidor = ["exprimidor pasta diente.png", "exprimidor pasta diente2.png", "exprimidor pasta diente3.png"];
+let iExprimidor = 0;
+function cambiarImagenExprimidor(dir) {
+  iExprimidor = (iExprimidor + dir + imagenesExprimidor.length) % imagenesExprimidor.length;
+  document.getElementById("img-exprimidor").src = imagenesExprimidor[iExprimidor];
+}
+</script>
+
+<script>
+const imagenesSoporte = ["soporte plegable celu.png", "soporte plegable celu2.png", "soporte plegable celu3.png"];
 let iSoporte = 0;
 function cambiarImagenSoporte(dir) {
   iSoporte = (iSoporte + dir + imagenesSoporte.length) % imagenesSoporte.length;
