@@ -208,7 +208,6 @@
     document.getElementById("img-tapalata").src = imagenesTapa[iTapa];
   }
 </script>
-
 <!-- Producto: Organizador de Cables USB -->
 <div class="juego">
 <h2>🔋 Organizador Modular de Cables USB</h2>
@@ -239,6 +238,22 @@
 <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Soporte Plegable para Celular 📱">Pedilo por WhatsApp</a>
 </div>
 </div>
+
+<!-- Producto: Amplificador de Sonido para Celular -->
+<div class="juego">
+<h2>📢 Amplificador de Sonido para Celular</h2>
+<img alt="Amplificador de Sonido para Celular" id="img-amplificador" src="amplificador sonido celu.png"/>
+<div class="nav-buttons">
+<button onclick="cambiarImagenAmplificador(-1)">◀</button>
+<button onclick="cambiarImagenAmplificador(1)">▶</button>
+</div>
+<p>📢 Amplificá el sonido de tu celular sin cables ni baterías.<br/>
+  🔊 Este amplificador acústico 3D proyecta el sonido y lo hace más claro y fuerte.<br/>
+  📱 Ideal para escuchar música, ver videos o manos libres en casa.</p>
+<div class="whatsapp">
+<a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Amplificador de Sonido para Celular 📢">Pedilo por WhatsApp</a>
+</div>
+</div>
 <div class="volver">
 <a href="otros.html">⬅️ Volver a la sección Otros</a>
 </div>
@@ -250,8 +265,6 @@ function cambiarImagenOrganizador(dir) {
   document.getElementById("img-organizador").src = imagenesOrganizador[iOrganizador];
 }
 </script>
-
-
 <script>
 const imagenesTomate = ["tomate1.png", "tomate2.png", "tomate3.png"];
 let iTomate = 0;
@@ -260,7 +273,6 @@ function cambiarImagenTomate(dir) {
   document.getElementById("img-tomate").src = imagenesTomate[iTomate];
 }
 </script>
-
 <script>
 const imagenesLavador = ["lavador frutas.png", "lavador frutas2.png", "lavador frutas1.png"];
 let iLavador = 0;
@@ -269,7 +281,6 @@ function cambiarImagenLavador(dir) {
   document.getElementById("img-lavador").src = imagenesLavador[iLavador];
 }
 </script>
-
 <script>
 const imagenesClips = ["clips ladrillo.png", "clips ladrillo2.png", "clips ladrillo3.png"];
 let iClips = 0;
@@ -278,7 +289,6 @@ function cambiarImagenClips(dir) {
   document.getElementById("img-clips").src = imagenesClips[iClips];
 }
 </script>
-
 <script>
 const imagenesExprimidor = ["exprimidor pasta diente.png", "exprimidor pasta diente2.png", "exprimidor pasta diente3.png"];
 let iExprimidor = 0;
@@ -287,13 +297,21 @@ function cambiarImagenExprimidor(dir) {
   document.getElementById("img-exprimidor").src = imagenesExprimidor[iExprimidor];
 }
 </script>
-
 <script>
-const imagenesSoporte = ["soporte plegable celu.png", "soporte plegable celu2.png", "soporte plegable celu1.png"];
+const imagenesSoporte = ["soporte plegable celu.png", "soporte plegable celu2.png", "soporte plegable celu3.png"];
 let iSoporte = 0;
 function cambiarImagenSoporte(dir) {
   iSoporte = (iSoporte + dir + imagenesSoporte.length) % imagenesSoporte.length;
   document.getElementById("img-soporte").src = imagenesSoporte[iSoporte];
+}
+</script>
+
+<script>
+const imagenesAmplificador = ["amplificador sonido celu.png"];
+let iAmplificador = 0;
+function cambiarImagenAmplificador(dir) {
+  iAmplificador = (iAmplificador + dir + imagenesAmplificador.length) % imagenesAmplificador.length;
+  document.getElementById("img-amplificador").src = imagenesAmplificador[iAmplificador];
 }
 </script>
 </body>
