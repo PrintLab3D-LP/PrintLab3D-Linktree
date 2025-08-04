@@ -238,7 +238,6 @@
 <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Soporte Plegable para Celular 📱">Pedilo por WhatsApp</a>
 </div>
 </div>
-
 <!-- Producto: Amplificador de Sonido para Celular -->
 <div class="juego">
 <h2>📢 Amplificador de Sonido para Celular</h2>
@@ -305,13 +304,30 @@ function cambiarImagenSoporte(dir) {
   document.getElementById("img-soporte").src = imagenesSoporte[iSoporte];
 }
 </script>
-
 <script>
 const imagenesAmplificador = ["amplificador sonido celu.png", "amplificador sonido celu1.png", "amplificador sonido celu2.png"];
 let iAmplificador = 0;
 function cambiarImagenAmplificador(dir) {
   iAmplificador = (iAmplificador + dir + imagenesAmplificador.length) % imagenesAmplificador.length;
   document.getElementById("img-amplificador").src = imagenesAmplificador[iAmplificador];
+}
+</script>
+
+<script>
+const imagenesPorta = ["porta huevos.png", "porta huevos1.png", "porta huevos2.png"];
+let iPorta = 0;
+function cambiarImagenPorta(dir) {
+  iPorta = (iPorta + dir + imagenesPorta.length) % imagenesPorta.length;
+  document.getElementById("img-porta").src = imagenesPorta[iPorta];
+}
+</script>
+
+<script>
+const imagenesPortaLata = ["porta lata bebida.png", "porta lata bebida2.png", "porta lata bebida3.png"];
+let iPortaLata = 0;
+function cambiarImagenPortaLata(dir) {
+  iPortaLata = (iPortaLata + dir + imagenesPortaLata.length) % imagenesPortaLata.length;
+  document.getElementById("img-porta-lata").src = imagenesPortaLata[iPortaLata];
 }
 </script>
 </body>
