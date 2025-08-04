@@ -251,10 +251,6 @@
 <img alt="Mini Mesa de Fútbol" class="active" src="mesa de futbol mini1.png"/>
 <img alt="Mini Mesa de Fútbol" class="active" src="mesa de futbol mini2.png"/>
 
-<div class="nav-buttons">
-<button onclick="cambiarImagenMiniFutbol(-1)">◀</button>
-<button onclick="cambiarImagenMiniFutbol(1)">▶</button>
-</div>
 </div>
 <div class="descripcion">
 <h2>⚽ Mini Mesa de Fútbol de Sobremesa</h2>
@@ -302,16 +298,5 @@
     });
   </script>
 
-<script>
-const imagenesMiniFutbol = [
-  "mesa de futbol mini.png"
-];
-let iMiniFutbol = 0;
-function cambiarImagenMiniFutbol(dir) {
-  iMiniFutbol = (iMiniFutbol + dir + imagenesMiniFutbol.length) % imagenesMiniFutbol.length;
-  const img = document.querySelector('img[alt="Mini Mesa de Fútbol"]');
-  img.src = imagenesMiniFutbol[iMiniFutbol];
-}
-</script>
 </body>
 </html>
