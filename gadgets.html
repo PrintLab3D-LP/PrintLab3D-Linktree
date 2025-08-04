@@ -195,7 +195,6 @@
 </div>
 </div>
 <!-- Producto: Tapa Protectora para Lata de Bebida -->
-
 <script>
   const imagenesTapa = [
     "tapa-lata-1.png",
@@ -265,8 +264,33 @@ function cambiarImagenPortaLata(dir) {
 
    
  </script>
+
+<!-- Producto: Organizador de Cables USB -->
+<div class="juego">
+<h2>🔋 Organizador Modular de Cables USB</h2>
+<img alt="Organizador de Cables USB" id="img-organizador" src="organizador cable usb.png"/>
+<div class="nav-buttons">
+<button onclick="cambiarImagenOrganizador(-1)">◀</button>
+<button onclick="cambiarImagenOrganizador(1)">▶</button>
+</div>
+<p>🔋 Mantené todos tus cables bien ordenados y sin enredos con este organizador modular impreso en 3D.<br/>
+  🧲 ¡Es apilable, elegante y súper práctico para escritorios, mochilas o cajones!<br/>
+  💡 Compatible con cables USB, tipo C, mini jack y más.</p>
+<div class="whatsapp">
+<a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio del Organizador de Cables USB 🔋">Pedilo por WhatsApp</a>
+</div>
+</div>
 <div class="volver">
 <a href="otros.html">⬅️ Volver a la sección Otros</a>
 </div>
+
+<script>
+const imagenesOrganizador = ["organizador cable usb.png"];
+let iOrganizador = 0;
+function cambiarImagenOrganizador(dir) {
+  iOrganizador = (iOrganizador + dir + imagenesOrganizador.length) % imagenesOrganizador.length;
+  document.getElementById("img-organizador").src = imagenesOrganizador[iOrganizador];
+}
+</script>
 </body>
 </html>
