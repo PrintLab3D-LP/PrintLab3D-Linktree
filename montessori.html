@@ -133,21 +133,27 @@
 </head>
 <body onload="AOS.init();">
 
-<a href="#" id="volverArriba" class="volver-arriba">🔝 Volver arriba</a>
+<a href="#" id="volverArriba" class="volver-arriba" title="Volver arriba">🔼</a>
 <style>
   .volver-arriba {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background: #40916c;
+    background: #52b788; /* verde pastel */
     color: white;
     text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 50px;
+    padding: 14px;
+    border-radius: 50%;
+    font-size: 24px;
     font-weight: bold;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     display: none;
     z-index: 100;
+    text-align: center;
+    line-height: 1;
+  }
+  .volver-arriba:hover {
+    background: #40916c;
   }
 </style>
 
