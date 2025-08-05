@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PrintLab 3D</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PrintLab 3D</title>
+<style>
     body {
       font-family: 'Comic Sans MS', sans-serif;
       background: linear-gradient(to bottom, #cdefff, #fdfbe4);
@@ -46,35 +47,67 @@
     .boton span {
       margin-right: 10px;
     }
-  </style>
+  
+/* Animaciones tipo slide */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.slide-in {
+  opacity: 0;
+  animation: slideInUp 0.8s ease-out forwards;
+}
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+.delay-3 { animation-delay: 0.6s; }
+.delay-4 { animation-delay: 0.8s; }
+.delay-5 { animation-delay: 1s; }
+
+@keyframes dropFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.logo-drop {
+  opacity: 0;
+  animation: dropFromTop 1s ease-out forwards;
+}
+</style>
 </head>
 <body>
-  <img src="logo.png" alt="PrintLab 3D" class="logo" />
-  <h1>¡Bienvenidos a PrintLab 3D!</h1>
-  <p>Regalos increíbles hechos con impresión 3D, personalizados para cada ocasión.</p>
-
-  <div class="boton">
-    <a href="https://wa.me/5492954218753" target="_blank">
-      <span>📲</span> Pedidos por WhatsApp
+<img alt="PrintLab 3D" class="logo logo-drop" src="logo.png"/>
+<h1 class="slide-in delay-1">¡Bienvenidos a PrintLab 3D!</h1>
+<p class="slide-in delay-2">Regalos increíbles hechos con impresión 3D, personalizados para cada ocasión.</p>
+<div class="boton slide-in delay-3">
+<a href="https://wa.me/5492954218753" target="_blank">
+<span>📲</span> Pedidos por WhatsApp
     </a>
-  </div>
-
-  <div class="boton">
-    <a href="https://www.instagram.com/printlab3d.lp" target="_blank">
-      <span>📷</span> Seguinos en Instagram
+</div>
+<div class="boton slide-in delay-4">
+<a href="https://www.instagram.com/printlab3d.lp" target="_blank">
+<span>📷</span> Seguinos en Instagram
     </a>
-  </div>
-
-  <div class="boton">
-    <a href="catalogo.html">
-      <span>🛍️</span> Catálogo
+</div>
+<div class="boton slide-in delay-5">
+<a href="catalogo.html">
+<span>🛍️</span> Catálogo
     </a>
-  </div>
-
-  <div class="boton">
-    <a href="promo-dia-infancia.html">
-      <span>🎁</span> Promo Día de la Infancia
+</div>
+<div class="boton slide-in delay-6">
+<a href="promo-dia-infancia.html">
+<span>🎁</span> Promo Día de la Infancia
     </a>
-  </div>
+</div>
 </body>
 </html>
