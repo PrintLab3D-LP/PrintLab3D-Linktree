@@ -155,11 +155,33 @@
   content: "🎁";
 }
 </style>
+    /* Animación fade-in cuando se carga */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Efecto zoom y sombra en hover */
+.card-hover:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 </head>
 <body>
 <h1> 🎮 Juegos  </h1>
 <!-- Producto 1 -->
 <div class="producto">
+<div class="juego fade-in card-hover">
 <div class="carousel"><div class="promo">Promo Día de la Infancia</div>
 <img alt="Ajedrez Enrollable" class="active" src="ajedrez1.png"/>
 <img alt="Ajedrez Enrollable" class="active" src="ajedrez2.png"/>
