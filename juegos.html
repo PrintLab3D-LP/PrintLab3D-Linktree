@@ -135,13 +135,32 @@
 .carousel {
   position: relative;
 }
+
+.promo {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #ffcc00;
+  color: #000;
+  padding: 5px 12px;
+  font-weight: bold;
+  font-size: 13px;
+  border-radius: 5px;
+  animation: parpadeo 1.2s infinite;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.promo::before {
+  content: "🎁";
+}
 </style>
 </head>
 <body>
 <h1> 🎮 Juegos  </h1>
 <!-- Producto 1 -->
 <div class="producto">
-<div class="carousel">
+<div class="carousel"><div class="promo">Promo Día de la Infancia</div>
 <img alt="Ajedrez Enrollable" class="active" src="ajedrez1.png"/>
 <img alt="Ajedrez Enrollable" class="active" src="ajedrez2.png"/>
 <img alt="Ajedrez Enrollable" class="active" src="ajedrez3.png"/>
@@ -159,7 +178,7 @@
 </div>
 <!-- Producto 2 -->
 <div class="producto">
-<div class="carousel">
+<div class="carousel"><div class="promo">Promo Día de la Infancia</div>
 <img alt="Igloo Mania" class="active" src="iglu11.png"/>
 <img alt="Igloo Mania" class="active" src="iglu12.png"/>
 <img alt="Igloo Mania" class="active" src="iglu13.png"/>
@@ -177,7 +196,7 @@
 </div>
 <!-- Producto 3 -->
 <div class="producto">
-<div class="carousel">
+<div class="carousel"><div class="promo">Promo Día de la Infancia</div>
 <img alt="Tetris Balance" class="active" src="tetris3d.png"/>
 <img alt="Tetris Balance" class="active" src="tetris3d1.png"/>
 <img alt="Tetris Balance" class="active" src="tetris3d2.png"/>
