@@ -154,34 +154,29 @@
 .promo::before {
   content: "🎁";
 }
-</style>
-    /* Animación fade-in cuando se carga */
+
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.8s ease-out forwards;
 }
-
-/* Efecto zoom y sombra en hover */
 .card-hover:hover {
   transform: scale(1.03);
   box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
 }
-
 @keyframes fadeInUp {
   to {
     opacity: 1;
     transform: none;
   }
 }
-
+</style>
 </head>
 <body>
 <h1> 🎮 Juegos  </h1>
 <!-- Producto 1 -->
-<div class="producto">
-<div class="juego fade-in card-hover">
+<div class="producto fade-in card-hover">
 <div class="carousel"><div class="promo">Promo Día de la Infancia</div>
 <img alt="Ajedrez Enrollable" class="active" src="ajedrez1.png"/>
 <img alt="Ajedrez Enrollable" class="active" src="ajedrez2.png"/>
@@ -199,7 +194,7 @@
 </div>
 </div>
 <!-- Producto 2 -->
-<div class="producto">
+<div class="producto fade-in card-hover">
 <div class="carousel"><div class="promo">Promo Día de la Infancia</div>
 <img alt="Igloo Mania" class="active" src="iglu11.png"/>
 <img alt="Igloo Mania" class="active" src="iglu12.png"/>
@@ -218,7 +213,7 @@
 </div>
 </div>
 <!-- Producto 3 -->
-<div class="producto">
+<div class="producto fade-in card-hover">
 <div class="carousel"><div class="promo">Promo Día de la Infancia</div>
 <img alt="Tetris Balance" class="active" src="tetris3d.png"/>
 <img alt="Tetris Balance" class="active" src="tetris3d1.png"/>
@@ -236,7 +231,7 @@
 </div>
 </div>
 <!-- Producto 4 -->
-<div class="producto">
+<div class="producto fade-in card-hover">
 <div class="carousel">
 <img alt="Baloncesto Arcade" class="active" src="Baloncesto1.png"/>
 <img alt="Baloncesto Arcade" class="active" src="Baloncesto2.png"/>
@@ -255,7 +250,7 @@
 </div>
 </div>
 <!-- Producto 5 -->
-<div class="producto">
+<div class="producto fade-in card-hover">
 <div class="carousel">
 <img alt="Ta-Te-Ti Llavero" class="active" src="ta-te-ti-llavero.png"/>
 <img alt="Ta-Te-Ti Llavero" class="active" src="ta-te-ti-llavero1.png"/>
@@ -273,7 +268,7 @@
 </div>
 </div>
 <!-- Producto 6 -->
-<div class="producto">
+<div class="producto fade-in card-hover">
 <div class="carousel">
 <img alt="Mini Pinball 3D" class="active" src="pinball.png"/>
 <img alt="Mini Pinball 3D" class="active" src="pinball1.png"/>
@@ -292,7 +287,7 @@
 </div>
 </div>
 <!-- Producto 7 -->
-<div class="producto">
+<div class="producto fade-in card-hover">
 <div class="carousel">
 <img alt="Juego de Bolos Cohete" class="active" src="bolos-cohete.png"/>
 <img alt="Juego de Bolos Cohete" class="active" src="bolos-cohete1.png"/>
@@ -311,7 +306,7 @@
 </div>
 </div>
 <!-- Producto 8 -->
-<div class="producto">
+<div class="producto fade-in card-hover">
 <div class="carousel">
 <img alt="Mini Mesa de Fútbol" class="active" src="mesa de futbol mini.png"/>
 <img alt="Mini Mesa de Fútbol" class="active" src="mesa de futbol mini1.png"/>
@@ -329,7 +324,7 @@
 </div>
 </div>
 <!-- Producto X -->
-<div class="producto">
+<div class="producto fade-in card-hover">
 <div class="carousel"><div class="nuevo">¡Nuevo!</div>
 <img alt="Laberinto Pac-Man 3D" class="active" src="juego pacman.png"/>
 <img alt="Laberinto Pac-Man 3D" class="active" src="juego pacman1.png"/>
@@ -359,7 +354,7 @@
 </div>
 </div>
 <!-- Producto X -->
-<div class="producto">
+<div class="producto fade-in card-hover">
 <div class="carousel"><div class="nuevo">¡Nuevo!</div>
 <img alt="Mini Air Hockey de Mesa" class="active" src="mesa air hockey.png"/>
 <img alt="Mini Air Hockey de Mesa" class="active" src="mesa air hockey1.png"/>
@@ -389,13 +384,12 @@ Ideal para jugar sobre cualquier mesa con amigos o en familia.<br/><br/>
 </div>
 </div>
 <!-- Producto X -->
-<div class="producto">
+<div class="producto fade-in card-hover">
 <div class="carousel">
 <img alt="Apuntá y Dispará – Mini Skee-Ball 3D" class="active" src="apunta y dispara.png"/>
 <img alt="Apuntá y Dispará – Mini Skee-Ball 3D" class="active" src="apunta y dispara1.png"/>
 <img alt="Apuntá y Dispará – Mini Skee-Ball 3D" class="active" src="apunta y dispara2.png"/>
 <img alt="Apuntá y Dispará – Mini Skee-Ball 3D" class="active" src="apunta y dispara.gif"/>
-
 </div>
 <div class="descripcion">
 <h2>🎯 Apuntá y Dispará – Mini Skee-Ball 3D</h2>
@@ -461,5 +455,18 @@ Ideal para jugar sobre cualquier mesa con amigos o en familia.<br/><br/>
       }
     });
   </script>
-</body>
+<script>
+const productos = document.querySelectorAll('.fade-in');
+const mostrar = () => {
+  const alto = window.innerHeight;
+  productos.forEach(prod => {
+    const top = prod.getBoundingClientRect().top;
+    if (top < alto - 50) {
+      prod.classList.add('visible');
+    }
+  });
+};
+window.addEventListener('scroll', mostrar);
+window.addEventListener('load', mostrar);
+</script></body>
 </html>
