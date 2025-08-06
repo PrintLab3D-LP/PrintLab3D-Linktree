@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>PrintLab 3D</title>
 <style>
 body {margin:0;font-family:'Comic Sans MS',sans-serif;background:#f5f9ff;text-align:center;overflow-x:hidden;}
@@ -219,21 +220,114 @@ h1 {
 }
 
 
-/* Animación de entrada del logo */
-@keyframes logoZoomIn {
-  0% { transform: scale(0.5); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+/* Chatbot flotante con robot verde */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 5px #28a745, 0 0 10px #28a745; }
+  50% { box-shadow: 0 0 15px #28a745, 0 0 25px #28a745; }
 }
-
-/* Pulso suave y halo luminoso */
-@keyframes logoPulseGlow {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 5px rgba(255,255,255,0.6); }
-  50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(255,255,255,0.9); }
+#chatbot-icon {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #28a745 url('https://cdn-icons-png.flaticon.com/512/4712/4712104.png') center/60% no-repeat;
+  cursor: pointer;
+  z-index: 9999;
+  animation: pulseGlow 2s infinite;
 }
-
-.logo {
-  animation: logoZoomIn 1s ease-out, logoPulseGlow 3s ease-in-out infinite;
+#chatbot-window {
+  position: fixed;
+  bottom: -420px;
+  right: 20px;
+  width: 320px;
+  height: 420px;
+  background: #ffffff;
   border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: bottom 0.4s ease;
+  z-index: 9998;
+}
+#chatbot-header {
+  background: #28a745;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+#chatbot-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  font-size: 0.9rem;
+}
+.chatbot-message {
+  margin-bottom: 8px;
+}
+.bot {
+  color: #333;
+  background: #e5f7ea;
+  padding: 6px 10px;
+  border-radius: 8px;
+  display: inline-block;
+}
+.user {
+  color: white;
+  background: #28a745;
+  padding: 6px 10px;
+  border-radius: 8px;
+  display: inline-block;
+  align-self: flex-end;
+}
+#chatbot-input {
+  display: flex;
+  border-top: 1px solid #ccc;
+}
+#chatbot-input input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  outline: none;
+}
+#chatbot-input button {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 0 15px;
+  cursor: pointer;
+}
+.chatbot-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 5px;
+}
+.chatbot-buttons button {
+  flex: 1;
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+
+/* Animación de balanceo para el robotito */
+#chatbot-icon:hover {
+  animation: wave 0.8s ease-in-out infinite alternate, pulseGlow 2s infinite;
+}
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(10deg); }
+  50% { transform: rotate(-10deg); }
+  75% { transform: rotate(8deg); }
+  100% { transform: rotate(0deg); }
 }
 
 </style>
@@ -241,13 +335,12 @@ h1 {
 <body>
 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 <div class="side-menu" id="sideMenu">
-  <a href="#" onclick="openModal('modalImpresora')">🖨️ Impresora que usamos</a>
-  <a href="#" onclick="openModal('modalMateriales')">🎨 Materiales que usamos</a>
-  <a href="#" onclick="openModal('modalQuienes')">ℹ️ Quiénes somos</a>
+<a href="#" onclick="openModal('modalImpresora')">🖨️ Impresora que usamos</a>
+<a href="#" onclick="openModal('modalMateriales')">🎨 Materiales que usamos</a>
+<a href="#" onclick="openModal('modalQuienes')">ℹ️ Quiénes somos</a>
 </div>
-
 <main>
-<img src="logo.png" alt="PrintLab 3D" class="logo">
+<img alt="PrintLab 3D" class="logo" src="logo.png"/>
 <h1>¡Bienvenidos a PrintLab 3D!</h1>
 <p class="subtitle">Innovación y creatividad en cada impresión</p>
 <p class="subtitle-extra">Te invitamos a conocer nuestros productos</p>
@@ -255,39 +348,33 @@ h1 {
 <div class="btn-box"><a class="btn" href="https://www.instagram.com/printlab3d.lp" target="_blank">📷 Seguinos en Instagram</a></div>
 <div class="btn-box"><a class="btn" href="catalogo.html">🛍️ Catálogo</a></div>
 <div class="btn-box pulso">
-    <a class="btn" href="promo-dia-infancia.html" style="background:#28a745;">🎁 Promo Día de la Infancia</a>
+<a class="btn" href="promo-dia-infancia.html" style="background:#28a745;">🎁 Promo Día de la Infancia</a>
 </div>
-
 <div class="btn-box"><a class="btn" href="#" onclick="salir()">🚪 Salir</a></div>
 </main>
-
 <button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
 <!-- Modales -->
-<div id="modalImpresora" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('modalImpresora')">&times;</span>
-    <img src="impresora.jpg" alt="Impresora Bambu Lab A1">
-    <p>Trabajamos con la impresora 3D Bambu Lab A1, reconocida por su precisión y velocidad de impresión.</p>
-  </div>
+<div class="modal" id="modalImpresora">
+<div class="modal-content">
+<span class="close" onclick="closeModal('modalImpresora')">×</span>
+<img alt="Impresora Bambu Lab A1" src="impresora.jpg"/>
+<p>Trabajamos con la impresora 3D Bambu Lab A1, reconocida por su precisión y velocidad de impresión.</p>
 </div>
-
-<div id="modalMateriales" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('modalMateriales')">&times;</span>
-    <img src="filamentos.jpg" alt="Filamentos 3D">
-    <p>Usamos filamentos de alta calidad como PLA y PETG, en una amplia variedad de colores para todo tipo de proyectos.</p>
-  </div>
 </div>
-
-<div id="modalQuienes" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal('modalQuienes')">&times;</span>
-    <img src="logo.png" alt="Quiénes somos">
-    <p>En PrintLab 3D creamos productos personalizados con impresión 3D, hechos especialmente para vos.</p>
-  </div>
+<div class="modal" id="modalMateriales">
+<div class="modal-content">
+<span class="close" onclick="closeModal('modalMateriales')">×</span>
+<img alt="Filamentos 3D" src="filamentos.jpg"/>
+<p>Usamos filamentos de alta calidad como PLA y PETG, en una amplia variedad de colores para todo tipo de proyectos.</p>
 </div>
-
+</div>
+<div class="modal" id="modalQuienes">
+<div class="modal-content">
+<span class="close" onclick="closeModal('modalQuienes')">×</span>
+<img alt="Quiénes somos" src="logo.png"/>
+<p>En PrintLab 3D creamos productos personalizados con impresión 3D, hechos especialmente para vos.</p>
+</div>
+</div>
 <script>
 function toggleMenu(){document.getElementById('sideMenu').classList.toggle('show');}
 function openModal(id){
@@ -303,7 +390,6 @@ window.onclick=function(event){
 }
 function salir(){window.open('','_self').close();window.location.href='https://www.instagram.com/printlab3d.lp/';}
 </script>
-
 <canvas id="particles"></canvas>
 <script>
 const canvas = document.getElementById('particles');
@@ -388,6 +474,123 @@ function animate(){
 init();
 animate();
 </script>
+<div id="chatbot-icon"></div>
+<div id="chatbot-window">
+<div id="chatbot-header">Asistente PrintLab 3D</div>
+<div id="chatbot-messages"></div>
+<div id="chatbot-input">
+<input id="chatbot-text" placeholder="Escribe tu mensaje..." type="text"/>
+<button id="chatbot-send">Enviar</button>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const chatbotIcon = document.getElementById('chatbot-icon');
+  const chatbotWindow = document.getElementById('chatbot-window');
+  const chatbotMessages = document.getElementById('chatbot-messages');
+  const chatbotInput = document.getElementById('chatbot-text');
+  const chatbotSend = document.getElementById('chatbot-send');
 
+  let chatbotOpen = false;
+
+  function chatbotWelcome() {
+    addBotMessage(`👋 ¡Hola! Soy el asistente de <b>PrintLab 3D</b> 🤖<br>
+    Somos un emprendimiento especializado en <b>impresión 3D personalizada</b> 🎨🖨️<br>
+    Creamos:<ul>
+      <li>🔑 Llaveros personalizados</li>
+      <li>🎲 Juegos de mesa y juguetes</li>
+      <li>🎁 Souvenirs y regalos únicos</li>
+      <li>⚙️ Gadgets y piezas funcionales</li>
+      <li>🖌️ Modelos exclusivos a pedido</li>
+    </ul>
+    📦 Trabajamos con <b>PLA y PETG</b> en más de 20 colores.<br>
+    🚚 Hacemos envíos a todo el país.<br>
+    📅 Diseñamos y fabricamos según tus ideas.<br><br>
+    🔗 <a href='catalogo.html'>Ver catálogo completo</a>`);
+
+    addBotMessage('Hola 🤖 Soy el asistente virtual de PrintLab 3D. Selecciona una opción o escribime tu consulta:');
+    const btns = document.createElement('div');
+    btns.classList.add('chatbot-buttons');
+    btns.innerHTML = `
+      <button onclick="botReply('envíos')">📦 Métodos de envío</button>
+      <button onclick="botReply('materiales y colores')">🎨 Materiales y colores</button>
+      <button onclick="botReply('formas de pago')">💲 Formas de pago</button>
+      <button onclick="botReply('tiempo de impresión')">⏳ Tiempo de impresión</button>
+      <button onclick="botReply('ubicación')">📍 Ubicación</button>
+      <button onclick="botReply('qué ofrecemos')">🛍️ Qué ofrecemos</button>
+    `;
+    chatbotMessages.appendChild(btns);
+  }
+
+  function toggleChatbot() {
+    chatbotOpen = !chatbotOpen;
+    chatbotWindow.style.bottom = chatbotOpen ? '20px' : '-420px';
+    if (chatbotOpen && chatbotMessages.innerHTML.trim() === '') {
+      chatbotWelcome();
+    }
+  }
+
+  function addUserMessage(text) {
+    document.getElementById('chatbot-user-sound').play();
+    const msg = document.createElement('div');
+    msg.classList.add('chatbot-message', 'user');
+    msg.innerHTML = text;
+    chatbotMessages.appendChild(msg);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  }
+
+  function addBotMessage(text) {
+    document.getElementById('chatbot-sound').play();
+    const msg = document.createElement('div');
+    msg.classList.add('chatbot-message', 'bot');
+    msg.innerHTML = text;
+    chatbotMessages.appendChild(msg);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  }
+
+  window.botReply = function(userText) {
+    const text = userText.toLowerCase();
+    addUserMessage(userText);
+
+    if (text.includes('hola') || text.includes('buenas') || text.includes('qué tal') || text.includes('como estas')) {
+      addBotMessage("😊 ¡Hola! Estoy muy bien, gracias por preguntar. Estoy aquí para ayudarte a conocer todo sobre PrintLab 3D. Preguntame lo que quieras.");
+    } else if (text.includes('quiero saber más') || text.includes('más info') || text.includes('informacion')) {
+      addBotMessage("ℹ️ En PrintLab 3D ofrecemos impresión 3D personalizada, trabajamos con PLA y PETG, realizamos envíos a todo el país y diseñamos piezas exclusivas. También hacemos juguetes, souvenirs, gadgets y más.");
+    } else if (text.includes('envío') || text.includes('entrega')) {
+      addBotMessage("📦 Realizamos envíos a todo el país y entregas locales en Santa Rosa, La Pampa.");
+    } else if (text.includes('material') || text.includes('color')) {
+      addBotMessage("🎨 Trabajamos con PLA y PETG de alta calidad en más de 20 colores.");
+    } else if (text.includes('pago')) {
+      addBotMessage("💲 Aceptamos transferencias, Mercado Pago y efectivo.");
+    } else if (text.includes('tiempo')) {
+      addBotMessage("⏳ El tiempo de impresión varía entre unas horas y varios días, según el producto.");
+    } else if (text.includes('ubicación') || text.includes('dónde están')) {
+      addBotMessage("📍 Estamos en Santa Rosa, La Pampa. Hacemos envíos a todo el país.");
+    } else if (text.includes('qué ofrecen') || text.includes('productos')) {
+      addBotMessage("🛍️ En <b>PrintLab 3D</b> ofrecemos: <ul><li>🎲 Juegos</li><li>🔑 Llaveros</li><li>🎁 Souvenirs</li><li>⚙️ Gadgets</li></ul>");
+    } else {
+      addBotMessage("❓ No tengo esa información exacta, pero podés escribirme por WhatsApp: <a href='https://wa.me/5492954218753'>Contactar</a>");
+    }
+  }
+
+  chatbotSend.addEventListener('click', () => {
+    const text = chatbotInput.value.trim();
+    if (text !== '') {
+      botReply(text);
+      chatbotInput.value = '';
+    }
+  });
+
+  chatbotInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      chatbotSend.click();
+    }
+  });
+
+  chatbotIcon.addEventListener('click', toggleChatbot);
+});
+</script>
+<audio id="chatbot-user-sound" preload="auto" src="https://www.soundjay.com/button/sounds/button-3.mp3"></audio>
+<audio id="chatbot-sound" preload="auto" src="https://www.soundjay.com/button/sounds/button-16.mp3"></audio>
 </body>
 </html>
