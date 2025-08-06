@@ -496,6 +496,14 @@ h1 {
   animation: logoZoomRotate 1.2s ease-out, logoShine 2s infinite ease-in-out;
 }
 
+
+/* Ajuste de posición de la hamburguesa para no tapar el banner */
+.menu-toggle {
+  top: 70px !important; /* Antes estaba más arriba, ahora se baja */
+  position: fixed;
+  z-index: 3001; /* Asegurar que esté sobre el contenido */
+}
+
 </style>
 </head>
 <body>
