@@ -88,13 +88,89 @@
       padding: 10px 20px;
       border-radius: 10px;
     }
-  </style>
+  
+/* Animación de aparición desde abajo */
+.producto-animado {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease-out;
+}
+
+.producto-animado.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Botón para volver arriba */
+#btnSubir {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 2000;
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  transition: background-color 0.3s;
+}
+
+#btnSubir:hover {
+  background-color: #218838;
+}
+
+
+/* Carrusel estándar */
+.carousel {
+  position: relative;
+  max-width: 300px;
+  margin: auto;
+}
+
+.carousel-images {
+  display: flex;
+  overflow: hidden;
+}
+
+.carousel-images img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.carousel button.prev,
+.carousel button.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 5;
+}
+
+.carousel button.prev {
+  left: 10px;
+}
+
+.carousel button.next {
+  right: 10px;
+}
+
+</style>
 </head>
 <body>
 
   <h1>🔑 Llaveros</h1>
 
-  <div class="juego" id="llavero-personalizado"><h2>✨ Llavero Personalizado</h2>
+  <div class="juego producto-animado" id="llavero-personalizado"><h2>✨ Llavero Personalizado</h2>
     <div class="slider" id="slider1">
       <img src="llavero1.png" class="active" />
       <img src="llavero2.png" class="active" />
@@ -121,7 +197,7 @@
   </div>
 
   
-  <div class="juego" id="llavero-de-animales"><h2>🦢 Llavero de Animales</h2>
+  <div class="juego producto-animado" id="llavero-de-animales"><h2>🦢 Llavero de Animales</h2>
     <div class="slider" id="slider2">
       <img src="llavero animal.png" class="active" />
       <img src="llavero animal1.png" class="active" />
@@ -155,7 +231,7 @@
   </div>
 
   
-  <div class="juego" id="llavero-antiestrés"><h2>🧘‍♂️ Llavero Antiestrés</h2>
+  <div class="juego producto-animado" id="llavero-antiestrés"><h2>🧘‍♂️ Llavero Antiestrés</h2>
     <div class="slider" id="slider3">
       <img src="llavero antiestres.png" class="active" />
       <img src="llavero antiestres1.png" class="active" />
@@ -181,7 +257,7 @@
   </div>
 
   
-  <div class="juego" id="llavero-con-foto-personalizada"><h2>📸 Llavero con Foto Personalizada</h2>
+  <div class="juego producto-animado" id="llavero-con-foto-personalizada"><h2>📸 Llavero con Foto Personalizada</h2>
     <div class="slider" id="slider4">
       <img src="llavero foto.png" class="active" />
       <img src="llavero foto1.png" class="active" />
@@ -228,6 +304,50 @@
       }
     }
   </script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const elementos = document.querySelectorAll('.producto-animado');
+  const observer = new IntersectionObserver((entradas) => {
+    entradas.forEach(entrada => {
+      if (entrada.isIntersecting) {
+        entrada.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  elementos.forEach(el => observer.observe(el));
+});
+</script>
+
+<script>
+// Mostrar u ocultar el botón al hacer scroll
+window.onscroll = function() {
+  let btn = document.getElementById("btnSubir");
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    btn.style.display = "block";
+  } else {
+    btn.style.display = "none";
+  }
+};
+
+// Función para subir suavemente
+function subirArriba() {
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
+
+<button id="btnSubir" onclick="subirArriba()">&#8679;</button>
+
+<script>
+function moveSlide(btn, direction) {
+  const carousel = btn.parentElement;
+  const imagesContainer = carousel.querySelector('.carousel-images');
+  const imageWidth = imagesContainer.querySelector('img').clientWidth;
+  imagesContainer.scrollBy({ left: direction * imageWidth, behavior: 'smooth' });
+}
+</script>
 
 </body>
 </html>
