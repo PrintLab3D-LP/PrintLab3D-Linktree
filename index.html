@@ -1,129 +1,174 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>PrintLab 3D</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>PrintLab 3D - Mobile</title>
 <style>
-    body {
-      font-family: 'Comic Sans MS', sans-serif;
-      background: linear-gradient(to bottom, #cdefff, #fdfbe4);
-      text-align: center;
-      padding: 2rem;
-    }
-    img.logo {
-      max-width: 150px;
-      margin-bottom: 1rem;
-    }
-    h1 {
-      color: #ff3e57;
-    }
-    p {
-      font-size: 1.1rem;
-      color: #222;
-      margin-bottom: 2rem;
-    }
-    .boton {
-      margin: 0.8rem auto;
-      width: 90%;
-      max-width: 400px;
-    }
-    .boton a {
-      display: block;
-      background-color: #ffb347;
-      padding: 1rem;
-      border-radius: 12px;
-      text-decoration: none;
-      color: #fff;
-      font-weight: bold;
-      font-size: 1.1rem;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-      transition: background 0.3s;
-    }
-    .boton a:hover {
-      background-color: #ffa726;
-    }
-    .boton span {
-      margin-right: 10px;
-    }
-  
-/* Animaciones tipo slide */
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
+  body {
+    font-family: 'Comic Sans MS', sans-serif;
+    background: linear-gradient(-45deg, #cdefff, #fdfbe4, #ffe5ec, #e0f7fa);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    margin: 0;
   }
-  to {
-    opacity: 1;
-    transform: none;
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
-}
-.slide-in {
-  opacity: 0;
-  animation: slideInUp 0.8s ease-out forwards;
-}
-.delay-1 { animation-delay: 0.2s; }
-.delay-2 { animation-delay: 0.4s; }
-.delay-3 { animation-delay: 0.6s; }
-.delay-4 { animation-delay: 0.8s; }
-.delay-5 { animation-delay: 1s; }
-.delay-6 { animation-delay: 1.2s; }
-.delay-7 { animation-delay: 1.4s; }
 
-@keyframes dropFromTop {
-  from {
+  img.logo {
+    max-width: 120px;
+    margin-bottom: 1rem;
     opacity: 0;
-    transform: translateY(-100px);
+    transform: scale(0.8);
+    animation: zoomIn 1s ease forwards;
   }
-  to {
-    opacity: 1;
-    transform: none;
+  @keyframes zoomIn {
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
-}
-.logo-drop {
-  opacity: 0;
-  animation: dropFromTop 1s ease-out forwards;
-}
+
+  h1 {
+    color: #ff3e57;
+    font-size: 1.6rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+    animation-delay: 0.2s;
+  }
+  p {
+    font-size: 1rem;
+    color: #222;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+    animation-delay: 0.4s;
+  }
+
+  .boton {
+    margin: 0.6rem auto;
+    width: 95%;
+    max-width: 350px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.8s ease forwards;
+  }
+  .boton a {
+    display: block;
+    background-color: #ffb347;
+    padding: 1.2rem;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+  }
+  .boton a:hover {
+    background-color: #ffa726;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  }
+  .boton span {
+    margin-right: 10px;
+  }
+
+  .delay-1 { animation-delay: 0.6s; }
+  .delay-2 { animation-delay: 0.8s; }
+  .delay-3 { animation-delay: 1s; }
+  .delay-4 { animation-delay: 1.2s; }
+  .delay-5 { animation-delay: 1.4s; }
+  .delay-6 { animation-delay: 1.6s; }
+  .delay-7 { animation-delay: 1.8s; }
+
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .pulso {
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 rgba(255,183,77, 0.7); }
+    70% { transform: scale(1.05); box-shadow: 0 0 15px rgba(255,183,77, 0.7); }
+    100% { transform: scale(1); box-shadow: 0 0 0 rgba(255,183,77, 0.7); }
+  }
+
+  #volverArriba {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #52b788;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 50%;
+    font-size: 22px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    display: none;
+    cursor: pointer;
+    z-index: 100;
+  }
+  #volverArriba:hover {
+    background: #40916c;
+  }
 </style>
 </head>
 <body>
-<img alt="PrintLab 3D" class="logo logo-drop" src="logo.png"/>
-<h1 class="slide-in delay-1">¡Bienvenidos a PrintLab 3D!</h1>
-<p class="slide-in delay-2">Regalos increíbles hechos con impresión 3D, personalizados para cada ocasión.</p>
-<div class="boton slide-in delay-3">
+<img alt="PrintLab 3D" class="logo" src="logo.png"/>
+<h1>¡Bienvenidos a PrintLab 3D!</h1>
+<p>Regalos increíbles hechos con impresión 3D, personalizados para cada ocasión.</p>
+
+<div class="boton delay-1">
 <a href="https://wa.me/5492954218753" target="_blank">
 <span>📲</span> Pedidos por WhatsApp
 </a>
 </div>
-<div class="boton slide-in delay-4">
+<div class="boton delay-2">
 <a href="https://www.instagram.com/printlab3d.lp" target="_blank">
 <span>📷</span> Seguinos en Instagram
 </a>
 </div>
-<div class="boton slide-in delay-5">
+<div class="boton delay-3">
 <a href="catalogo.html">
 <span>🛍️</span> Catálogo
 </a>
 </div>
-<div class="boton slide-in delay-6">
+<div class="boton delay-4 pulso">
 <a href="promo-dia-infancia.html">
 <span>🎁</span> Promo Día de la Infancia
 </a>
 </div>
-<div class="boton slide-in delay-7">
+<div class="boton delay-5">
 <a href="#" onclick="salirPagina()">
 <span>🚪</span> Salir
 </a>
 </div>
 
+<button onclick="scrollToTop()" id="volverArriba">↑</button>
+
 <script>
 function salirPagina() {
-  // Intenta cerrar la pestaña
   window.open('', '_self').close();
-  // Si no puede, redirige a Instagram
   window.location.href = 'https://www.instagram.com/printlab3d.lp/';
 }
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+window.onscroll = function() {
+  document.getElementById("volverArriba").style.display =
+    window.scrollY > 200 ? "block" : "none";
+};
 </script>
 </body>
 </html>
