@@ -603,13 +603,29 @@ h1 {
   z-index: 3001;
 }
 
+
+/* Estilo para el contador de la promo */
+#contador-promo {
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffb347;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+#contador-promo .icono-reloj {
+  font-size: 18px;
+}
+
 </style>
 </head>
 <body>
 
 <div id="banner-ofertas">
   <marquee behavior="scroll" direction="left">
-    🎉 ¡Promo Día de la Infancia! Aprovecha descuentos hasta el 17/08 - 🎨 Agregamos nuevos juegos visita la seccion catalogos - juegos - 🚀 Si tenes dudas usa la Nueva herramienta ChatBoot en la parte posterior a la derecha.
+    🎉 ¡Promo Día de la Infancia! Envíos gratis en pedidos mayores a $15.000 - 🎨 Personaliza tu pedido hoy mismo - 🚀 Entregas rápidas en todo el país
   </marquee>
 </div>
 
@@ -638,6 +654,7 @@ h1 {
 <div class="btn-box pulso">
 <a class="btn" href="promo-dia-infancia.html" style="background:#28a745;">🎁 Promo Día de la Infancia</a>
 </div>
+<div id="contador-promo"></div>
 <div class="btn-box"><a class="btn" href="#" onclick="salir()">🚪 Salir</a></div>
 </main>
 <button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
@@ -968,6 +985,33 @@ document.addEventListener("DOMContentLoaded", function() {
     btnCarrito.addEventListener("click", abrirModalCarrito);
   }
 });
+</script>
+
+
+<script>
+function iniciarContadorPromo() {
+  const fechaObjetivo = new Date("August 16, 2025 23:59:00").getTime();
+  const elemento = document.getElementById("contador-promo");
+
+  const intervalo = setInterval(function() {
+    const ahora = new Date().getTime();
+    const distancia = fechaObjetivo - ahora;
+
+    if (distancia < 0) {
+      clearInterval(intervalo);
+      elemento.innerHTML = "⏳ ¡La promo ha terminado!";
+      return;
+    }
+
+    const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+    elemento.innerHTML = '<span class="icono-reloj">⏳</span>' + dias + "d " + horas + "h " + minutos + "m " + segundos + "s ";
+  }, 1000);
+}
+document.addEventListener("DOMContentLoaded", iniciarContadorPromo);
 </script>
 
 </body>
