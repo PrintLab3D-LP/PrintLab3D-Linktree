@@ -194,6 +194,47 @@
 #volverArriba:hover {
   background-color: #c0392b;
 }
+
+/* Ajuste carrusel estándar */
+.carousel {
+  position: relative;
+  max-width: 300px;
+  margin: auto;
+}
+
+.carousel-images {
+  display: flex;
+  overflow: hidden;
+}
+
+.carousel-images img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.carousel button.prev,
+.carousel button.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 5;
+}
+
+.carousel button.prev {
+  left: 10px;
+}
+
+.carousel button.next {
+  right: 10px;
+}
+
 </style>
 </head>
 <body>
