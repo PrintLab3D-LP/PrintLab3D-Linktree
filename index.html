@@ -1,93 +1,199 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PrintLab 3D</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-  <style>
-    body{font-family:'Comic Sans MS',sans-serif;margin:0;padding:2rem;text-align:center;background:linear-gradient(-45deg,#cdefff,#fdfbe4,#ffe5ec,#e0f7fa);background-size:400% 400%;animation:gradientBG 15s ease infinite;}
-    @keyframes gradientBG{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-    .logo{max-width:150px;margin-bottom:1rem;opacity:0;transform:scale(.8);animation:zoomIn 1s ease forwards}
-    @keyframes zoomIn{to{opacity:1;transform:scale(1)}}
-    h1{color:#ff3e57;opacity:0;animation:fadeUp .8s ease forwards .2s}
-    p.desc{font-size:1.1rem;color:#222;margin-bottom:2rem;opacity:0;animation:fadeUp .8s ease forwards .4s}
-    @keyframes fadeUp{to{opacity:1;transform:none}}
-    .btn-box{width:90%;max-width:400px;margin:1rem auto;opacity:0;transform:translateY(40px);animation:slideUp .8s ease forwards}
-    @keyframes slideUp{to{opacity:1;transform:none}}
-    .btn{display:block;background:#ffb347;color:#fff;padding:1rem;border-radius:12px;text-decoration:none;font-weight:bold;font-size:1.1rem;box-shadow:0 4px 6px rgba(0,0,0,.2);transition:all 0.3s ease;position:relative;overflow:hidden}
-    .btn:hover{transform:scale(1.08);box-shadow:0 8px 16px rgba(0,0,0,.3)}
-    .btn::after{content:"";position:absolute;top:0;left:-75px;width:50px;height:100%;background:rgba(255,255,255,0.4);transform:skewX(-25deg);transition:0.5s}
-    .btn:hover::after{left:125%;}
-    .btn span{margin-right:10px}
-    .d1{animation-delay:.4s}.d2{animation-delay:.6s}.d3{animation-delay:.8s}.d4{animation-delay:1s}.d5{animation-delay:1.2s}
-    .pulso{animation:pulse 2s infinite}
-    @keyframes pulse{0%{transform:scale(1);box-shadow:0 0 0 rgba(255,183,77,.7)}70%{transform:scale(1.05);box-shadow:0 0 15px rgba(255,183,77,.7)}100%{transform:scale(1);box-shadow:0 0 0 rgba(255,183,77,.7)}}
-    #topBtn{position:fixed;bottom:20px;right:20px;background:#52b788;color:#fff;border:none;border-radius:50%;width:56px;height:56px;font-size:22px;font-weight:bold;box-shadow:0 4px 10px rgba(0,0,0,.2);cursor:pointer;display:none;z-index:100}
-    #topBtn:hover{background:#40916c}
-    #chatbot{font-family:'Roboto',sans-serif;position:fixed;bottom:80px;right:20px;width:340px;max-width:90vw;background:#fff;border-radius:15px;box-shadow:0 8px 20px rgba(0,0,0,.3);display:none;flex-direction:column;overflow:hidden;z-index:9999}
-    #chat-header{background:#40916c;color:#fff;padding:15px;font-weight:bold;text-align:center}
-    #chat-msgs{background:#e8f5e9;padding:10px;height:300px;overflow-y:auto}
-    .msg{margin:10px;padding:8px 12px;border-radius:8px;line-height:1.4;animation:fadeMsg .4s}
-    .bot{background:#40916c;color:#fff;align-self:flex-start}
-    .user{background:#52b788;color:#fff;align-self:flex-end}
-    #chat-input{display:flex;border-top:1px solid #ddd}
-    #chat-input input{flex:1;padding:10px;border:none;font-size:14px}
-    #chat-input button{background:#40916c;color:#fff;border:none;padding:0 15px;font-weight:bold;cursor:pointer}
-    #chat-toggle{position:fixed;bottom:20px;right:20px;background:#40916c;color:#fff;width:60px;height:60px;border-radius:50%;font-size:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.2);z-index:10000}
-    .quick{margin:5px;padding:6px 10px;background:#fff;border:2px solid #40916c;border-radius:8px;color:#40916c;font-size:13px;cursor:pointer;transition:.3s}
-    .quick:hover{background:#40916c;color:#fff}
-    @keyframes fadeMsg{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrintLab 3D</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Comic Sans MS', sans-serif;
+  background: #f5f9ff;
+  overflow-x: hidden;
+  text-align: center;
+}
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+main {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.logo {
+  max-width: 150px;
+  margin-top: 20px;
+  animation: zoomIn 1s ease forwards, floatLogo 4s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+.logo:hover { transform: scale(1.1); }
+@keyframes zoomIn { from { opacity: 0; transform: scale(0.8);} to { opacity: 1; transform: scale(1);} }
+@keyframes floatLogo { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+h1 {
+  color: #ff3e57;
+  animation: fadeInUp 1s ease forwards;
+}
+#bienvenida {
+  font-size: 1.2rem;
+  color: #222;
+  min-height: 1.5em;
+  margin-bottom: 2rem;
+  animation: fadeInUp 1.2s ease forwards;
+}
+@keyframes fadeInUp { from { opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+.btn-box {
+  width: 100%;
+  margin: 1rem auto;
+  opacity: 0;
+  transform: translateY(40px);
+  animation: slideUp 0.8s ease forwards;
+}
+@keyframes slideUp { to {opacity:1; transform:none;} }
+.btn {
+  display:block;
+  background:#ffb347;
+  color:#fff;
+  padding:1rem;
+  border-radius:12px;
+  text-decoration:none;
+  font-weight:bold;
+  font-size:1.1rem;
+  box-shadow:0 4px 6px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  position:relative;
+  overflow:hidden;
+}
+.btn:hover { transform:scale(1.08); box-shadow:0 8px 16px rgba(0,0,0,0.3); }
+.btn::after {
+  content:"";
+  position:absolute;
+  top:0; left:-75px;
+  width:50px; height:100%;
+  background:rgba(255,255,255,0.4);
+  transform:skewX(-25deg);
+  transition:0.5s;
+}
+.btn:hover::after { left:125%; }
+.d1{animation-delay:0.4s;} .d2{animation-delay:0.6s;} .d3{animation-delay:0.8s;} .d4{animation-delay:1s;} .d5{animation-delay:1.2s;}
+.pulso {
+  animation:pulse 2s infinite;
+  border:2px solid #fff;
+}
+@keyframes pulse {
+  0%{transform:scale(1); box-shadow:0 0 0 rgba(255,183,77,0.7);}
+  70%{transform:scale(1.05); box-shadow:0 0 15px rgba(255,183,77,0.7);}
+  100%{transform:scale(1); box-shadow:0 0 0 rgba(255,183,77,0.7);}
+}
+#topBtn {
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#52b788;
+  color:#fff;
+  border:none;
+  border-radius:50%;
+  width:56px;
+  height:56px;
+  font-size:22px;
+  font-weight:bold;
+  box-shadow:0 4px 10px rgba(0,0,0,0.2);
+  cursor:pointer;
+  display:none;
+  z-index:100;
+  animation: fadeInUp 0.5s ease;
+}
+#topBtn:hover { background:#40916c; }
+#chatbot{
+  font-family:'Roboto',sans-serif;
+  position:fixed;
+  bottom:80px;
+  right:20px;
+  width:340px;
+  max-width:90vw;
+  background:#fff;
+  border-radius:15px;
+  box-shadow:0 8px 20px rgba(0,0,0,.3);
+  display:none;
+  flex-direction:column;
+  overflow:hidden;
+  z-index:9999;
+  animation:fadeInUp 0.5s ease;
+}
+#chat-header{background:#40916c;color:#fff;padding:15px;font-weight:bold;text-align:center}
+#chat-msgs{background:#e8f5e9;padding:10px;height:300px;overflow-y:auto}
+.msg{margin:10px;padding:8px 12px;border-radius:8px;line-height:1.4;animation:fadeMsg .4s}
+.bot{background:#40916c;color:#fff;align-self:flex-start}
+.user{background:#52b788;color:#fff;align-self:flex-end}
+#chat-input{display:flex;border-top:1px solid #ddd}
+#chat-input input{flex:1;padding:10px;border:none;font-size:14px}
+#chat-input button{background:#40916c;color:#fff;border:none;padding:0 15px;font-weight:bold;cursor:pointer}
+#chat-toggle{position:fixed;bottom:20px;right:20px;background:#40916c;color:#fff;width:60px;height:60px;border-radius:50%;font-size:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.2);z-index:10000}
+.quick{margin:5px;padding:6px 10px;background:#fff;border:2px solid #40916c;border-radius:8px;color:#40916c;font-size:13px;cursor:pointer;transition:.3s}
+.quick:hover{background:#40916c;color:#fff}
+@keyframes fadeMsg{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+</style>
 </head>
 <body>
-  <img src="logo.png" alt="PrintLab 3D" class="logo">
-  <h1>¡Bienvenidos a PrintLab 3D!</h1>
-  <p class="desc">Regalos increíbles hechos con impresión 3D, personalizados para cada ocasión.</p>
+<canvas id="particles"></canvas>
+<main>
+<img src="logo.png" alt="PrintLab 3D" class="logo">
+<h1>¡Bienvenidos a PrintLab 3D!</h1>
+<div id="bienvenida"></div>
 
-  <div class="btn-box d1"><a class="btn" href="https://wa.me/5492954218753" target="_blank"><span>📲</span>Pedidos por WhatsApp</a></div>
-  <div class="btn-box d2"><a class="btn" href="https://www.instagram.com/printlab3d.lp" target="_blank"><span>📷</span>Seguinos en Instagram</a></div>
-  <div class="btn-box d3"><a class="btn" href="catalogo.html"><span>🛍️</span>Catálogo</a></div>
+<div class="btn-box d1"><a class="btn" href="https://wa.me/5492954218753" target="_blank"><span>📲</span>Pedidos por WhatsApp</a></div>
+<div class="btn-box d2"><a class="btn" href="https://www.instagram.com/printlab3d.lp" target="_blank"><span>📷</span>Seguinos en Instagram</a></div>
+<div class="btn-box d3"><a class="btn" href="catalogo.html"><span>🛍️</span>Catálogo</a></div>
+<div class="btn-box d4 pulso" style="display:block; opacity:1 !important; transform:none !important; margin:1.5rem 0;">
+  <a class="btn" href="promo-dia-infancia.html" style="background:#28a745;"><span>🎁</span>Promo Día de la Infancia</a>
+</div>
+<div class="btn-box d5"><a class="btn" href="#" onclick="salir()"><span>🚪</span>Salir</a></div>
+</main>
 
-  <!-- Botón Promo Día de la Infancia destacado -->
-  <div class="btn-box d4 pulso" style="opacity:1 !important; transform:none !important; z-index:10;">
-    <a class="btn" 
-       href="promo-dia-infancia.html" 
-       style="background:#28a745; color:white; border:2px solid #fff; box-shadow:0 0 15px rgba(0,0,0,0.3);">
-      <span>🎁</span>Promo Día de la Infancia
-    </a>
+<button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<div id="chatbot">
+<div id="chat-header">💬 PrintLab 3D Chat</div>
+<div id="chat-msgs">
+  <div class="msg bot">👋 ¡Hola! Soy tu asistente de PrintLab 3D. ¿En qué puedo ayudarte?</div>
+  <div id="quicks">
+    <button class="quick">Productos</button>
+    <button class="quick">Tiempo de entrega</button>
+    <button class="quick">Formas de pago</button>
+    <button class="quick">Envíos</button>
   </div>
-
-  <div class="btn-box d5"><a class="btn" href="#" onclick="salir()"><span>🚪</span>Salir</a></div>
-
-  <button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
-  <div id="chatbot">
-    <div id="chat-header">💬 PrintLab 3D Chat</div>
-    <div id="chat-msgs">
-      <div class="msg bot">👋 ¡Hola! Soy tu asistente de PrintLab 3D. ¿En qué puedo ayudarte?</div>
-      <div id="quicks">
-        <button class="quick">Productos</button>
-        <button class="quick">Tiempo de entrega</button>
-        <button class="quick">Formas de pago</button>
-        <button class="quick">Envíos</button>
-      </div>
-    </div>
-    <div id="chat-input"><input id="chatTxt" placeholder="Escribí tu consulta..."><button id="send">Enviar</button></div>
-  </div>
-  <div id="chat-toggle">💬</div>
+</div>
+<div id="chat-input"><input id="chatTxt" placeholder="Escribí tu consulta..."><button id="send">Enviar</button></div>
+</div>
+<div id="chat-toggle">💬</div>
 
 <script>
-function salir(){window.open('','_self').close();window.location.href='https://www.instagram.com/printlab3d.lp/';}
-window.addEventListener('scroll',()=>{document.getElementById('topBtn').style.display=window.scrollY>200?'block':'none'});
+const texto = "Explorá todos nuestros productos y promociones 🎁";
+let i = 0;
+function typeWriter() {
+  if (i < texto.length) {
+    document.getElementById("bienvenida").innerHTML += texto.charAt(i);
+    i++;
+    setTimeout(typeWriter, 70);
+  }
+}
+window.onload = typeWriter;
 
+window.addEventListener('scroll',()=>{
+  document.getElementById('topBtn').style.display=window.scrollY>200?'block':'none';
+});
+
+function salir(){window.open('','_self').close();window.location.href='https://www.instagram.com/printlab3d.lp/';}
 const toggle=document.getElementById('chat-toggle');
 const botBox=document.getElementById('chatbot');
 const msgs=document.getElementById('chat-msgs');
 const input=document.getElementById('chatTxt');
 const send=document.getElementById('send');
 const quicks=document.querySelectorAll('.quick');
-
 const data=[
   ["hola","¡Hola! ¿En qué puedo ayudarte con PrintLab 3D?"],
   ["producto","Tenemos llaveros, juguetes, souvenirs, gadgets y más, todo personalizado en 3D."],
@@ -100,16 +206,52 @@ const data=[
   ["garantía","Ofrecemos garantía contra defectos de fabricación en todos nuestros productos."],
   ["gracias","¡Gracias a vos por contactarte con PrintLab 3D!"]
 ];
-
 function addMsg(text,type){const div=document.createElement('div');div.className='msg '+type;div.textContent=text;msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;}
 function reply(q){q=q.toLowerCase();for(const [k,r] of data){if(q.includes(k))return r}return 'Perdón, no entendí. Podés consultarme de otra forma o escribirnos por WhatsApp.';}
 function sendMsg(txt){if(!txt)return;addMsg(txt,'user');input.value='';setTimeout(()=>addMsg(reply(txt),'bot'),500)}
-
 send.onclick=()=>sendMsg(input.value.trim());
 input.addEventListener('keypress',e=>{if(e.key==='Enter')sendMsg(input.value.trim())});
 quicks.forEach(b=>b.onclick=()=>sendMsg(b.textContent));
-
 toggle.onclick=()=>{botBox.style.display=botBox.style.display==='flex'?'none':'flex';toggle.textContent=botBox.style.display==='flex'?'❌':'💬';input.focus()};
+
+// Fondo partículas rápidas
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particlesArray;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+window.addEventListener('resize',function(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  init();
+});
+class Particle{
+  constructor(x,y,dirX,dirY,size,color){
+    this.x = x;this.y = y;this.dirX = dirX;this.dirY = dirY;this.size = size;this.color = color;
+  }
+  draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2,false);ctx.fillStyle = this.color;ctx.fill();}
+  update(){if(this.x + this.size > canvas.width || this.x - this.size < 0){this.dirX = -this.dirX;}if(this.y + this.size > canvas.height || this.y - this.size < 0){this.dirY = -this.dirY;}this.x += this.dirX;this.y += this.dirY;this.draw();}
+}
+function init(){
+  particlesArray = [];
+  let numberOfParticles = (canvas.width * canvas.height) / 19000;
+  for(let i=0;i<numberOfParticles;i++){
+    let size = Math.random()*3+1;
+    let x = Math.random() * (innerWidth - size * 2);
+    let y = Math.random() * (innerHeight - size * 2);
+    let dirX = (Math.random() * 0.6) - 0.3;
+    let dirY = (Math.random() * 0.6) - 0.3;
+    let color = '#cce7ff';
+    particlesArray.push(new Particle(x,y,dirX,dirY,size,color));
+  }
+}
+function animate(){
+  requestAnimationFrame(animate);
+  ctx.clearRect(0,0,innerWidth,innerHeight);
+  for(let i=0;i<particlesArray.length;i++){particlesArray[i].update();}
+}
+init();
+animate();
 </script>
 </body>
 </html>
