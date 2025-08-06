@@ -776,26 +776,24 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="mini-carrito">🛒</div>
 <script>
 
-// Lista completa de productos
+// Buscador rápido con redirección a páginas y anclas específicas
 const productos = [
-  {nombre: "♟️ Ajedrez Enrollable 3D", enlace: "juegos.html#apunt-y-dispar-mini-skee-ball-3d"},
-  {nombre: "🟥 Encastre Geométrico", enlace: "montessori.html#encastre-geom-trico"},
-  {nombre: "🦕 Rompecabezas Dinosaurio Numérico", enlace: "montessori.html#rompecabezas-dinosaurio-num-rico"},
-  {nombre: "😁 Figuras Apilables Sonrientes", enlace: "montessori.html#figuras-apilables-sonrientes"},
-  {nombre: "🍔 Hamburguesa Apilable Montessori", enlace: "montessori.html#hamburguesa-apilable-montessori"},
-  {nombre: "🐾 Animales Apilables con Dado", enlace: "montessori.html#animales-apilables-con-dado"},
-  {nombre: "🔢 Tablero Numérico Montessori", enlace: "montessori.html#tablero-num-rico-montessori"},
-  {nombre: "🥚 Porta Huevos Automático", enlace: "gadgets.html#porta-huevos-autom-tico"},
-  {nombre: "🍅 Cortador de Tomates", enlace: "gadgets.html#cortador-de-tomates"},
-  {nombre: "🍋 Lavador de Frutas", enlace: "gadgets.html#lavador-de-frutas"},
-  {nombre: "🧱 Clips para Bolsas tipo Ladrillo", enlace: "gadgets.html#clips-para-bolsas-tipo-ladrillo"},
-  {nombre: "🦷 Exprimidor de Pasta Dental", enlace: "gadgets.html#exprimidor-de-pasta-dental"},
-  {nombre: "🍻 Porta Lata con Asa", enlace: "gadgets.html#porta-lata-con-asa"},
-  {nombre: "🥤 Tapa Protectora para Lata", enlace: "gadgets.html#tapa-protectora-para-lata"},
-  {nombre: "🧹 Recolector de Polvo para Taladro", enlace: "gadgets.html#recolector-de-polvo-para-taladro"},
-  {nombre: "🔋 Organizador Modular de Cables USB", enlace: "gadgets.html#organizador-modular-de-cables-usb"},
-  {nombre: "📱 Soporte Plegable para Celular", enlace: "gadgets.html#soporte-plegable-para-celular"},
-  {nombre: "📢 Amplificador de Sonido para Celular", enlace: "gadgets.html#amplificador-de-sonido-para-celular"},
+  {nombre: "Ajedrez enrollable", enlace: "juegos.html#ajedrez"},
+  {nombre: "Metegol", enlace: "juegos.html#metegol"},
+  {nombre: "Mini Pinball de mesa", enlace: "juegos.html#mini-pinball"},
+  {nombre: "Bolos a cohete", enlace: "juegos.html#bolos-cohete"},
+  {nombre: "Hélice voladora", enlace: "juegos.html#helice-voladora"},
+  {nombre: "Tatris balance", enlace: "juegos.html#tatris-balance"},
+  {nombre: "Mini Baloncesto Arcade", enlace: "juegos.html#mini-baloncesto"},
+  {nombre: "Igloo Mania", enlace: "juegos.html#igloo-mania"},
+  {nombre: "Tatetí llavero 3D", enlace: "juegos.html#tateti-llavero-3d"},
+  {nombre: "Laberinto Pac-Man 3D", enlace: "juegos.html#laberinto-pacman-3d"},
+  {nombre: "Mini Air Hockey de mesa", enlace: "juegos.html#mini-air-hockey"},
+  {nombre: "Apunta y dispara", enlace: "juegos.html#apunta-dispara"},
+  {nombre: "Llavero Barbie", enlace: "llaveros.html#llavero-barbie"},
+  {nombre: "Llavero personalizado", enlace: "llaveros.html#llavero-personalizado"},
+  {nombre: "Tapa protectora lata de bebida", enlace: "otros.html#tapa-lata"},
+  {nombre: "Souvenir personalizado", enlace: "otros.html#souvenir"}
 ];
 
 document.getElementById("buscador-input").addEventListener("input", function() {
