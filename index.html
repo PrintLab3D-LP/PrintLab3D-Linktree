@@ -332,5 +332,153 @@ chatbotToggle.addEventListener('click', () => {
   }
 });
 </script>
+    <!-- CHATBOT PRO PRINTLAB 3D -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+<style>
+  #chatbot {
+    font-family: 'Roboto', sans-serif;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 340px;
+    max-width: 90vw;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    border-radius: 15px;
+    display: none;
+    flex-direction: column;
+    background: #fff;
+    overflow: hidden;
+    z-index: 9999;
+  }
+  #chat-header {
+    background: #40916c;
+    color: #fff;
+    padding: 15px;
+    font-weight: bold;
+    text-align: center;
+  }
+  #chat-messages {
+    padding: 10px;
+    height: 300px;
+    overflow-y: auto;
+    background: #e8f5e9;
+  }
+  .msg {
+    margin: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    line-height: 1.4;
+    animation: fadeMsg 0.4s;
+  }
+  .bot { background: #40916c; color: #fff; align-self: flex-start; }
+  .user { background: #52b788; color: #fff; align-self: flex-end; }
+  #chat-input {
+    display: flex;
+    border-top: 1px solid #ddd;
+  }
+  #chat-input input {
+    flex: 1; padding: 10px; border: none; font-size: 14px;
+  }
+  #chat-input button {
+    background: #40916c; color: #fff; padding: 0 15px; border: none; cursor: pointer; font-weight: bold;
+  }
+  #chat-toggle {
+    position: fixed;
+    bottom: 20px; right: 20px;
+    background: #40916c; color: #fff;
+    width: 60px; height: 60px;
+    border-radius: 50%; font-size: 32px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index:10000;
+  }
+  .quick-btn {
+    margin: 5px; padding: 6px 10px; background: #fff;
+    border: 2px solid #40916c; border-radius: 8px;
+    color: #40916c; cursor: pointer; font-size: 13px; transition: 0.3s;
+  }
+  .quick-btn:hover {
+    background: #40916c; color: #fff;
+  }
+  @keyframes fadeMsg {
+    from {opacity:0; transform: translateY(10px);}
+    to {opacity:1; transform:none;}
+  }
+</style>
+
+<div id="chatbot">
+  <div id="chat-header">💬 PrintLab 3D Chat</div>
+  <div id="chat-messages">
+    <div class="msg bot">👋 ¡Hola! Soy tu asistente de PrintLab 3D. ¿En qué puedo ayudarte?</div>
+    <div id="quick-buttons">
+      <button class="quick-btn">Productos</button>
+      <button class="quick-btn">Tiempo de entrega</button>
+      <button class="quick-btn">Formas de pago</button>
+      <button class="quick-btn">Envíos</button>
+    </div>
+  </div>
+  <div id="chat-input">
+    <input id="chat-text" placeholder="Escribí acá tu consulta..."/>
+    <button id="send-btn">Enviar</button>
+  </div>
+</div>
+
+<div id="chat-toggle">💬</div>
+
+<script>
+const chatbot = document.getElementById('chatbot');
+const toggle = document.getElementById('chat-toggle');
+const messages = document.getElementById('chat-messages');
+const input = document.getElementById('chat-text');
+const sendBtn = document.getElementById('send-btn');
+const quickBtns = document.querySelectorAll('.quick-btn');
+
+const responses = [
+  ["hola","¡Hola! ¿En qué puedo ayudarte con PrintLab 3D?"],
+  ["producto","Tenemos llaveros, juguetes, souvenirs, gadgets y más, todo personalizado en 3D."],
+  ["precio","El precio depende del modelo y tamaño, consultame por WhatsApp para más detalles."],
+  ["pedido","Para hacer tu pedido contactanos por WhatsApp o desde nuestro catálogo."],
+  ["envío","Realizamos envíos con seguimiento a todo el país."],
+  ["tiempo","La entrega demora entre 3 y 5 días hábiles luego de recibido el pedido."],
+  ["pago","Aceptamos transferencia, tarjeta y efectivo. Es necesario un anticipo del 50%."],
+  ["depósito","Para empezar necesitamos un anticipo del 50% del valor."],
+  ["garantía","Sí, ofrecemos garantía contra defectos de fabricación en todos nuestros productos."],
+  ["gracias","¡Gracias a vos por contactarte con PrintLab 3D!"],
+];
+
+toggle.onclick = () => chatbot.style.display = chatbot.style.display === 'flex' ? 'none' : 'flex';
+
+function addMessage(text, type) {
+  const div = document.createElement('div');
+  div.className = `msg ${type}`;
+  div.innerText = text;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function botReply(msg) {
+  const txt = msg.toLowerCase();
+  for (const [key, res] of responses) {
+    if(txt.includes(key)) return res;
+  }
+  return "Perdón, no entendí. ¿Podés consultarme de otra forma o escribirme por WhatsApp?";
+}
+
+sendBtn.onclick = () => {
+  const userMsg = input.value.trim();
+  if(!userMsg) return;
+  addMessage(userMsg, 'user');
+  input.value = '';
+  setTimeout(() => addMessage(botReply(userMsg), 'bot'), 500);
+};
+
+input.addEventListener('keypress', e => { if(e.key==='Enter') sendBtn.click(); });
+
+quickBtns.forEach(btn => btn.onclick = () => {
+  const query = btn.textContent;
+  addMessage(query, 'user');
+  setTimeout(() => addMessage(botReply(query), 'bot'), 500);
+});
+</script>
 </body>
 </html>
