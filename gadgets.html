@@ -80,7 +80,43 @@
       border-radius: 8px;
       font-weight: bold;
     }
-  </style>
+  
+/* Animación de aparición desde abajo */
+.producto-animado {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease-out;
+}
+
+.producto-animado.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* Botón para volver arriba */
+#btnSubir {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 2000;
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  transition: background-color 0.3s;
+}
+
+#btnSubir:hover {
+  background-color: #218838;
+}
+
+</style>
 
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <style>
@@ -108,14 +144,50 @@
       transform: scale(1.02);
       transition: transform 0.3s;
     }
-  </style>
+  
+/* Animación de aparición desde abajo */
+.producto-animado {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease-out;
+}
+
+.producto-animado.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* Botón para volver arriba */
+#btnSubir {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 2000;
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  transition: background-color 0.3s;
+}
+
+#btnSubir:hover {
+  background-color: #218838;
+}
+
+</style>
 </head>
 <body onload="AOS.init();">
 <a href="#" id="volverArriba" class="volver-arriba" title="Volver arriba">🔼</a>
 
 <h1>🔌 Gadgets 3D</h1>
 <!-- Producto: Porta Huevos -->
-<div class="juego" id="porta-huevos-automático"><h2>🥚 Porta Huevos Automático</h2>
+<div class="juego producto-animado" id="porta-huevos-automático"><h2>🥚 Porta Huevos Automático</h2>
 <img alt="Porta Huevos Automático" id="img-porta" src="porta huevos.png"/>
 <div class="nav-buttons">
 <button onclick="cambiarImagenPorta(-1)">◀</button>
@@ -127,7 +199,7 @@
 </div>
 </div>
 <!-- Producto: Cortador de Tomates -->
-<div class="juego" id="cortador-de-tomates"><h2>🍅 Cortador de Tomates</h2>
+<div class="juego producto-animado" id="cortador-de-tomates"><h2>🍅 Cortador de Tomates</h2>
 <img alt="Cortador de Tomates" id="img-tomate" src="tomate1.png"/>
 <div class="nav-buttons">
 <button onclick="cambiarImagenTomate(-1)">◀</button>
@@ -139,7 +211,7 @@
 </div>
 </div>
 <!-- Producto: Lavador de Frutas -->
-<div class="juego" id="lavador-de-frutas"><h2>🍋 Lavador de Frutas</h2>
+<div class="juego producto-animado" id="lavador-de-frutas"><h2>🍋 Lavador de Frutas</h2>
 <img alt="Lavador de Frutas" id="img-lavador" src="lavador frutas.png"/>
 <div class="nav-buttons">
 <button onclick="cambiarImagenLavador(-1)">◀</button>
@@ -153,7 +225,7 @@
 </div>
 </div>
 <!-- Producto: Clips tipo Ladrillo -->
-<div class="juego" id="clips-para-bolsas-tipo-ladrillo"><h2>🧱 Clips para Bolsas tipo Ladrillo</h2>
+<div class="juego producto-animado" id="clips-para-bolsas-tipo-ladrillo"><h2>🧱 Clips para Bolsas tipo Ladrillo</h2>
 <img alt="Clips para Bolsas tipo Ladrillo" id="img-clips" src="clips ladrillo.png"/>
 <div class="nav-buttons">
 <button onclick="cambiarImagenClips(-1)">◀</button>
@@ -166,7 +238,7 @@
 </div>
 </div>
 <!-- Producto: Exprimidor de Pasta Dental -->
-<div class="juego" id="exprimidor-de-pasta-dental"><h2>🦷 Exprimidor de Pasta Dental</h2>
+<div class="juego producto-animado" id="exprimidor-de-pasta-dental"><h2>🦷 Exprimidor de Pasta Dental</h2>
 <img alt="Exprimidor de Pasta Dental" id="img-exprimidor" src="exprimidor pasta diente.png"/>
 <div class="nav-buttons">
 <button onclick="cambiarImagenExprimidor(-1)">◀</button>
@@ -180,7 +252,7 @@
 </div>
 </div>
 <!-- Producto: Porta Lata con Asa -->
-<div class="juego" id="porta-lata-con-asa"><h2>🍻 Porta Lata con Asa</h2>
+<div class="juego producto-animado" id="porta-lata-con-asa"><h2>🍻 Porta Lata con Asa</h2>
 <div class="slider">
 <img alt="Porta Lata con Tapa y Asa" id="img-porta-lata" src="porta lata bebida.png"/>
 <div class="nav-buttons">
@@ -195,7 +267,7 @@
 </div>
 </div>
 <!-- Producto: Recolector de Polvo para Taladro -->
-<div class="juego" id="tapa-protectora-para-lata"><h2>🥤 Tapa Protectora para Lata</h2>
+<div class="juego producto-animado" id="tapa-protectora-para-lata"><h2>🥤 Tapa Protectora para Lata</h2>
 <img alt="Tapa protectora para lata" id="img-tapalata" src="tapa-lata-1.png"/>
 <div class="nav-buttons">
 <button onclick="cambiarImagenTapa(-1)">◀</button>
@@ -205,7 +277,7 @@
 <div class="whatsapp">
 <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio de la Tapa Protectora para Lata 🥤">Pedilo por WhatsApp</a>
 </div>
-</div><div class="juego" id="recolector-de-polvo-para-taladro"><h2>🧹 Recolector de Polvo para Taladro</h2>
+</div><div class="juego producto-animado" id="recolector-de-polvo-para-taladro"><h2>🧹 Recolector de Polvo para Taladro</h2>
 <img alt="Recolector de Polvo para Taladro" id="img-polvo" src="recolector polvo agujero.png"/>
 <div class="nav-buttons">
 <button onclick="cambiarImagenPolvo(-1)">▶</button>
@@ -231,7 +303,7 @@
   }
 </script>
 <!-- Producto: Organizador de Cables USB -->
-<div class="juego" id="organizador-modular-de-cables-usb"><h2>🔋 Organizador Modular de Cables USB</h2>
+<div class="juego producto-animado" id="organizador-modular-de-cables-usb"><h2>🔋 Organizador Modular de Cables USB</h2>
 <img alt="Organizador de Cables USB" id="img-organizador" src="organizador cable usb.png"/>
 <div class="nav-buttons">
 <button onclick="cambiarImagenOrganizador(-1)">◀</button>
@@ -245,7 +317,7 @@
 </div>
 </div>
 <!-- Producto: Soporte Plegable para Celular -->
-<div class="juego" id="soporte-plegable-para-celular"><h2>📱 Soporte Plegable para Celular</h2>
+<div class="juego producto-animado" id="soporte-plegable-para-celular"><h2>📱 Soporte Plegable para Celular</h2>
 <img alt="Soporte Plegable para Celular" id="img-soporte" src="soporte plegable celu.png"/>
 <div class="nav-buttons">
 <button onclick="cambiarImagenSoporte(-1)">◀</button>
@@ -259,7 +331,7 @@
 </div>
 </div>
 <!-- Producto: Amplificador de Sonido para Celular -->
-<div class="juego" id="amplificador-de-sonido-para-celular"><h2>📢 Amplificador de Sonido para Celular</h2>
+<div class="juego producto-animado" id="amplificador-de-sonido-para-celular"><h2>📢 Amplificador de Sonido para Celular</h2>
 <img alt="Amplificador de Sonido para Celular" id="img-amplificador" src="amplificador sonido celu.png"/>
 <div class="nav-buttons">
 <button onclick="cambiarImagenAmplificador(-1)">◀</button>
@@ -368,5 +440,40 @@ function cambiarImagenPolvo(dir) {
       window.scrollY > 200 ? "block" : "none";
   };
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const elementos = document.querySelectorAll('.producto-animado');
+  const observer = new IntersectionObserver((entradas) => {
+    entradas.forEach(entrada => {
+      if (entrada.isIntersecting) {
+        entrada.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  elementos.forEach(el => observer.observe(el));
+});
+</script>
+
+
+<script>
+// Mostrar u ocultar el botón al hacer scroll
+window.onscroll = function() {
+  let btn = document.getElementById("btnSubir");
+  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+    btn.style.display = "block";
+  } else {
+    btn.style.display = "none";
+  }
+};
+
+// Función para subir suavemente
+function subirArriba() {
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
+
+<button id="btnSubir" onclick="subirArriba()">&#8679;</button>
 </body>
 </html>
