@@ -333,6 +333,17 @@ h1 {
 
 #chatbot-window { padding-bottom: 5px; }
 #chatbot-input { margin-bottom: 0; }
+
+.chat-open #chatbot-icon {
+  display: none !important;
+}
+
+@media (max-width: 600px) {
+  #chatbot-icon {
+    bottom: 80px !important; /* lo sube sobre el teclado y campo de texto */
+  }
+}
+
 </style>
 </head>
 <body>
@@ -511,7 +522,7 @@ document.addEventListener('DOMContentLoaded', function() {
     📅 Diseñamos y fabricamos según tus ideas.<br><br>
     🔗 <a href='catalogo.html'>Ver catálogo completo</a>`);
 
-    addBotMessage('Selecciona una opción o escribime tu consulta:');
+    addBotMessage('Hola 🤖 Soy el asistente virtual de PrintLab 3D. Selecciona una opción o escribime tu consulta:');
     const btns = document.createElement('div');
     btns.classList.add('chatbot-buttons');
     btns.innerHTML = `
