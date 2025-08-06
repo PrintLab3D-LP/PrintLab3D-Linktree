@@ -776,13 +776,24 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="mini-carrito">🛒</div>
 <script>
 
-// Buscador rápido de productos
+// Buscador rápido con redirección a productos específicos
 const productos = [
-  {nombre: "Llaveros personalizados", enlace: "catalogo.html"},
-  {nombre: "Juegos de mesa", enlace: "catalogo.html"},
-  {nombre: "Souvenirs", enlace: "catalogo.html"},
-  {nombre: "Gadgets", enlace: "catalogo.html"},
-  {nombre: "Promo Día de la Infancia", enlace: "promo-dia-infancia.html"}
+  {nombre: "Ajedrez enrollable", enlace: "catalogo.html#ajedrez"},
+  {nombre: "Metegol", enlace: "catalogo.html#metegol"},
+  {nombre: "Mini Pinball de mesa", enlace: "catalogo.html#mini-pinball"},
+  {nombre: "Bolos a cohete", enlace: "catalogo.html#bolos-cohete"},
+  {nombre: "Hélice voladora", enlace: "catalogo.html#helice-voladora"},
+  {nombre: "Tatris balance", enlace: "catalogo.html#tatris-balance"},
+  {nombre: "Mini Baloncesto Arcade", enlace: "catalogo.html#mini-baloncesto"},
+  {nombre: "Igloo Mania", enlace: "catalogo.html#igloo-mania"},
+  {nombre: "Tatetí llavero 3D", enlace: "catalogo.html#tateti-llavero-3d"},
+  {nombre: "Laberinto Pac-Man 3D", enlace: "catalogo.html#laberinto-pacman-3d"},
+  {nombre: "Mini Air Hockey de mesa", enlace: "catalogo.html#mini-air-hockey"},
+  {nombre: "Apunta y dispara", enlace: "catalogo.html#apunta-dispara"},
+  {nombre: "Llavero Barbie", enlace: "catalogo.html#llavero-barbie"},
+  {nombre: "Llavero personalizado", enlace: "catalogo.html#llavero-personalizado"},
+  {nombre: "Tapa protectora lata de bebida", enlace: "catalogo.html#tapa-lata"},
+  {nombre: "Souvenir personalizado", enlace: "catalogo.html#souvenir"}
 ];
 
 document.getElementById("buscador-input").addEventListener("input", function() {
@@ -799,7 +810,24 @@ document.getElementById("buscador-input").addEventListener("input", function() {
   }
 });
 
+// Redirigir si presiona Enter
+document.getElementById("buscador-input").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") {
+    const valor = this.value.toLowerCase();
+    const encontrado = productos.find(p => p.nombre.toLowerCase().includes(valor));
+    if (encontrado) {
+      window.location.href = encontrado.enlace;
+    }
+  }
+});
+
 // Mini carrito decorativo
+document.getElementById("mini-carrito").addEventListener("click", function(){
+  alert("🛒 Esta es una vista previa del carrito. Próximamente estará disponible la tienda online.");
+});
+document.getElementById("mini-carrito").addEventListener("click", function(){
+  alert("🛒 Esta es una vista previa del carrito. Próximamente estará disponible la tienda online.");
+});
 document.getElementById("mini-carrito").addEventListener("click", function(){
   alert("🛒 Esta es una vista previa del carrito. Próximamente estará disponible la tienda online.");
 });
