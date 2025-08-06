@@ -344,9 +344,168 @@ h1 {
   }
 }
 
+
+/* Banner de novedades */
+#banner-ofertas {
+  background: #ff6f61;
+  color: white;
+  font-weight: bold;
+  padding: 8px;
+  font-size: 0.95rem;
+  position: sticky;
+  top: 0;
+  z-index: 3000;
+}
+
+/* Buscador rápido */
+#buscador {
+  margin: 15px auto;
+  display: flex;
+  justify-content: center;
+}
+#buscador input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 80%;
+  max-width: 400px;
+}
+
+/* Lista de resultados del buscador */
+#resultados-busqueda {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+#resultados-busqueda li {
+  padding: 6px;
+  background: #f1f1f1;
+  margin: 3px auto;
+  max-width: 400px;
+  border-radius: 6px;
+}
+
+/* Mini carrito decorativo */
+#mini-carrito {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: #28a745;
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  z-index: 2000;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+#mini-carrito:hover {
+  background: #218838;
+}
+
+/* Calendario de eventos */
+#calendario {
+  margin: 20px auto;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  padding: 10px;
+}
+#calendario table {
+  width: 100%;
+  border-collapse: collapse;
+}
+#calendario th, #calendario td {
+  border: 1px solid #ddd;
+  padding: 6px;
+  text-align: center;
+}
+#calendario th {
+  background: #28a745;
+  color: white;
+}
+.evento {
+  background: #ffeb3b;
+  font-weight: bold;
+}
+
+
+/* Mejor estilo para el buscador */
+#buscador {
+  margin: 15px auto;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+#buscador input {
+  padding: 10px 35px 10px 15px;
+  border-radius: 25px;
+  border: 2px solid #28a745;
+  width: 80%;
+  max-width: 400px;
+  outline: none;
+  font-size: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+#buscador::after {
+  content: '🔍';
+  position: absolute;
+  right: calc(50% - 180px);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #28a745;
+}
+#resultados-busqueda li {
+  padding: 8px;
+  background: #e5f7ea;
+  margin: 3px auto;
+  max-width: 400px;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: transform 0.2s ease;
+}
+#resultados-busqueda li:hover {
+  transform: scale(1.05);
+  background: #c8f7d1;
+}
+
+/* Efecto al logo */
+@keyframes logoZoomRotate {
+  0% { transform: scale(0.8) rotate(-10deg); opacity: 0; }
+  50% { transform: scale(1.05) rotate(5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); }
+}
+.logo {
+  animation: logoZoomRotate 1.2s ease-out;
+}
+
+
+/* Efecto brillante intermitente en el logo */
+@keyframes logoShine {
+  0% { filter: drop-shadow(0 0 0px #28a745); }
+  50% { filter: drop-shadow(0 0 10px #28a745) drop-shadow(0 0 20px #28a745); }
+  100% { filter: drop-shadow(0 0 0px #28a745); }
+}
+.logo {
+  animation: logoZoomRotate 1.2s ease-out, logoShine 2s infinite ease-in-out;
+}
+
 </style>
 </head>
 <body>
+
+<div id="banner-ofertas">
+  <marquee behavior="scroll" direction="left">
+    🎉 ¡Promo Día de la Infancia! Envíos gratis en pedidos mayores a $15.000 - 🎨 Personaliza tu pedido hoy mismo - 🚀 Entregas rápidas en todo el país
+  </marquee>
+</div>
+
 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
 <div class="side-menu" id="sideMenu">
 <a href="#" onclick="openModal('modalImpresora')">🖨️ Impresora que usamos</a>
@@ -358,6 +517,14 @@ h1 {
 <h1>¡Bienvenidos a PrintLab 3D!</h1>
 <p class="subtitle">Innovación y creatividad en cada impresión</p>
 <p class="subtitle-extra">Te invitamos a conocer nuestros productos</p>
+
+<div id="buscador">
+  <input type="text" id="buscador-input" placeholder="🔍 Buscar producto...">
+</div>
+<ul id="resultados-busqueda"></ul>
+
+
+
 <div class="btn-box"><a class="btn" href="https://wa.me/5492954218753" target="_blank">📲 Pedidos por WhatsApp</a></div>
 <div class="btn-box"><a class="btn" href="https://www.instagram.com/printlab3d.lp" target="_blank">📷 Seguinos en Instagram</a></div>
 <div class="btn-box"><a class="btn" href="catalogo.html">🛍️ Catálogo</a></div>
@@ -606,5 +773,37 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 <audio id="chatbot-user-sound" preload="auto" src="https://www.soundjay.com/button/sounds/button-3.mp3"></audio>
 <audio id="chatbot-sound" preload="auto" src="https://www.soundjay.com/button/sounds/button-16.mp3"></audio>
+<div id="mini-carrito">🛒</div>
+<script>
+
+// Buscador rápido de productos
+const productos = [
+  {nombre: "Llaveros personalizados", enlace: "catalogo.html"},
+  {nombre: "Juegos de mesa", enlace: "catalogo.html"},
+  {nombre: "Souvenirs", enlace: "catalogo.html"},
+  {nombre: "Gadgets", enlace: "catalogo.html"},
+  {nombre: "Promo Día de la Infancia", enlace: "promo-dia-infancia.html"}
+];
+
+document.getElementById("buscador-input").addEventListener("input", function() {
+  const valor = this.value.toLowerCase();
+  const resultados = document.getElementById("resultados-busqueda");
+  resultados.innerHTML = "";
+  if (valor.length > 0) {
+    const filtrados = productos.filter(p => p.nombre.toLowerCase().includes(valor));
+    filtrados.forEach(p => {
+      const li = document.createElement("li");
+      li.innerHTML = `<a href="${p.enlace}">${p.nombre}</a>`;
+      resultados.appendChild(li);
+    });
+  }
+});
+
+// Mini carrito decorativo
+document.getElementById("mini-carrito").addEventListener("click", function(){
+  alert("🛒 Esta es una vista previa del carrito. Próximamente estará disponible la tienda online.");
+});
+
+</script>
 </body>
 </html>
