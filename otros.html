@@ -16,6 +16,9 @@
     h1 {
       color: #ff6f61;
       margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.8s ease;
     }
     .categoria {
       display: block;
@@ -31,15 +34,22 @@
       color: white;
       font-size: 1.2rem;
       cursor: pointer;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
     }
     .volver {
       margin-top: 3rem;
+    }
+    .visible {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-  <h1>🎨 Otros</h1>
+  <h1 id="titulo">🎨 Otros</h1>
 
   <a href="gadgets.html" class="categoria">🛠️ Gadgets</a>
   <div class="categoria" onclick="mostrarProximamente()">🔤 Letreros</div>
@@ -59,6 +69,20 @@
         confirmButtonText: '¡Genial!'
       });
     }
+
+    const mostrarAnimaciones = () => {
+      const elementos = document.querySelectorAll('.categoria, #titulo');
+      elementos.forEach(el => {
+        const pos = el.getBoundingClientRect().top;
+        const visible = window.innerHeight * 0.9;
+        if (pos < visible) {
+          el.classList.add('visible');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', mostrarAnimaciones);
+    window.addEventListener('load', mostrarAnimaciones);
   </script>
 </body>
 </html>
