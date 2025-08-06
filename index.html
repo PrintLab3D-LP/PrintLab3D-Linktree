@@ -1,337 +1,112 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>PrintLab 3D</title>
-<style>
-    /* Fondo degradado animado */
-    body {
-      font-family: 'Comic Sans MS', sans-serif;
-      background: linear-gradient(-45deg, #cdefff, #fdfbe4, #ffe5ec, #e0f7fa);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      text-align: center;
-      padding: 2rem;
-      margin: 0;
-    }
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* Logo animación zoom suave */
-    img.logo {
-      max-width: 150px;
-      margin-bottom: 1rem;
-      opacity: 0;
-      transform: scale(0.8);
-      animation: zoomIn 1s ease forwards;
-    }
-    @keyframes zoomIn {
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    /* Título y texto */
-    h1 {
-      color: #ff3e57;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards;
-      animation-delay: 0.2s;
-    }
-    p {
-      font-size: 1.1rem;
-      color: #222;
-      margin-bottom: 2rem;
-      opacity: 0;
-      animation: fadeUp 0.8s ease forwards;
-      animation-delay: 0.4s;
-    }
-
-    /* Botones */
-    .boton {
-      margin: 0.8rem auto;
-      width: 90%;
-      max-width: 400px;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp 0.8s ease forwards;
-    }
-    .boton a {
-      display: block;
-      background-color: #ffb347;
-      padding: 1rem;
-      border-radius: 12px;
-      text-decoration: none;
-      color: #fff;
-      font-weight: bold;
-      font-size: 1.1rem;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-      transition: all 0.3s ease;
-    }
-    .boton a:hover {
-      background-color: #ffa726;
-      transform: scale(1.05);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-    }
-    .boton span {
-      margin-right: 10px;
-    }
-
-    /* Animaciones en cascada */
-    .delay-1 { animation-delay: 0.6s; }
-    .delay-2 { animation-delay: 0.8s; }
-    .delay-3 { animation-delay: 1s; }
-    .delay-4 { animation-delay: 1.2s; }
-    .delay-5 { animation-delay: 1.4s; }
-
-    @keyframes fadeUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Efecto pulso en promo */
-    .pulso {
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 0 rgba(255,183,77, 0.7); }
-      70% { transform: scale(1.05); box-shadow: 0 0 15px rgba(255,183,77, 0.7); }
-      100% { transform: scale(1); box-shadow: 0 0 0 rgba(255,183,77, 0.7); }
-    }
-
-    /* Botón volver arriba */
-    #volverArriba {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #52b788;
-      color: white;
-      border: none;
-      padding: 14px;
-      border-radius: 50%;
-      font-size: 22px;
-      font-weight: bold;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      display: none;
-      cursor: pointer;
-      z-index: 100;
-    }
-    #volverArriba:hover {
-      background: #40916c;
-    }
-
-    /* Chatbot simple */
-    #chatbot {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      width: 320px;
-      max-width: 90vw;
-      font-family: Arial, sans-serif;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      border-radius: 12px;
-      overflow: hidden;
-      display: none;
-      flex-direction: column;
-      background: white;
-      z-index: 9999;
-    }
-    #chatbot-header {
-      background: #52b788;
-      color: white;
-      padding: 10px;
-      font-weight: bold;
-      cursor: grab;
-    }
-    #chatbot-messages {
-      padding: 10px;
-      height: 280px;
-      overflow-y: auto;
-      background: #f1f1f1;
-    }
-    .chatbot-message {
-      margin-bottom: 10px;
-      line-height: 1.3;
-    }
-    .chatbot-message.bot {
-      text-align: left;
-      color: #2d6a4f;
-    }
-    .chatbot-message.user {
-      text-align: right;
-      color: #555;
-    }
-    #chatbot-input {
-      display: flex;
-      border-top: 1px solid #ccc;
-    }
-    #chatbot-input input {
-      flex-grow: 1;
-      padding: 10px;
-      border: none;
-      font-size: 14px;
-    }
-    #chatbot-input button {
-      background: #52b788;
-      border: none;
-      color: white;
-      padding: 0 15px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    #chatbot-toggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #52b788;
-      border-radius: 50%;
-      width: 56px;
-      height: 56px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-      cursor: pointer;
-      z-index: 10000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      font-size: 30px;
-    }
-</style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PrintLab 3D</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <style>
+    body{font-family:'Comic Sans MS',sans-serif;margin:0;padding:2rem;text-align:center;background:linear-gradient(-45deg,#cdefff,#fdfbe4,#ffe5ec,#e0f7fa);background-size:400% 400%;animation:gradientBG 15s ease infinite;}
+    @keyframes gradientBG{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    .logo{max-width:150px;margin-bottom:1rem;opacity:0;transform:scale(.8);animation:zoomIn 1s ease forwards}
+    @keyframes zoomIn{to{opacity:1;transform:scale(1)}}
+    h1{color:#ff3e57;opacity:0;animation:fadeUp .8s ease forwards .2s}
+    p.desc{font-size:1.1rem;color:#222;margin-bottom:2rem;opacity:0;animation:fadeUp .8s ease forwards .4s}
+    @keyframes fadeUp{to{opacity:1;transform:none}}
+    .btn-box{width:90%;max-width:400px;margin:.8rem auto;opacity:0;transform:translateY(30px);animation:fadeUp .8s ease forwards}
+    .btn{display:block;background:#ffb347;color:#fff;padding:1rem;border-radius:12px;text-decoration:none;font-weight:bold;font-size:1.1rem;box-shadow:0 4px 6px rgba(0,0,0,.2);transition:.3s}
+    .btn:hover{background:#ffa726;transform:scale(1.05);box-shadow:0 6px 12px rgba(0,0,0,.3)}
+    .btn span{margin-right:10px}
+    .d1{animation-delay:.6s}.d2{animation-delay:.8s}.d3{animation-delay:1s}.d4{animation-delay:1.2s}.d5{animation-delay:1.4s}
+    .pulso{animation:pulse 2s infinite}
+    @keyframes pulse{0%{transform:scale(1);box-shadow:0 0 0 rgba(255,183,77,.7)}70%{transform:scale(1.05);box-shadow:0 0 15px rgba(255,183,77,.7)}100%{transform:scale(1);box-shadow:0 0 0 rgba(255,183,77,.7)}}
+    #topBtn{position:fixed;bottom:20px;right:20px;background:#52b788;color:#fff;border:none;border-radius:50%;width:56px;height:56px;font-size:22px;font-weight:bold;box-shadow:0 4px 10px rgba(0,0,0,.2);cursor:pointer;display:none;z-index:100}
+    #topBtn:hover{background:#40916c}
+    #chatbot{font-family:'Roboto',sans-serif;position:fixed;bottom:80px;right:20px;width:340px;max-width:90vw;background:#fff;border-radius:15px;box-shadow:0 8px 20px rgba(0,0,0,.3);display:none;flex-direction:column;overflow:hidden;z-index:9999}
+    #chat-header{background:#40916c;color:#fff;padding:15px;font-weight:bold;text-align:center}
+    #chat-msgs{background:#e8f5e9;padding:10px;height:300px;overflow-y:auto}
+    .msg{margin:10px;padding:8px 12px;border-radius:8px;line-height:1.4;animation:fadeMsg .4s}
+    .bot{background:#40916c;color:#fff;align-self:flex-start}
+    .user{background:#52b788;color:#fff;align-self:flex-end}
+    #chat-input{display:flex;border-top:1px solid #ddd}
+    #chat-input input{flex:1;padding:10px;border:none;font-size:14px}
+    #chat-input button{background:#40916c;color:#fff;border:none;padding:0 15px;font-weight:bold;cursor:pointer}
+    #chat-toggle{position:fixed;bottom:20px;right:20px;background:#40916c;color:#fff;width:60px;height:60px;border-radius:50%;font-size:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 10px rgba(0,0,0,.2);z-index:10000}
+    .quick{margin:5px;padding:6px 10px;background:#fff;border:2px solid #40916c;border-radius:8px;color:#40916c;font-size:13px;cursor:pointer;transition:.3s}
+    .quick:hover{background:#40916c;color:#fff}
+    @keyframes fadeMsg{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  </style>
 </head>
 <body>
-<img alt="PrintLab 3D" class="logo" src="logo.png"/>
-<h1>¡Bienvenidos a PrintLab 3D!</h1>
-<p>Regalos increíbles hechos con impresión 3D, personalizados para cada ocasión.</p>
+  <img src="logo.png" alt="PrintLab 3D" class="logo">
+  <h1>¡Bienvenidos a PrintLab 3D!</h1>
+  <p class="desc">Regalos increíbles hechos con impresión 3D, personalizados para cada ocasión.</p>
 
-<div class="boton delay-1">
-<a href="https://wa.me/5492954218753" target="_blank">
-<span>📲</span> Pedidos por WhatsApp
-</a>
-</div>
-<div class="boton delay-2">
-<a href="https://www.instagram.com/printlab3d.lp" target="_blank">
-<span>📷</span> Seguinos en Instagram
-</a>
-</div>
-<div class="boton delay-3">
-<a href="catalogo.html">
-<span>🛍️</span> Catálogo
-</a>
-</div>
-<div class="boton delay-4 pulso">
-<a href="promo-dia-infancia.html">
-<span>🎁</span> Promo Día de la Infancia
-</a>
-</div>
-<div class="boton delay-5">
-<a href="#" onclick="salirPagina()">
-<span>🚪</span> Salir
-</a>
-</div>
+  <div class="btn-box d1" style="opacity:1 !important; transform:none !important;"><a class="btn" href="https://wa.me/5492954218753" target="_blank"><span>📲</span>Pedidos por WhatsApp</a></div>
+  <div class="btn-box d2" style="opacity:1 !important; transform:none !important;"><a class="btn" href="https://www.instagram.com/printlab3d.lp" target="_blank"><span>📷</span>Seguinos en Instagram</a></div>
+  <div class="btn-box d3" style="opacity:1 !important; transform:none !important;"><a class="btn" href="catalogo.html"><span>🛍️</span>Catálogo</a></div>
 
-<!-- Botón volver arriba -->
-<button onclick="scrollToTop()" id="volverArriba">↑</button>
-
-<!-- Chatbot simple -->
-<div id="chatbot">
-  <div id="chatbot-header">Chat PrintLab 3D</div>
-  <div id="chatbot-messages"></div>
-  <div id="chatbot-input">
-    <input type="text" id="chatbot-text" placeholder="Escribí tu pregunta..."/>
-    <button id="chatbot-send">Enviar</button>
+  <!-- Botón Promo Día de la Infancia con mismo tamaño y visibilidad forzada -->
+  <div class="btn-box d4 pulso" style="opacity:1 !important; transform:none !important; z-index:10;">
+    <a class="btn" 
+       href="promo-dia-infancia.html" 
+       style="background:#28a745; color:white; border:2px solid #fff; box-shadow:0 0 15px rgba(0,0,0,0.3);">
+      <span>🎁</span>Promo Día de la Infancia
+    </a>
   </div>
-</div>
-<div id="chatbot-toggle">💬</div>
+
+  <div class="btn-box d5" style="opacity:1 !important; transform:none !important;"><a class="btn" href="#" onclick="salir()"><span>🚪</span>Salir</a></div>
+
+  <button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+  <div id="chatbot">
+    <div id="chat-header">💬 PrintLab 3D Chat</div>
+    <div id="chat-msgs">
+      <div class="msg bot">👋 ¡Hola! Soy tu asistente de PrintLab 3D. ¿En qué puedo ayudarte?</div>
+      <div id="quicks">
+        <button class="quick">Productos</button>
+        <button class="quick">Tiempo de entrega</button>
+        <button class="quick">Formas de pago</button>
+        <button class="quick">Envíos</button>
+      </div>
+    </div>
+    <div id="chat-input"><input id="chatTxt" placeholder="Escribí tu consulta..."><button id="send">Enviar</button></div>
+  </div>
+  <div id="chat-toggle">💬</div>
 
 <script>
-function salirPagina() {
-  window.open('', '_self').close();
-  window.location.href = 'https://www.instagram.com/printlab3d.lp/';
-}
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-window.onscroll = function() {
-  document.getElementById("volverArriba").style.display =
-    window.scrollY > 200 ? "block" : "none";
-};
+function salir(){window.open('','_self').close();window.location.href='https://www.instagram.com/printlab3d.lp/';}
+window.addEventListener('scroll',()=>{document.getElementById('topBtn').style.display=window.scrollY>200?'block':'none'});
 
-// Chatbot
-const chatbotToggle = document.getElementById('chatbot-toggle');
-const chatbot = document.getElementById('chatbot');
-const messages = document.getElementById('chatbot-messages');
-const input = document.getElementById('chatbot-text');
-const sendBtn = document.getElementById('chatbot-send');
+const toggle=document.getElementById('chat-toggle');
+const botBox=document.getElementById('chatbot');
+const msgs=document.getElementById('chat-msgs');
+const input=document.getElementById('chatTxt');
+const send=document.getElementById('send');
+const quicks=document.querySelectorAll('.quick');
 
-const responses = [
-  ["hola", "¡Hola! ¿En qué puedo ayudarte con PrintLab 3D?"],
-  ["buenos días", "¡Buenos días! ¿En qué puedo ayudarte?"],
-  ["producto", "Ofrecemos llaveros, juguetes, souvenirs, gadgets y mucho más en impresión 3D personalizada."],
-  ["precio", "El precio varía según el diseño y tamaño. Podés consultarme modelos específicos."],
-  ["pedido", "Podés hacer tu pedido por WhatsApp o a través de nuestro catálogo online."],
-  ["horario", "Atendemos de lunes a viernes de 9 a 18 hs."],
-  ["envío", "Realizamos envíos a todo el país con seguimiento incluido."],
-  ["tiempo de entrega", "Los tiempos de entrega son entre 3 y 5 días hábiles porque los productos se imprimen después de recibido el pedido."],
-  ["depósito", "Para comenzar a imprimir tu producto se debe entregar un 50% del valor total."],
-  ["pago", "Aceptamos transferencia, tarjeta y pago contra entrega en algunos casos."],
-  ["garantía", "Ofrecemos garantía en todos nuestros productos por defectos de impresión."],
-  ["contacto", "Podés contactarnos por WhatsApp, Instagram o a través del formulario en la web."],
-  ["gracias", "¡Gracias a vos! Estamos para ayudarte."]
+const data=[
+  ["hola","¡Hola! ¿En qué puedo ayudarte con PrintLab 3D?"],
+  ["producto","Tenemos llaveros, juguetes, souvenirs, gadgets y más, todo personalizado en 3D."],
+  ["precio","El precio depende del modelo y tamaño, podés consultarme por WhatsApp."],
+  ["pedido","Para hacer tu pedido contactanos por WhatsApp o desde nuestro catálogo."],
+  ["envío","Realizamos envíos con seguimiento a todo el país."],
+  ["tiempo","La entrega demora entre 3 y 5 días hábiles luego de recibido el pedido."],
+  ["pago","Aceptamos transferencia, tarjeta y efectivo. Se requiere un anticipo del 50%."],
+  ["depósito","Para comenzar la impresión necesitamos un anticipo del 50% del valor."],
+  ["garantía","Ofrecemos garantía contra defectos de fabricación en todos nuestros productos."],
+  ["gracias","¡Gracias a vos por contactarte con PrintLab 3D!"]
 ];
 
-function appendMessage(text, sender) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  div.classList.add('chatbot-message', sender);
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
-}
+function addMsg(text,type){const div=document.createElement('div');div.className='msg '+type;div.textContent=text;msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;}
+function reply(q){q=q.toLowerCase();for(const [k,r] of data){if(q.includes(k))return r}return 'Perdón, no entendí. Podés consultarme de otra forma o escribirnos por WhatsApp.';}
+function sendMsg(txt){if(!txt)return;addMsg(txt,'user');input.value='';setTimeout(()=>addMsg(reply(txt),'bot'),500)}
 
-function getResponse(message) {
-  const msg = message.toLowerCase();
+send.onclick=()=>sendMsg(input.value.trim());
+input.addEventListener('keypress',e=>{if(e.key==='Enter')sendMsg(input.value.trim())});
+quicks.forEach(b=>b.onclick=()=>sendMsg(b.textContent));
 
-  for (const [key, response] of responses) {
-    if (msg.includes(key)) {
-      return response;
-    }
-  }
-
-  return "Perdón, no entendí eso. Podés probar con otras preguntas o escribirnos por WhatsApp.";
-}
-
-function sendMessage() {
-  const text = input.value;
-  if (!text) return;
-  appendMessage(text, 'user');
-  input.value = '';
-  setTimeout(() => {
-    appendMessage(getResponse(text), 'bot');
-  }, 700);
-}
-
-sendBtn.addEventListener('click', sendMessage);
-input.addEventListener('keypress', e => {
-  if (e.key === 'Enter') sendMessage();
-});
-
-chatbotToggle.addEventListener('click', () => {
-  if (chatbot.style.display === 'flex') {
-    chatbot.style.display = 'none';
-    chatbotToggle.textContent = '💬';
-  } else {
-    chatbot.style.display = 'flex';
-    chatbotToggle.textContent = '❌';
-    input.focus();
-  }
-});
+toggle.onclick=()=>{botBox.style.display=botBox.style.display==='flex'?'none':'flex';toggle.textContent=botBox.style.display==='flex'?'❌':'💬';input.focus()};
 </script>
-        
 </body>
 </html>
