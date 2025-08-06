@@ -504,6 +504,36 @@ h1 {
   z-index: 3001; /* Asegurar que esté sobre el contenido */
 }
 
+
+/* Carrito flotante en el lado izquierdo con animación */
+#mini-carrito {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #28a745;
+  color: white;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  z-index: 2000;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  animation: carritoFlotante 2s infinite ease-in-out;
+}
+
+@keyframes carritoFlotante {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+#mini-carrito:hover {
+  background: #218838;
+}
+
 </style>
 </head>
 <body>
