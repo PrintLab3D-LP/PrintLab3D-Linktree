@@ -619,6 +619,16 @@ h1 {
   font-size: 18px;
 }
 
+
+/* Contador dentro del botón */
+#promo-dia-infancia .contador-en-boton {
+  display: block;
+  font-size: 14px;
+  font-weight: normal;
+  margin-top: 4px;
+  color: white;
+}
+
 </style>
 </head>
 <body>
@@ -652,9 +662,9 @@ h1 {
 <div class="btn-box"><a class="btn" href="https://www.instagram.com/printlab3d.lp" target="_blank">📷 Seguinos en Instagram</a></div>
 <div class="btn-box"><a class="btn" href="catalogo.html">🛍️ Catálogo</a></div>
 <div class="btn-box pulso">
-<a class="btn" href="promo-dia-infancia.html" style="background:#28a745;">🎁 Promo Día de la Infancia</a>
+<a class="btn" id="promo-dia-infancia" href="promo-dia-infancia.html" style="background:#28a745;">🎁 Promo Día de la Infancia<span class="contador-en-boton"></span></a>
 </div>
-<div id="contador-promo"></div>
+
 <div class="btn-box"><a class="btn" href="#" onclick="salir()">🚪 Salir</a></div>
 </main>
 <button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
@@ -1012,6 +1022,35 @@ function iniciarContadorPromo() {
   }, 1000);
 }
 document.addEventListener("DOMContentLoaded", iniciarContadorPromo);
+</script>
+
+
+<script>
+function iniciarContadorPromoDentro() {
+  const fechaObjetivo = new Date("August 16, 2025 23:59:00").getTime();
+  const boton = document.getElementById("promo-dia-infancia");
+  const elemento = boton.querySelector(".contador-en-boton");
+
+  const intervalo = setInterval(function() {
+    const ahora = new Date().getTime();
+    const distancia = fechaObjetivo - ahora;
+
+    if (distancia < 0) {
+      clearInterval(intervalo);
+      boton.style.backgroundColor = "#777";
+      boton.innerHTML = "🎁 Promo Finalizada";
+      return;
+    }
+
+    const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+    elemento.innerHTML = "⏳ " + dias + "d " + horas + "h " + minutos + "m " + segundos + "s ";
+  }, 1000);
+}
+document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
 </script>
 
 </body>
