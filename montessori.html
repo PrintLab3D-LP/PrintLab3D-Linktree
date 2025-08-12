@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Juegos Montessori | PrintLab 3D</title>
-<style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Juegos Montessori | PrintLab 3D</title>
+  <style>
     body {
       font-family: Arial, sans-serif;
       background: #d8f3dc; /* verde pastel */
@@ -24,48 +23,42 @@
       padding: 15px;
       max-width: 500px;
     }
-.slider {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4 / 3; /* usa proporción en vez de altura fija */
-  overflow: hidden;
-  background: white;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.slider img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: none;
-}
-
-.slider img.active {
-  display: block;
-}
+    .slider {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: white;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .nav-buttons {
-      text-align: center;
-      margin-top: 10px;
+    .slider img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: none;
     }
-    .nav-buttons button {
-      margin: 0 5px;
-      padding: 5px 10px;
-      font-size: 16px;
-      border: none;
-      border-radius: 5px;
-      background-color: #52b788;
-      color: white;
-      cursor: pointer;
-    }
-    .whatsapp {
+    .slider img.active {
       display: block;
-      margin-top: 10px;
-      text-align: center;
     }
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(82, 183, 136, 0.9);
+      border: none;
+      color: white;
+      padding: 10px;
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 50%;
+      z-index: 2;
+    }
+    .arrow.left { left: 10px; }
+    .arrow.right { right: 10px; }
+    .whatsapp { text-align:center; margin-top:10px; }
     .whatsapp a {
       text-decoration: none;
       background-color: #25d366;
@@ -75,10 +68,7 @@
       font-weight: bold;
       display: inline-block;
     }
-    .volver {
-      text-align: center;
-      margin-top: 30px;
-    }
+    .volver { text-align:center; margin: 30px 0; }
     .volver a {
       text-decoration: none;
       color: #2d6a4f;
@@ -87,317 +77,195 @@
       padding: 10px 20px;
       border-radius: 10px;
     }
-  
-.arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(82, 183, 136, 0.8);
-  border: none;
-  color: white;
-  padding: 10px;
-  font-size: 20px;
-  cursor: pointer;
-  border-radius: 50%;
-  z-index: 2;
-}
-.arrow.left {
-  left: 10px;
-}
-.arrow.right {
-  right: 10px;
-}
-
-/* Animación de aparición desde abajo */
-.producto-animado {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease-out;
-}
-
-.producto-animado.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-</style>
-
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <style>
-    #volverArriba {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #2d6a4f;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 50px;
-      cursor: pointer;
-      font-size: 16px;
-      display: none;
-      z-index: 99;
-    }
-    .juego:hover {
-      transform: scale(1.02);
-      transition: transform 0.3s;
-    }
-  
-/* Animación de aparición desde abajo */
-.producto-animado {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease-out;
-}
-
-.producto-animado.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-</style>
+    /* animación de aparición */
+    .producto-animado { opacity:0; transform: translateY(30px); transition: all .6s ease-out; }
+    .producto-animado.visible { opacity:1; transform: translateY(0); }
+  </style>
 </head>
-<body onload="AOS.init();">
+<body>
+  <h1>🧩 Juegos Montessori</h1>
 
-<a href="#" id="volverArriba" class="volver-arriba" title="Volver arriba">🔼</a>
-<style>
-  .volver-arriba {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #52b788; /* verde pastel */
-    color: white;
-    text-decoration: none;
-    padding: 14px;
-    border-radius: 50%;
-    font-size: 24px;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    display: none;
-    z-index: 100;
-    text-align: center;
-    line-height: 1;
-  }
-  .volver-arriba:hover {
-    background: #40916c;
-  }
-
-/* Animación de aparición desde abajo */
-.producto-animado {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease-out;
-}
-
-.producto-animado.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-</style>
-
-
-<h1>🧩 Juegos Montessori</h1>
-<div class="juego producto-animado" id="encastre-geométrico"><h2>🟥 Encastre Geométrico</h2>
-<div class="slider" id="slider3"><button class="arrow left" onclick="prevSlide(3)">◀</button><button class="arrow right" onclick="nextSlide(3)">▶</button>
-<img class="active" src="juego educativo montessori.png"/>
-<img class="active" src="juego educativo montessori1.png"/>
-<img class="active" src="juego educativo montessori2.png"/>
-<img class="active" src="juego educativo montessori3.png"/>
-<!-- Agregá más imágenes si querés -->
-</div>
-<p style="text-align:center; margin-top:10px; color:#555;">
-    🎨 Estimula la creatividad y el reconocimiento de colores<br/>
-    🧠 Favorece la coordinación mano-ojo y la motricidad fina<br/>
-    ✨ Método Montessori para aprender jugando
-  </p>
-
-<div class="whatsapp">
-<a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20el%20juego%20Montessori%20Clasificador%20de%20Formas%20y%20Colores.%20¿Cuánto%20cuesta%3F" target="_blank">Pedilo por WhatsApp</a>
-</div>
-</div><div class="juego producto-animado" id="rompecabezas-dinosaurio-numérico"><h2>🦕 Rompecabezas Dinosaurio Numérico</h2>
-<div class="slider" id="slider4"><button class="arrow left" onclick="prevSlide(4)">◀</button><button class="arrow right" onclick="nextSlide(4)">▶</button>
-<img class="active" src="rompecabezas dinosaurio.png"/>
-<img class="active" src="rompecabezas dinosaurio1.png"/>
-<!-- Podés agregar más imágenes si querés -->
-</div>
-<p style="text-align:center; margin-top:10px; color:#555;">
-    🔢 Ayuda a aprender los números del 1 al 10<br/>
-    🧩 Ideal para desarrollar pensamiento lógico y paciencia<br/>
-    🌱 Hecho con el enfoque Montessori: aprender jugando
-  </p>
-
-<div class="whatsapp">
-<a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20el%20Rompecabezas%20Dinosaurio%20Montessori.%20¿Cuánto%20cuesta%3F" target="_blank">Pedilo por WhatsApp</a>
-</div>
-</div><div class="juego producto-animado" id="figuras-apilables-sonrientes"><h2>😁 Figuras Apilables Sonrientes</h2>
-<div class="slider" id="slider5"><button class="arrow left" onclick="prevSlide(5)">◀</button><button class="arrow right" onclick="nextSlide(5)">▶</button>
-<img class="active" src="figuras apilables.png"/>
-<img class="active" src="figuras apilables1.png"/>
-<img class="active" src="figuras apilables2.png"/>
-</div>
-<p style="text-align:center; margin-top:10px; color:#555;">
-    🧱 Apilá, ordená y equilibrá mientras te divertís<br/>
-    🎨 Estimula la motricidad fina y la imaginación<br/>
-    😃 Caritas felices que invitan al juego libre y creativo
-  </p>
-
-<div class="whatsapp">
-<a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20las%20Figuras%20Apilables%20Montessori.%20¿Cuánto%20cuestan%3F" target="_blank">Pedilo por WhatsApp</a>
-</div>
-</div><div class="juego producto-animado" id="hamburguesa-apilable-montessori"><h2>🍔 Hamburguesa Apilable Montessori</h2>
-<div class="slider" id="slider6"><button class="arrow left" onclick="prevSlide(6)">◀</button><button class="arrow right" onclick="nextSlide(6)">▶</button>
-<img class="active" src="hamburguesa montesori.png"/>
-<img class="active" src="hamburguesa montesori1.png"/>
-<img class="active" src="hamburguesa montesori2.png"/>
-<img class="active" src="hamburguesa montesori3.png"/>
-</div>
-<p style="text-align:center; margin-top:10px; color:#555;">
-    👧 Juego simbólico que estimula la imaginación<br/>
-    🧠 Practicá el orden, la motricidad y la creatividad<br/>
-    🍅 Armá tu propia hamburguesa ¡ingrediente por ingrediente!
-  </p>
-
-<div class="whatsapp">
-<a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20la%20Hamburguesa%20Montessori.%20¿Cuánto%20cuesta%3F" target="_blank">Pedila por WhatsApp</a>
-</div>
-</div><div class="juego producto-animado" id="animales-apilables-con-dado"><h2>🐾 Animales Apilables con Dado</h2>
-<div class="slider" id="slider7"><button class="arrow left" onclick="prevSlide(7)">◀</button><button class="arrow right" onclick="nextSlide(7)">▶</button>
-<img class="active" src="animales apilables.png"/>
-<img class="active" src="animales apilables1.png"/>
-<img class="active" src="animales apilables2.png"/>
-</div>
-<p style="text-align:center; margin-top:10px; color:#555;">
-    🐘 Apilá animales sin que se caigan<br/>
-    🎲 Incluye dado para jugar por turnos<br/>
-    🧠 Ideal para concentración, equilibrio y juego grupal
-  </p>
-
-<div class="whatsapp">
-<a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20el%20juego%20Montessori%20Animales%20Apilables.%20¿Cuánto%20cuesta%3F" target="_blank">Pedilo por WhatsApp</a>
-</div>
-</div><div class="juego producto-animado" id="tablero-numérico-montessori"><h2>🔢 Tablero Numérico Montessori</h2>
-<div class="slider" id="slider8"><button class="arrow left" onclick="prevSlide(8)">◀</button><button class="arrow right" onclick="nextSlide(8)">▶</button>
-<img class="active" src="tablero numerico.png"/>
-<img class="active" src="tablero numerico1.png"/>
-<img class="active" src="tablero numerico2.png"/>
-</div>
-<p style="text-align:center; margin-top:10px; color:#555;">
-    🧠 Asociá número y cantidad de forma concreta<br/>
-    🌈 Colores llamativos que ayudan a la concentración<br/>
-    🖐️ Ideal para aprender jugando con piezas encastrables
-  </p>
-
-<div class="whatsapp">
-<a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20el%20Tablero%20Numérico%20Montessori.%20¿Cuánto%20cuesta%3F" target="_blank">Pedilo por WhatsApp</a>
-</div>
-</div>
-  <p style="text-align:center; margin-top:10px; color:#555;">
-    🎨 Reconocimiento de colores y secuencias<br>
-    🧠 Lógica, clasificación y pensamiento espacial<br>
-    ✋ Motricidad fina y juego libre inspirado en Montessori
-  </p>
-  <div class="nav-buttons">
-    <button onclick="prevSlide(9)">◀</button>
-    <button onclick="nextSlide(9)">▶</button>
+  <div class="juego producto-animado" id="encastre-geometrico">
+    <h2>🟥 Encastre Geométrico</h2>
+    <div class="slider" id="slider3">
+      <button class="arrow left" onclick="prevSlide(3)">◀</button>
+      <button class="arrow right" onclick="nextSlide(3)">▶</button>
+      <img src="juego educativo montessori.png" class="active" alt="Encastre 1"/>
+      <img src="juego educativo montessori1.png" alt="Encastre 2"/>
+      <img src="juego educativo montessori2.png" alt="Encastre 3"/>
+      <img src="juego educativo montessori3.png" alt="Encastre 4"/>
+    </div>
+    <p style="text-align:center; margin-top:10px; color:#555;">
+      🎨 Estimula la creatividad y el reconocimiento de colores<br>
+      🧠 Favorece la coordinación mano-ojo y la motricidad fina<br>
+      ✨ Método Montessori para aprender jugando
+    </p>
+    <div class="whatsapp">
+      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20el%20juego%20Montessori%20Clasificador%20de%20Formas%20y%20Colores.%20%C2%BFCu%C3%A1nto%20cuesta%3F" target="_blank">Pedilo por WhatsApp</a>
+    </div>
   </div>
-  <div class="whatsapp">
-    <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20juego%20Montessori%20Nube%20%2F%20Arco%C3%ADris%20Apilable.%20%C2%BFCu%C3%A1nto%20sale%3F" target="_blank">
-      Pedilo por WhatsApp
-    </a>
-  </div>
-</div>
 
-</div><script>
+  <div class="juego producto-animado" id="rompecabezas-dinosaurio">
+    <h2>🦕 Rompecabezas Dinosaurio Numérico</h2>
+    <div class="slider" id="slider4">
+      <button class="arrow left" onclick="prevSlide(4)">◀</button>
+      <button class="arrow right" onclick="nextSlide(4)">▶</button>
+      <img src="rompecabezas dinosaurio.png" class="active" alt="Dino 1"/>
+      <img src="rompecabezas dinosaurio1.png" alt="Dino 2"/>
+    </div>
+    <p style="text-align:center; margin-top:10px; color:#555;">
+      🔢 Ayuda a aprender los números del 1 al 10<br>
+      🧩 Ideal para desarrollar pensamiento lógico y paciencia<br>
+      🌱 Hecho con el enfoque Montessori: aprender jugando
+    </p>
+    <div class="whatsapp">
+      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20el%20Rompecabezas%20Dinosaurio%20Montessori.%20%C2%BFCu%C3%A1nto%20cuesta%3F" target="_blank">Pedilo por WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="juego producto-animado" id="figuras-apilables">
+    <h2>😁 Figuras Apilables Sonrientes</h2>
+    <div class="slider" id="slider5">
+      <button class="arrow left" onclick="prevSlide(5)">◀</button>
+      <button class="arrow right" onclick="nextSlide(5)">▶</button>
+      <img src="figuras apilables.png" class="active" alt="Figuras 1"/>
+      <img src="figuras apilables1.png" alt="Figuras 2"/>
+      <img src="figuras apilables2.png" alt="Figuras 3"/>
+    </div>
+    <p style="text-align:center; margin-top:10px; color:#555;">
+      🧱 Apilá, ordená y equilibrá mientras te divertís<br>
+      🎨 Estimula la motricidad fina y la imaginación<br>
+      😃 Caritas felices que invitan al juego libre y creativo
+    </p>
+    <div class="whatsapp">
+      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20las%20Figuras%20Apilables%20Montessori.%20%C2%BFCu%C3%A1nto%20cuestan%3F" target="_blank">Pedilo por WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="juego producto-animado" id="hamburguesa-apilable">
+    <h2>🍔 Hamburguesa Apilable Montessori</h2>
+    <div class="slider" id="slider6">
+      <button class="arrow left" onclick="prevSlide(6)">◀</button>
+      <button class="arrow right" onclick="nextSlide(6)">▶</button>
+      <img src="hamburguesa montesori.png" class="active" alt="Hamburguesa 1"/>
+      <img src="hamburguesa montesori1.png" alt="Hamburguesa 2"/>
+      <img src="hamburguesa montesori2.png" alt="Hamburguesa 3"/>
+      <img src="hamburguesa montesori3.png" alt="Hamburguesa 4"/>
+    </div>
+    <p style="text-align:center; margin-top:10px; color:#555;">
+      👧 Juego simbólico que estimula la imaginación<br>
+      🧠 Practicá el orden, la motricidad y la creatividad<br>
+      🍅 Armá tu propia hamburguesa ¡ingrediente por ingrediente!
+    </p>
+    <div class="whatsapp">
+      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20la%20Hamburguesa%20Montessori.%20%C2%BFCu%C3%A1nto%20cuesta%3F" target="_blank">Pedila por WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="juego producto-animado" id="animales-apilables">
+    <h2>🐾 Animales Apilables con Dado</h2>
+    <div class="slider" id="slider7">
+      <button class="arrow left" onclick="prevSlide(7)">◀</button>
+      <button class="arrow right" onclick="nextSlide(7)">▶</button>
+      <img src="animales apilables.png" class="active" alt="Animales 1"/>
+      <img src="animales apilables1.png" alt="Animales 2"/>
+      <img src="animales apilables2.png" alt="Animales 3"/>
+    </div>
+    <p style="text-align:center; margin-top:10px; color:#555;">
+      🐘 Apilá animales sin que se caigan<br>
+      🎲 Incluye dado para jugar por turnos<br>
+      🧠 Ideal para concentración, equilibrio y juego grupal
+    </p>
+    <div class="whatsapp">
+      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20el%20juego%20Montessori%20Animales%20Apilables.%20%C2%BFCu%C3%A1nto%20cuesta%3F" target="_blank">Pedilo por WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="juego producto-animado" id="tablero-numerico">
+    <h2>🔢 Tablero Numérico Montessori</h2>
+    <div class="slider" id="slider8">
+      <button class="arrow left" onclick="prevSlide(8)">◀</button>
+      <button class="arrow right" onclick="nextSlide(8)">▶</button>
+      <img src="tablero numerico.png" class="active" alt="Tablero 1"/>
+      <img src="tablero numerico1.png" alt="Tablero 2"/>
+      <img src="tablero numerico2.png" alt="Tablero 3"/>
+    </div>
+    <p style="text-align:center; margin-top:10px; color:#555;">
+      🧠 Asociá número y cantidad de forma concreta<br>
+      🌈 Colores llamativos que ayudan a la concentración<br>
+      🖐️ Ideal para aprender jugando con piezas encastrables
+    </p>
+    <div class="whatsapp">
+      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20encargar%20el%20Tablero%20Num%C3%A9rico%20Montessori.%20%C2%BFCu%C3%A1nto%20cuesta%3F" target="_blank">Pedilo por WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="juego producto-animado" id="nube-arcoiris-montessori">
+    <h2>🌈 Nube / Arcoíris Apilable Montessori</h2>
+    <div class="slider" id="slider9">
+      <button class="arrow left" onclick="prevSlide(9)">◀</button>
+      <button class="arrow right" onclick="nextSlide(9)">▶</button>
+      <img src="nube montessori.png" class="active" alt="Nube Montessori"/>
+    </div>
+    <p style="text-align:center; margin-top:10px; color:#555;">
+      🎨 Reconocimiento de colores y secuencias<br>
+      🧠 Lógica, clasificación y pensamiento espacial<br>
+      ✋ Motricidad fina y juego libre inspirado en Montessori
+    </p>
+    <div class="whatsapp">
+      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20juego%20Montessori%20Nube%20%2F%20Arco%C3%ADris%20Apilable.%20%C2%BFCu%C3%A1nto%20sale%3F" target="_blank">Pedilo por WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="juego producto-animado" id="mini-juego-enchufable">
+    <h2>🎯 Mini Juego Enchufable para Niños</h2>
+    <div class="slider" id="slider10">
+      <button class="arrow left" onclick="prevSlide(10)">◀</button>
+      <button class="arrow right" onclick="nextSlide(10)">▶</button>
+      <img src="mini juego enchufable niños.png" class="active" alt="Mini juego enchufable"/>
+    </div>
+    <p style="text-align:center; margin-top:10px; color:#555;">
+      🧩 Estimula la creatividad y el reconocimiento de formas<br>
+      🎨 Favorece la coordinación mano-ojo y la motricidad fina<br>
+      🌟 Ideal para aprender jugando y crear diseños únicos
+    </p>
+    <div class="whatsapp">
+      <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Mini%20Juego%20Enchufable%20para%20Ni%C3%B1os.%20%C2%BFCu%C3%A1nto%20sale%3F" target="_blank">Pedilo por WhatsApp</a>
+    </div>
+  </div>
+
+  <div class="volver">
+    <a href="catalogo.html">⬅ Volver al Catálogo</a>
+  </div>
+
+  <script>
     function nextSlide(sliderId) {
       const slider = document.getElementById("slider" + sliderId);
       const images = slider.querySelectorAll("img");
       let current = [...images].findIndex(img => img.classList.contains("active"));
+      if (current === -1) { images[0].classList.add("active"); return; }
       images[current].classList.remove("active");
       let next = (current + 1) % images.length;
       images[next].classList.add("active");
     }
-
     function prevSlide(sliderId) {
       const slider = document.getElementById("slider" + sliderId);
       const images = slider.querySelectorAll("img");
       let current = [...images].findIndex(img => img.classList.contains("active"));
+      if (current === -1) { images[0].classList.add("active"); return; }
       images[current].classList.remove("active");
       let prev = (current - 1 + images.length) % images.length;
       images[prev].classList.add("active");
     }
-  </script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<script>
-  window.onscroll = function() {
-    document.getElementById("volverArriba").style.display =
-      window.scrollY > 200 ? "block" : "none";
-  };
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-</script>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const elementos = document.querySelectorAll('.producto-animado');
-  const observer = new IntersectionObserver((entradas) => {
-    entradas.forEach(entrada => {
-      if (entrada.isIntersecting) {
-        entrada.target.classList.add('visible');
-      }
+    // animación on-scroll
+    document.addEventListener("DOMContentLoaded", function() {
+      const elementos = document.querySelectorAll('.producto-animado');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.2 });
+      elementos.forEach(el => observer.observe(el));
     });
-  }, { threshold: 0.2 });
-
-  elementos.forEach(el => observer.observe(el));
-});
-</script>
-
-
-<div class="juego producto-animado" id="nube-arcoiris-montessori">
-  <h2>🌈 Nube / Arcoíris Apilable Montessori</h2>
-  <div class="slider" id="slider9" style="position: relative; display: inline-block;">
-    <button class="arrow left" onclick="prevSlide(9)" style="position:absolute; left:10px; top:50%; transform:translateY(-50%);">◀</button>
-    <button class="arrow right" onclick="nextSlide(9)" style="position:absolute; right:10px; top:50%; transform:translateY(-50%);">▶</button>
-    <img src="nube montessori.png" class="active" alt="Nube arcoíris apilable Montessori" />
-  </div>
-  <p style="text-align:center; margin-top:10px; color:#555;">
-    🎨 Reconocimiento de colores y secuencias<br>
-    🧠 Lógica, clasificación y pensamiento espacial<br>
-    ✋ Motricidad fina y juego libre inspirado en Montessori
-  </p>
-  <div class="whatsapp">
-    <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20juego%20Montessori%20Nube%20%2F%20Arco%C3%ADris%20Apilable.%20%C2%BFCu%C3%A1nto%20sale%3F" target="_blank">
-      Pedilo por WhatsApp
-    </a>
-  </div>
-</div>
-
-<div class="juego producto-animado" id="mini-juego-enchufable">
-  <h2>🎯 Mini Juego Enchufable para Niños</h2>
-  <div class="slider" id="slider10">
-    <button class="arrow left" onclick="prevSlide(10)">◀</button>
-    <button class="arrow right" onclick="nextSlide(10)">▶</button>
-    <img src="mini juego enchufable niños.png" class="active" alt="Mini juego enchufable para niños" />
-    <!-- Podés sumar más imágenes:
-    <img src="mini-juego-2.png" alt="Mini juego enchufable - vista 2" />
-    -->
-  </div>
-  <p style="text-align:center; margin-top:10px; color:#555;">
-    🧩 Estimula la creatividad y el reconocimiento de formas<br>
-    🎨 Favorece la coordinación mano-ojo y la motricidad fina<br>
-    🌟 Ideal para aprender jugando y crear diseños únicos
-  </p>
-  <div class="whatsapp">
-    <a href="https://wa.me/5492954218753?text=Hola!%20Quiero%20el%20Mini%20Juego%20Enchufable%20para%20Ni%C3%B1os.%20%C2%BFCu%C3%A1nto%20sale%3F" target="_blank">
-      Pedilo por WhatsApp
-    </a>
-  </div>
-</div>
-
-
-<div class="volver">
-  <a href="catalogo.html">⬅ Volver al Catálogo</a>
-</div>
+  </script>
 </body>
 </html>
