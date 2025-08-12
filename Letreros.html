@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Letreros - PrintLab 3D</title>
+<style>
+  /* === Tema Azul Pastel, mismo layout que Gadgets === */
+  body {
+    font-family: sans-serif;
+    background-color: #eaf4ff; /* azul pastel muy claro */
+    margin: 0;
+    padding: 2rem;
+    color: #2b2b2b;
+    text-align: center;
+  }
+  h1 {
+    color: #5b8def; /* título principal */
+    margin-bottom: 2rem;
+  }
+  h2 {
+    color: #3f6fc9; /* subtítulos de producto */
+    font-size: 1.6rem;
+    margin-top: 2.0rem;
+  }
+  .juego {
+    background-color: #dceaff; /* tarjeta producto */
+    padding: 1.5rem;
+    margin: 2rem auto;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+    transition: transform 0.3s;
+  }
+  .juego:hover { transform: scale(1.02); }
+  .juego img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: contain;
+    border-radius: 12px;
+  }
+  .nav-buttons { margin-top: 1rem; }
+  .nav-buttons button {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    margin: 0 0.5rem;
+    background-color: #7aa9ff; /* botones slider */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .whatsapp { margin-top: 1.2rem; }
+  .whatsapp a {
+    background: #25D366;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .volver { margin-top: 3rem; }
+  .volver a {
+    background-color: #7aa9ff; /* botón volver */
+    padding: 0.8rem 1.6rem;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+  }
+  /* Animación de aparición desde abajo */
+  .producto-animado { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
+  .producto-animado.visible { opacity: 1; transform: translateY(0); }
+
+  /* Botón flotante volver arriba (icono redondo) */
+  .volver-arriba {
+    position: fixed; bottom: 20px; right: 20px; background: #7aa9ff; color: white;
+    text-decoration: none; padding: 14px; border-radius: 50%; font-size: 22px; font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); display: none; z-index: 100; text-align: center; line-height: 1;
+  }
+  .volver-arriba:hover { background: #5e90f5; }
+
+  /* Botón caret grande para subir (compat con tu otra lógica) */
+  #btnSubir {
+    display: none; position: fixed; bottom: 80px; right: 20px; z-index: 2000;
+    background-color: #7aa9ff; color: white; padding: 10px 15px; border: none; border-radius: 50%;
+    font-size: 20px; cursor: pointer; box-shadow: 0 0 8px rgba(0,0,0,0.25); transition: background-color 0.3s;
+  }
+  #btnSubir:hover { background-color: #5e90f5; }
+</style>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body onload="AOS.init();">
+<a href="#" id="volverArriba" class="volver-arriba" title="Volver arriba">🔼</a>
+
+<h1>🪧 Letreros 3D</h1>
+
+<!-- Producto Único: Letras con Musgo -->
+<div class="juego producto-animado" id="letras-con-musgo">
+  <h2>🪴 Letras con Musgo</h2>
+  <img alt="Letras con musgo 3D" id="img-musgo" src="letras musgo.png"/>
+  <div class="nav-buttons">
+    <button onclick="cambiarImagenMusgo(-1)">◀</button>
+    <button onclick="cambiarImagenMusgo(1)">▶</button>
+  </div>
+  <p>✨ Personalizá tus <strong>letras 3D</strong> con relleno de <strong>musgo preservado</strong>. Elegí iniciales o nombres completos, altura, color del marco y base. Ideales para deco de eventos, locales o habitaciones.</p>
+  <p>📏 <strong>Alturas sugeridas:</strong> 12–25 cm • ⚙️ <strong>Material:</strong> PLA • 🧼 <strong>Mantenimiento:</strong> sin riego.</p>
+  <div class="whatsapp">
+    <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio de las *Letras con Musgo* 🪴">Pedilo por WhatsApp</a>
+  </div>
+</div>
+
+<div class="volver">
+  <a href="otros.html">⬅️ Volver a la sección Otros</a>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  // Mostrar/ocultar ancla volver arriba (emoji circular)
+  window.addEventListener('scroll', function(){
+    document.getElementById('volverArriba').style.display = (window.scrollY > 200) ? 'block' : 'none';
+  });
+  // Smooth scroll para volver arriba
+  document.getElementById('volverArriba').addEventListener('click', function(e){
+    e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  // IntersectionObserver para animar aparición
+  document.addEventListener('DOMContentLoaded', function(){
+    const elementos = document.querySelectorAll('.producto-animado');
+    const observer = new IntersectionObserver((entradas)=>{
+      entradas.forEach(entrada=>{ if(entrada.isIntersecting){ entrada.target.classList.add('visible'); }});
+    }, { threshold: 0.2 });
+    elementos.forEach(el=>observer.observe(el));
+  });
+
+  // Slider simple: si más adelante agregás más imágenes, sumalas acá
+  const imagenesMusgo = [
+    'letras musgo.png' // podés agregar 'letras musgo 2.png', 'letras musgo 3.png', etc.
+  ];
+  let iMusgo = 0;
+  function cambiarImagenMusgo(dir){
+    iMusgo = (iMusgo + dir + imagenesMusgo.length) % imagenesMusgo.length;
+    document.getElementById('img-musgo').src = imagenesMusgo[iMusgo];
+  }
+
+  // Botón caret grande (compat con tu código existente)
+  window.onscroll = function() {
+    const btn = document.getElementById('btnSubir');
+    if (!btn) return; // por si no lo usás
+    btn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? 'block' : 'none';
+  };
+  function subirArriba(){ window.scrollTo({top:0, behavior:'smooth'}); }
+</script>
+<button id="btnSubir" onclick="subirArriba()">&#8679;</button>
+</body>
+</html>
