@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Letreros - PrintLab 3D</title>
 <style>
-  /* === Tema Azul Pastel, mismo layout que Gadgets === */
   body{font-family:sans-serif;background:#eaf4ff;margin:0;padding:2rem;color:#2b2b2b;text-align:center}
   h1{color:#5b8def;margin-bottom:2rem}
   h2{color:#3f6fc9;font-size:1.6rem;margin-top:2rem}
-  .juego{background:#dceaff;padding:1.5rem;margin:2rem auto;border-radius:12px;width:90%;max-width:800px;box-shadow:0 4px 6px rgba(0,0,0,.08);transition:transform .3s}
+  .juego{background:#dceaff;padding:1.5rem;margin:2rem auto;border-radius:12px;width:90%;max-width:800px;
+        box-shadow:0 4px 6px rgba(0,0,0,.08);transition:transform .3s}
   .juego:hover{transform:scale(1.02)}
   .juego img{width:100%;max-width:600px;height:auto;aspect-ratio:4/3;object-fit:contain;border-radius:12px}
   .nav-buttons{margin-top:1rem}
@@ -18,12 +18,15 @@
   .whatsapp a{background:#25D366;color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:bold}
   .volver{margin-top:3rem}
   .volver a{background:#7aa9ff;padding:.8rem 1.6rem;color:#fff;text-decoration:none;border-radius:8px;font-weight:bold}
-  /* Aparición desde abajo */
+  /* aparición */
   .producto-animado{opacity:0;transform:translateY(30px);transition:all .6s ease-out}
   .producto-animado.visible{opacity:1;transform:translateY(0)}
-  /* Botón redondo grande volver arriba */
-  #btnSubir{display:none;position:fixed;bottom:20px;right:20px;z-index:2000;background:#7aa9ff;color:#fff;padding:12px 16px;border:none;border-radius:50%;font-size:22px;cursor:pointer;box-shadow:0 0 8px rgba(0,0,0,.25);transition:background-color .3s}
+  /* botón volver arriba */
+  #btnSubir{display:none;position:fixed;bottom:20px;right:20px;z-index:2000;background:#7aa9ff;color:#fff;
+            padding:12px 16px;border:none;border-radius:50%;font-size:22px;cursor:pointer;box-shadow:0 0 8px rgba(0,0,0,.25)}
   #btnSubir:hover{background:#5e90f5}
+  /* desactivar botones si no hay más imágenes */
+  .nav-buttons button[disabled]{opacity:.5;cursor:not-allowed}
 </style>
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
@@ -36,8 +39,8 @@
   <h2>🔤🌿 Letras con Musgo</h2>
   <img id="img-musgo" alt="Letras con musgo 3D" src="letras musgo.png"/>
   <div class="nav-buttons">
-    <button onclick="cambiarImagenMusgo(-1)">◀</button>
-    <button onclick="cambiarImagenMusgo(1)">▶</button>
+    <button id="btn-musgo-prev" onclick="cambiarImagen('musgo', -1)">◀</button>
+    <button id="btn-musgo-next" onclick="cambiarImagen('musgo', 1)">▶</button>
   </div>
   <p>✨ Personalizá tus <strong>letras 3D</strong> con <strong>musgo preservado</strong>. Iniciales o nombres, altura y color a elección.</p>
   <p>📏 Tamaño personalizable • ⚙️ PLA • 🧼 Sin riego.</p>
@@ -49,8 +52,8 @@
   <h2>🎨 Letras 3D de Colores</h2>
   <img id="img-colores" alt="Letras 3D de colores" src="caja letras color.png"/>
   <div class="nav-buttons">
-    <button onclick="cambiarImagenColores(-1)">◀</button>
-    <button onclick="cambiarImagenColores(1)">▶</button>
+    <button id="btn-colores-prev" onclick="cambiarImagen('colores', -1)">◀</button>
+    <button id="btn-colores-next" onclick="cambiarImagen('colores', 1)">▶</button>
   </div>
   <p>✨ Letras en colores vibrantes para deco, señalética o educación. Sets o sueltas.</p>
   <p>📏 Tamaño personalizable • ⚙️ PLA/PETG Premium • 🎯 Colores personalizables.</p>
@@ -62,24 +65,21 @@
   <h2>💡 Letras 3D con Luz LED</h2>
   <img id="img-luz" alt="Letras 3D con luz LED" src="letras con luz.png"/>
   <div class="nav-buttons">
-    <button onclick="cambiarImagenLuz(-1)">◀</button>
-    <button onclick="cambiarImagenLuz(1)">▶</button>
+    <button id="btn-luz-prev" onclick="cambiarImagen('luz', -1)">◀</button>
+    <button id="btn-luz-next" onclick="cambiarImagen('luz', 1)">▶</button>
   </div>
-  <p>💡 Letreros hechos para colocar cinta LED. Solo se vende el cartel, no incluye la iluminación LED.</p>
+  <p>💡 Letreros hechos para colocar cinta LED. <strong>Solo se vende el cartel</strong>, no incluye la iluminación LED.</p>
   <p>📏 Tamaño personalizable • ⚙️ PLA/PETG • 🎨 Colores de marco a elección.</p>
   <div class="whatsapp"><a href="https://wa.me/5492954218753?text=Hola! Me interesan las *Letras 3D con Luz LED* 💡">Pedilo por WhatsApp</a></div>
 </div>
-
 
 <!-- Producto 4: Letras Amurables con Tapa Ajustable -->
 <div class="juego producto-animado" id="letras-amurables">
   <h2>📐 Letras Amurables con Tapa Ajustable</h2>
   <img id="img-amurables" alt="Letras amurables con tapa" src="letras amurables con tapa.png"/>
-   <img id="img-amurables" alt="Letras amurables con tapa" src="letras amurables con tapa1.png"/>
-   <img id="img-amurables" alt="Letras amurables con tapa" src="letras amurables con tapa2.png"/>
   <div class="nav-buttons">
-    <button onclick="cambiarImagenAmurables(-1)">◀</button>
-    <button onclick="cambiarImagenAmurables(1)">▶</button>
+    <button id="btn-amurables-prev" onclick="cambiarImagen('amurables', -1)">◀</button>
+    <button id="btn-amurables-next" onclick="cambiarImagen('amurables', 1)">▶</button>
   </div>
   <p>Soporte incluido, diseñado para mayor estabilidad.</p>
   <p>Tapa ajustable por presión, con una tolerancia optimizada de -0.1 para un encaje perfecto.</p>
@@ -92,35 +92,65 @@
   <div class="whatsapp"><a href="https://wa.me/5492954218753?text=Hola! Me interesan las *Letras Amurables con Tapa Ajustable* 📐">Pedilo por WhatsApp</a></div>
 </div>
 
-
 <div class="volver"><a href="otros.html">⬅️ Volver a la sección Otros</a></div>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-  // Aparición con IntersectionObserver
-  document.addEventListener('DOMContentLoaded',()=>{
-    const obs=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.2});
-    document.querySelectorAll('.producto-animado').forEach(el=>obs.observe(el));
+  // Animación de aparición
+  document.addEventListener('DOMContentLoaded', () => {
+    const elementos = document.querySelectorAll('.producto-animado');
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.2 });
+    elementos.forEach(el=>observer.observe(el));
   });
 
-  // Sliders: una sola <img> por producto
-  const imagenesMusgo=['letras musgo.png','letras musgo1.png','letras musgo2.png','letras musgo4.png'];
-  let iMusgo=0;function cambiarImagenMusgo(d){iMusgo=(iMusgo+d+imagenesMusgo.length)%imagenesMusgo.length;document.getElementById('img-musgo').src=imagenesMusgo[iMusgo];}
+  // Arrays de imágenes para cada producto (solo UNA <img> visible por producto)
+  const galeria = {
+    musgo:    ['letras musgo.png','letras musgo1.png','letras musgo2.png','letras musgo4.png'],
+    colores:  ['caja letras color.png','caja letras color1.png'],
+    luz:      ['letras con luz.png'], // sumá más si tenés: 'letras con luz1.png', 'letras con luz2.png'
+    amurables:['letras amurables con tapa.png'] // sumá más si tenés
+  };
+  const indices = { musgo:0, colores:0, luz:0, amurables:0 };
 
-  const imagenesColores=['caja letras color.png','caja letras color1.png'];
-  let iColores=0;function cambiarImagenColores(d){iColores=(iColores+d+imagenesColores.length)%imagenesColores.length;document.getElementById('img-colores').src=imagenesColores[iColores];}
+  function setSrc(idImg, arr, idx){
+    const el = document.getElementById(idImg);
+    if(el) el.src = arr[idx];
+  }
 
-  const imagenesLuz=['letras con luz.png','letras con luz1.png','letras con luz2.png'];
-  let iLuz=0;function cambiarImagenLuz(d){iLuz=(iLuz+d+imagenesLuz.length)%imagenesLuz.length;document.getElementById('img-luz').src=imagenesLuz[iLuz];}
+  function updateButtons(nombre){
+    const arr = galeria[nombre];
+    const prev = document.getElementById(`btn-${nombre}-prev`);
+    const next = document.getElementById(`btn-${nombre}-next`);
+    if(!prev || !next) return;
+    const disabled = (arr.length <= 1);
+    prev.disabled = disabled; next.disabled = disabled;
+  }
 
-  
-  const imagenesAmurables=['letras amurables con tapa.png'];
-  let iAmurables=0;function cambiarImagenAmurables(d){iAmurables=(iAmurables+d+imagenesAmurables.length)%imagenesAmurables.length;document.getElementById('img-amurables').src=imagenesAmurables[iAmurables];}
+  // Inicializar imágenes y estado de botones
+  document.addEventListener('DOMContentLoaded', () => {
+    setSrc('img-musgo', galeria.musgo, indices.musgo);      updateButtons('musgo');
+    setSrc('img-colores', galeria.colores, indices.colores);updateButtons('colores');
+    setSrc('img-luz', galeria.luz, indices.luz);            updateButtons('luz');
+    setSrc('img-amurables', galeria.amurables, indices.amurables); updateButtons('amurables');
+  });
+
+  function cambiarImagen(nombre, dir){
+    const arr = galeria[nombre];
+    indices[nombre] = (indices[nombre] + dir + arr.length) % arr.length;
+    const idImg = `img-${nombre}`;
+    setSrc(idImg, arr, indices[nombre]);
+  }
 
   // Botón subir (solo botón redondo grande)
-  window.addEventListener('scroll',()=>{const btn=document.getElementById('btnSubir');if(btn)btn.style.display=(document.documentElement.scrollTop>200)?'block':'none'});
-  function subirArriba(){window.scrollTo({top:0,behavior:'smooth'})}
+  window.addEventListener('scroll', () => {
+    const btn = document.getElementById('btnSubir');
+    btn.style.display = (document.documentElement.scrollTop > 200) ? 'block' : 'none';
+  });
+  function subirArriba(){ window.scrollTo({top:0, behavior:'smooth'}); }
 </script>
+
 <button id="btnSubir" onclick="subirArriba()">↑</button>
 </body>
 </html>
