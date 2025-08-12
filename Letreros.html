@@ -98,14 +98,11 @@
 
 <h1>🔤 Letreros 3D</h1>
 
-<!-- Producto Único: Letras con Musgo -->
+<!-- Producto 1: Letras con Musgo -->
 <div class="juego producto-animado" id="letras-con-musgo">
   <h2>🔤🌿 Letras con Musgo</h2>
+  <!-- una sola IMG para slider -->
   <img alt="Letras con musgo 3D" id="img-musgo" src="letras musgo.png"/>
-  <img alt="Letras con musgo 3D" id="img-musgo" src="letras musgo1.png"/>
-  <img alt="Letras con musgo 3D" id="img-musgo" src="letras musgo2.png"/>
-  <img alt="Letras con musgo 3D" id="img-musgo" src="letras musgo4.png"/>
-  
   <div class="nav-buttons">
     <button onclick="cambiarImagenMusgo(-1)">◀</button>
     <button onclick="cambiarImagenMusgo(1)">▶</button>
@@ -114,6 +111,22 @@
   <p>📏 <strong>Alturas sugeridas:</strong> 12–25 cm • ⚙️ <strong>Material:</strong> PLA • 🧼 <strong>Mantenimiento:</strong> sin riego.</p>
   <div class="whatsapp">
     <a href="https://wa.me/5492954218753?text=Hola! Quiero saber el precio de las *Letras con Musgo* 🪴">Pedilo por WhatsApp</a>
+  </div>
+</div>
+
+<!-- Producto 2: Letras 3D de Colores -->
+<div class="juego producto-animado" id="letras-colores">
+  <h2>🎨 Letras 3D de Colores</h2>
+  <!-- una sola IMG para slider -->
+  <img alt="Letras 3D de colores" id="img-colores" src="caja letras color.png"/>
+  <div class="nav-buttons">
+    <button onclick="cambiarImagenColores(-1)">◀</button>
+    <button onclick="cambiarImagenColores(1)">▶</button>
+  </div>
+  <p>✨ Letras 3D en colores vibrantes. Perfectas para decoración, señalética o proyectos educativos. Pedilas en sets o sueltas, con la paleta que más te guste.</p>
+  <p>📏 <strong>Alturas disponibles:</strong> 10–20 cm • ⚙️ <strong>Material:</strong> PLA Premium • 🎯 <strong>Colores:</strong> Personalizables.</p>
+  <div class="whatsapp">
+    <a href="https://wa.me/5492954218753?text=Hola! Me interesan las *Letras 3D de Colores* 🎨">Pedilo por WhatsApp</a>
   </div>
 </div>
 
@@ -141,14 +154,28 @@
     elementos.forEach(el=>observer.observe(el));
   });
 
-  // Slider simple: si más adelante agregás más imágenes, sumalas acá
+  // Slider: Musgo (usa tus archivos existentes)
   const imagenesMusgo = [
-    'letras musgo.png' // podés agregar 'letras musgo 2.png', 'letras musgo 3.png', etc.
+    'letras musgo.png',
+    'letras musgo1.png',
+    'letras musgo2.png',
+    'letras musgo4.png'
   ];
   let iMusgo = 0;
   function cambiarImagenMusgo(dir){
     iMusgo = (iMusgo + dir + imagenesMusgo.length) % imagenesMusgo.length;
     document.getElementById('img-musgo').src = imagenesMusgo[iMusgo];
+  }
+
+  // Slider: Colores (por ahora 1 imagen, podés sumar más)
+  const imagenesColores = [
+    'caja letras color.png'
+    // 'caja letras color 2.png', 'caja letras color 3.png', ...
+  ];
+  let iColores = 0;
+  function cambiarImagenColores(dir){
+    iColores = (iColores + dir + imagenesColores.length) % imagenesColores.length;
+    document.getElementById('img-colores').src = imagenesColores[iColores];
   }
 
   // Botón caret grande (compat con tu código existente)
@@ -162,5 +189,4 @@
 <button id="btnSubir" onclick="subirArriba()">&#8679;</button>
 </body>
 </html>
-
 
