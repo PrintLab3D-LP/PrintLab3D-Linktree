@@ -71,30 +71,18 @@
     border-radius: 8px;
     font-weight: bold;
   }
-  /* Animación de aparición desde abajo */
-  .producto-animado { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
-  .producto-animado.visible { opacity: 1; transform: translateY(0); }
 
-  /* Botón flotante volver arriba (icono redondo) */
-  .volver-arriba {
-    position: fixed; bottom: 20px; right: 20px; background: #7aa9ff; color: white;
-    text-decoration: none; padding: 14px; border-radius: 50%; font-size: 22px; font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2); display: none; z-index: 100; text-align: center; line-height: 1;
-  }
-  .volver-arriba:hover { background: #5e90f5; }
-
-  /* Botón caret grande para subir (compat con tu otra lógica) */
+  /* Botón caret grande para subir */
   #btnSubir {
-    display: none; position: fixed; bottom: 80px; right: 20px; z-index: 2000;
-    background-color: #7aa9ff; color: white; padding: 10px 15px; border: none; border-radius: 50%;
-    font-size: 20px; cursor: pointer; box-shadow: 0 0 8px rgba(0,0,0,0.25); transition: background-color 0.3s;
+    display: none; position: fixed; bottom: 20px; right: 20px; z-index: 2000;
+    background-color: #7aa9ff; color: white; padding: 12px 16px; border: none; border-radius: 50%;
+    font-size: 22px; cursor: pointer; box-shadow: 0 0 8px rgba(0,0,0,0.25); transition: background-color 0.3s;
   }
   #btnSubir:hover { background-color: #5e90f5; }
 </style>
 <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body onload="AOS.init();">
-<a href="#" id="volverArriba" class="volver-arriba" title="Volver arriba">🔼</a>
 
 <h1>🔤 Letreros 3D</h1>
 
@@ -103,6 +91,9 @@
   <h2>🔤🌿 Letras con Musgo</h2>
   <!-- una sola IMG para slider -->
   <img alt="Letras con musgo 3D" id="img-musgo" src="letras musgo.png"/>
+  4 <img alt="Letras con musgo 3D" id="img-musgo" src="letras musgo1.png"/>
+   <img alt="Letras con musgo 3D" id="img-musgo" src="letras musgo2.png"/>
+   <img alt="Letras con musgo 3D" id="img-musgo" src="letras musgo4.png"/>
   <div class="nav-buttons">
     <button onclick="cambiarImagenMusgo(-1)">◀</button>
     <button onclick="cambiarImagenMusgo(1)">▶</button>
@@ -119,7 +110,7 @@
   <h2>🎨 Letras 3D de Colores</h2>
   <!-- una sola IMG para slider -->
   <img alt="Letras 3D de colores" id="img-colores" src="caja letras color.png"/>
-   <img alt="Letras 3D de colores" id="img-colores" src="caja letras color1.png"/>
+    <img alt="Letras 3D de colores" id="img-colores" src="caja letras color1.png"/>
   <div class="nav-buttons">
     <button onclick="cambiarImagenColores(-1)">◀</button>
     <button onclick="cambiarImagenColores(1)">▶</button>
@@ -131,21 +122,30 @@
   </div>
 </div>
 
+<!-- Producto 3: Letras 3D con Luz LED -->
+<div class="juego producto-animado" id="letras-luz">
+  <h2>💡 Letras 3D con Luz LED</h2>
+  <!-- una sola IMG para slider -->
+  <img alt="Letras 3D con luz LED" id="img-luz" src="letras con luz.png"/>
+  <img alt="Letras 3D con luz LED" id="img-luz" src="letras con luz1.png"/>
+  <img alt="Letras 3D con luz LED" id="img-luz" src="letras con luz2.png"/>
+  <div class="nav-buttons">
+    <button onclick="cambiarImagenLuz(-1)">◀</button>
+    <button onclick="cambiarImagenLuz(1)">▶</button>
+  </div>
+  <p>💡 Letreros 3D iluminados con LED para destacar tu nombre o marca. Opciones USB o a pilas, difusor frontal y marcos personalizables.</p>
+  <p>📏 <strong>Tamaños:</strong> 12–25 cm • 🔌 <strong>Alimentación:</strong> USB/pilas • 🎨 <strong>Colores de marco:</strong> a elección.</p>
+  <div class="whatsapp">
+    <a href="https://wa.me/5492954218753?text=Hola! Me interesan las *Letras 3D con Luz LED* 💡">Pedilo por WhatsApp</a>
+  </div>
+</div>
+
 <div class="volver">
   <a href="otros.html">⬅️ Volver a la sección Otros</a>
 </div>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-  // Mostrar/ocultar ancla volver arriba (emoji circular)
-  window.addEventListener('scroll', function(){
-    document.getElementById('volverArriba').style.display = (window.scrollY > 200) ? 'block' : 'none';
-  });
-  // Smooth scroll para volver arriba
-  document.getElementById('volverArriba').addEventListener('click', function(e){
-    e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'});
-  });
-
   // IntersectionObserver para animar aparición
   document.addEventListener('DOMContentLoaded', function(){
     const elementos = document.querySelectorAll('.producto-animado');
@@ -168,10 +168,10 @@
     document.getElementById('img-musgo').src = imagenesMusgo[iMusgo];
   }
 
-  // Slider: Colores (por ahora 1 imagen, podés sumar más)
+  // Slider: Colores (podés sumar más archivos si querés)
   const imagenesColores = [
-    'caja letras color.png'
-    // 'caja letras color 2.png', 'caja letras color 3.png', ...
+    'caja letras color.png',
+    'caja letras color1.png'
   ];
   let iColores = 0;
   function cambiarImagenColores(dir){
@@ -179,16 +179,29 @@
     document.getElementById('img-colores').src = imagenesColores[iColores];
   }
 
-  // Botón caret grande (compat con tu código existente)
-  window.onscroll = function() {
+  // Slider: Luz LED (sumá más imágenes si las tenés)
+  const imagenesLuz = [
+    'letras con luz.png'
+    // 'letras con luz 2.png', 'letras con luz 3.png', ...
+  ];
+  let iLuz = 0;
+  function cambiarImagenLuz(dir){
+    iLuz = (iLuz + dir + imagenesLuz.length) % imagenesLuz.length;
+    document.getElementById('img-luz').src = imagenesLuz[iLuz];
+  }
+
+  // Botón grande: mostrar/ocultar y subir
+  window.addEventListener('scroll', () => {
     const btn = document.getElementById('btnSubir');
-    if (!btn) return; // por si no lo usás
-    btn.style.display = (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) ? 'block' : 'none';
-  };
+    btn.style.display = (document.documentElement.scrollTop > 200) ? 'block' : 'none';
+  });
   function subirArriba(){ window.scrollTo({top:0, behavior:'smooth'}); }
 </script>
-<button id="btnSubir" onclick="subirArriba()">&#8679;</button>
+
+<button id="btnSubir" onclick="subirArriba()">↑</button>
 </body>
 </html>
+
+
 
 
