@@ -28,9 +28,8 @@
   /* desactivar botones si no hay más imágenes */
   .nav-buttons button[disabled]{opacity:.5;cursor:not-allowed}
 </style>
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
-<body onload="AOS.init();">
+<body>
 
 <h1>🔤 Letreros 3D</h1>
 
@@ -39,8 +38,8 @@
   <h2>🔤🌿 Letras con Musgo</h2>
   <img id="img-musgo" alt="Letras con musgo 3D" src="letras musgo.png"/>
   <div class="nav-buttons">
-    <button id="btn-musgo-prev" onclick="cambiarImagen('musgo', -1)">◀</button>
-    <button id="btn-musgo-next" onclick="cambiarImagen('musgo', 1)">▶</button>
+    <button id="btn-musgo-prev">◀</button>
+    <button id="btn-musgo-next">▶</button>
   </div>
   <p>✨ Personalizá tus <strong>letras 3D</strong> con <strong>musgo preservado</strong>. Iniciales o nombres, altura y color a elección.</p>
   <p>📏 Tamaño personalizable • ⚙️ PLA • 🧼 Sin riego.</p>
@@ -52,8 +51,8 @@
   <h2>🎨 Letras 3D de Colores</h2>
   <img id="img-colores" alt="Letras 3D de colores" src="caja letras color.png"/>
   <div class="nav-buttons">
-    <button id="btn-colores-prev" onclick="cambiarImagen('colores', -1)">◀</button>
-    <button id="btn-colores-next" onclick="cambiarImagen('colores', 1)">▶</button>
+    <button id="btn-colores-prev">◀</button>
+    <button id="btn-colores-next">▶</button>
   </div>
   <p>✨ Letras en colores vibrantes para deco, señalética o educación. Sets o sueltas.</p>
   <p>📏 Tamaño personalizable • ⚙️ PLA/PETG Premium • 🎯 Colores personalizables.</p>
@@ -64,11 +63,9 @@
 <div class="juego producto-animado" id="letras-luz">
   <h2>💡 Letras 3D con Luz LED</h2>
   <img id="img-luz" alt="Letras 3D con luz LED" src="letras con luz.png"/>
-  <img id="img-luz" alt="Letras 3D con luz LED" src="letras con luz1.png"/>
-  <img id="img-luz" alt="Letras 3D con luz LED" src="letras con luz2.png"/>
   <div class="nav-buttons">
-    <button id="btn-luz-prev" onclick="cambiarImagen('luz', -1)">◀</button>
-    <button id="btn-luz-next" onclick="cambiarImagen('luz', 1)">▶</button>
+    <button id="btn-luz-prev">◀</button>
+    <button id="btn-luz-next">▶</button>
   </div>
   <p>💡 Letreros hechos para colocar cinta LED. <strong>Solo se vende el cartel</strong>, no incluye la iluminación LED.</p>
   <p>📏 Tamaño personalizable • ⚙️ PLA/PETG • 🎨 Colores de marco a elección.</p>
@@ -79,11 +76,9 @@
 <div class="juego producto-animado" id="letras-amurables">
   <h2>📐 Letras Amurables con Tapa Ajustable</h2>
   <img id="img-amurables" alt="Letras amurables con tapa" src="letras amurables con tapa.png"/>
-  <img id="img-amurables" alt="Letras amurables con tapa" src="letras amurables con tapa1.png"/>
-  <img id="img-amurables" alt="Letras amurables con tapa" src="letras amurables con tapa2.png"/>
   <div class="nav-buttons">
-    <button id="btn-amurables-prev" onclick="cambiarImagen('amurables', -1)">◀</button>
-    <button id="btn-amurables-next" onclick="cambiarImagen('amurables', 1)">▶</button>
+    <button id="btn-amurables-prev">◀</button>
+    <button id="btn-amurables-next">▶</button>
   </div>
   <p>Soporte incluido, diseñado para mayor estabilidad.</p>
   <p>Tapa ajustable por presión, con una tolerancia optimizada de -0.1 para un encaje perfecto.</p>
@@ -98,61 +93,68 @@
 
 <div class="volver"><a href="otros.html">⬅️ Volver a la sección Otros</a></div>
 
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-  // Animación de aparición
-  document.addEventListener('DOMContentLoaded', () => {
+  // Aparición simple (sin dependencias externas)
+  (function() {
     const elementos = document.querySelectorAll('.producto-animado');
     const observer = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.2 });
     elementos.forEach(el=>observer.observe(el));
-  });
+  })();
 
-  // Arrays de imágenes para cada producto (solo UNA <img> visible por producto)
+  // --- SLIDERS ---
+  // Galerías (podés agregar más nombres de archivos si tenés)
   const galeria = {
-    musgo:    ['letras musgo.png','letras musgo1.png','letras musgo2.png','letras musgo4.png'],
-    colores:  ['caja letras color.png','caja letras color1.png'],
-    luz:      ['letras con luz.png'], // sumá más si tenés: 'letras con luz1.png', 'letras con luz2.png'
-    amurables:['letras amurables con tapa.png'] // sumá más si tenés
+    musgo: ['letras musgo.png','letras musgo1.png','letras musgo2.png','letras musgo4.png'],
+    colores: ['caja letras color.png','caja letras color1.png'],
+    luz: ['letras con luz.png','letras con luz1.png','letras con luz2.png'],
+    amurables: ['letras amurables con tapa.png','letras amurables con tapa1.png','letras amurables con tapa2.png']
   };
   const indices = { musgo:0, colores:0, luz:0, amurables:0 };
 
-  function setSrc(idImg, arr, idx){
+  function setSrc(idImg, src){
     const el = document.getElementById(idImg);
-    if(el) el.src = arr[idx];
+    if (el) el.src = src;
   }
 
   function updateButtons(nombre){
     const arr = galeria[nombre];
     const prev = document.getElementById(`btn-${nombre}-prev`);
     const next = document.getElementById(`btn-${nombre}-next`);
-    if(!prev || !next) return;
     const disabled = (arr.length <= 1);
-    prev.disabled = disabled; next.disabled = disabled;
+    if(prev) prev.disabled = disabled;
+    if(next) next.disabled = disabled;
   }
 
-  // Inicializar imágenes y estado de botones
-  document.addEventListener('DOMContentLoaded', () => {
-    setSrc('img-musgo', galeria.musgo, indices.musgo);      updateButtons('musgo');
-    setSrc('img-colores', galeria.colores, indices.colores);updateButtons('colores');
-    setSrc('img-luz', galeria.luz, indices.luz);            updateButtons('luz');
-    setSrc('img-amurables', galeria.amurables, indices.amurables); updateButtons('amurables');
-  });
-
-  function cambiarImagen(nombre, dir){
-    const arr = galeria[nombre];
-    indices[nombre] = (indices[nombre] + dir + arr.length) % arr.length;
-    const idImg = `img-${nombre}`;
-    setSrc(idImg, arr, indices[nombre]);
+  function bindSlider(nombre){
+    const imgId = `img-${nombre}`;
+    const prev = document.getElementById(`btn-${nombre}-prev`);
+    const next = document.getElementById(`btn-${nombre}-next`);
+    // set inicial
+    setSrc(imgId, galeria[nombre][indices[nombre]]);
+    updateButtons(nombre);
+    // listeners
+    if(prev) prev.addEventListener('click', () => {
+      indices[nombre] = (indices[nombre] - 1 + galeria[nombre].length) % galeria[nombre].length;
+      setSrc(imgId, galeria[nombre][indices[nombre]]);
+    });
+    if(next) next.addEventListener('click', () => {
+      indices[nombre] = (indices[nombre] + 1) % galeria[nombre].length;
+      setSrc(imgId, galeria[nombre][indices[nombre]]);
+    });
   }
 
-  // Botón subir (solo botón redondo grande)
+  // Inicializar todos los sliders
+  ['musgo','colores','luz','amurables'].forEach(bindSlider);
+
+  // Botón subir
   window.addEventListener('scroll', () => {
     const btn = document.getElementById('btnSubir');
-    btn.style.display = (document.documentElement.scrollTop > 200) ? 'block' : 'none';
+    if (btn) btn.style.display = (document.documentElement.scrollTop > 200) ? 'block' : 'none';
   });
   function subirArriba(){ window.scrollTo({top:0, behavior:'smooth'}); }
+  window.subirArriba = subirArriba;
 </script>
 
 <button id="btnSubir" onclick="subirArriba()">↑</button>
