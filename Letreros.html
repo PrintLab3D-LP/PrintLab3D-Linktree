@@ -70,6 +70,27 @@
   <div class="whatsapp"><a href="https://wa.me/5492954218753?text=Hola! Me interesan las *Letras 3D con Luz LED* 💡">Pedilo por WhatsApp</a></div>
 </div>
 
+
+<!-- Producto 4: Letras Amurables con Tapa Ajustable -->
+<div class="juego producto-animado" id="letras-amurables">
+  <h2>📐 Letras Amurables con Tapa Ajustable</h2>
+  <img id="img-amurables" alt="Letras amurables con tapa" src="letras amurables con tapa.png"/>
+  <div class="nav-buttons">
+    <button onclick="cambiarImagenAmurables(-1)">◀</button>
+    <button onclick="cambiarImagenAmurables(1)">▶</button>
+  </div>
+  <p>Soporte incluido, diseñado para mayor estabilidad.</p>
+  <p>Tapa ajustable por presión, con una tolerancia optimizada de -0.1 para un encaje perfecto.</p>
+  <p>Orificios interiores, ideales para colocar tornillos y cintas LED, permitiendo iluminación personalizada.</p>
+  <ul style="text-align:left;display:inline-block;">
+    <li>✔️ Ideal para emprendedores en el área publicitaria.</li>
+    <li>✔️ Perfecto para proyectos personales, decoración de interiores y creación de letreros comerciales.</li>
+  </ul>
+  <p>📏 Tamaño personalizable • ⚙️ PLA/PETG • 🎨 Colores de marco a elección.</p>
+  <div class="whatsapp"><a href="https://wa.me/5492954218753?text=Hola! Me interesan las *Letras Amurables con Tapa Ajustable* 📐">Pedilo por WhatsApp</a></div>
+</div>
+
+
 <div class="volver"><a href="otros.html">⬅️ Volver a la sección Otros</a></div>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -89,6 +110,10 @@
 
   const imagenesLuz=['letras con luz.png','letras con luz1.png','letras con luz2.png'];
   let iLuz=0;function cambiarImagenLuz(d){iLuz=(iLuz+d+imagenesLuz.length)%imagenesLuz.length;document.getElementById('img-luz').src=imagenesLuz[iLuz];}
+
+  
+  const imagenesAmurables=['letras amurables con tapa.png'];
+  let iAmurables=0;function cambiarImagenAmurables(d){iAmurables=(iAmurables+d+imagenesAmurables.length)%imagenesAmurables.length;document.getElementById('img-amurables').src=imagenesAmurables[iAmurables];}
 
   // Botón subir (solo botón redondo grande)
   window.addEventListener('scroll',()=>{const btn=document.getElementById('btnSubir');if(btn)btn.style.display=(document.documentElement.scrollTop>200)?'block':'none'});
