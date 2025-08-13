@@ -630,7 +630,7 @@ h1 {
 }
 
 
-/* Contador moderno de visitas (instantáneo con caché) */
+/* Contador moderno de visitas (centrado + fallback IMG) */
 #visit-counter{
   display:inline-flex;
   align-items:center;
@@ -644,7 +644,8 @@ h1 {
 }
 #visit-counter .vc-eye{font-size:1.15rem}
 #visit-counter .vc-label{opacity:.7;font-weight:700}
-#visit-counter .vc-number{font-size:1.15rem}
+#visit-counter .vc-number{font-size:1.15rem; min-width:2.5ch; display:inline-flex; align-items:center; justify-content:center}
+#visit-counter .vc-number img{height:18px; vertical-align:middle}
 #visit-counter .vc-today{margin-left:6px; opacity:.7; font-size:.9rem}
 @media (max-width:480px){
   #visit-counter{gap:8px;padding:8px 12px}
@@ -670,12 +671,12 @@ h1 {
 <main>
 
 <!-- Contador de visitas moderno (total + hoy) -->
-<div id="visit-counter-wrapper" style="text-align:center; margin-top:15px;">
+<div id="visit-counter-wrapper" style="text-align:center; margin:12px 0 4px;">
   <div id="visit-counter" role="status" aria-live="polite" title="Visitas acumuladas y de hoy">
     <span class="vc-eye" aria-hidden="true">👁️</span>
     <span class="vc-label">Visitas:</span>
-    <span class="vc-number" id="vc-total">cargando…</span>
-    <span class="vc-today" id="vc-today" title="Visitas de hoy">Hoy: cargando…</span>
+    <span class="vc-number" id="vc-total">—</span>
+    <span class="vc-today" id="vc-today" title="Visitas de hoy">Hoy: —</span>
   </div>
 </div>
 
@@ -1091,72 +1092,66 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
 document.addEventListener("DOMContentLoaded", function() {
   const totalEl = document.getElementById('vc-total');
   const todayEl = document.getElementById('vc-today');
-
   const NS = 'printlab3d_counter';
   const TOTAL_KEY = 'visitas_total';
   const todayIso = new Date().toISOString().slice(0,10); // YYYY-MM-DD
   const todayKey = 'hoy_' + todayIso.replace(/-/g,'');
 
-  const LS_TOTAL = 'pl3d_total';
-  const LS_TODAY_PREFIX = 'pl3d_today_'; // + YYYY-MM-DD
-
-  // 1) Mostrar al instante desde cache si existe
-  try {
-    const cachedTotal = localStorage.getItem(LS_TOTAL);
-    if (cachedTotal) totalEl.textContent = Number(cachedTotal).toLocaleString();
-    const cachedToday = localStorage.getItem(LS_TODAY_PREFIX + todayIso);
-    if (cachedToday) todayEl.textContent = 'Hoy: ' + Number(cachedToday).toLocaleString();
-  } catch (e) { /* ignore */ }
-
-  // Helper: fetch con timeout
   function withTimeout(promise, ms=2500) {
-    return Promise.race([
-      promise,
-      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms))
-    ]);
+    return Promise.race([promise, new Promise((_, rej)=>setTimeout(()=>rej(new Error('timeout')), ms))]);
   }
-
-  async function hitCount(endpoints) {
-    for (const url of endpoints) {
-      try {
-        const res = await withTimeout(fetch(url, {cache:'no-store'}));
-        if (!res.ok) continue;
-        const data = await res.json();
-        if (typeof data.value === 'number') return data.value;
-      } catch (e) {
-        // intenta siguiente
-      }
+  async function tryHit(urls){
+    for(const u of urls){
+      try{
+        const r = await withTimeout(fetch(u, {cache:'no-store'}));
+        if(!r.ok) continue;
+        const j = await r.json();
+        if(typeof j.value === 'number') return j.value;
+      }catch(e){}
     }
-    throw new Error('sin_respuesta');
+    throw new Error('fail');
   }
 
-  // 2) Actualizar Total
-  (async () => {
-    const endpoints = [
-      `https://api.countapi.xyz/hit/${NS}/${TOTAL_KEY}`,
-      `https://countapi.xyz/hit/${NS}/${TOTAL_KEY}`
-    ];
-    try {
-      const value = await hitCount(endpoints);
+  // Fallback visual con IMG (no JS) para total acumulado
+  function showImgFallbackTotal(){
+    // hitwebcounter con estilo simple (número negro)
+    const img = new Image();
+    img.alt = 'visitas';
+    img.src = 'https://hitwebcounter.com/counter/counter.php?page=14931806&style=0006&nbdigits=6&type=ip&initCount=0';
+    img.onload = ()=>{
+      totalEl.textContent = '';
+      totalEl.appendChild(img);
+    };
+    img.onerror = ()=>{
+      totalEl.textContent = '—';
+    };
+  }
+
+  // TOTAL
+  (async()=>{
+    try{
+      const value = await tryHit([
+        `https://api.countapi.xyz/hit/${NS}/${TOTAL_KEY}`,
+        `https://countapi.xyz/hit/${NS}/${TOTAL_KEY}`
+      ]);
       totalEl.textContent = Number(value).toLocaleString();
-      try { localStorage.setItem(LS_TOTAL, String(value)); } catch(e){}
-    } catch(e) {
-      // conserva lo que haya (caché o "cargando…")
+    }catch(e){
+      // Si falla, usar imagen fallback
+      showImgFallbackTotal();
     }
   })();
 
-  // 3) Actualizar Hoy
-  (async () => {
-    const endpoints = [
-      `https://api.countapi.xyz/hit/${NS}/${todayKey}`,
-      `https://countapi.xyz/hit/${NS}/${todayKey}`
-    ];
-    try {
-      const value = await hitCount(endpoints);
+  // HOY
+  (async()=>{
+    try{
+      const value = await tryHit([
+        `https://api.countapi.xyz/hit/${NS}/${todayKey}`,
+        `https://countapi.xyz/hit/${NS}/${todayKey}`
+      ]);
       todayEl.textContent = 'Hoy: ' + Number(value).toLocaleString();
-      try { localStorage.setItem(LS_TODAY_PREFIX + todayIso, String(value)); } catch(e){}
-    } catch(e) {
-      // conserva lo que haya (caché o "cargando…")
+    }catch(e){
+      // si falla, mostrar guion y no queda "cargando…"
+      todayEl.textContent = 'Hoy: —';
     }
   })();
 });
