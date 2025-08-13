@@ -1100,6 +1100,8 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
 </script>
 
 
+
+
 <script>
 (function () {
   if (window.__pl3d_lock) return; window.__pl3d_lock = true;
@@ -1108,16 +1110,25 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
   var todayEl = document.getElementById('vc-today');
   var igBadge = document.getElementById('ig-badge');
   var todayISO = new Date().toISOString().slice(0, 10);
+
+  var COOKIE_DAY='pl3d_hit_date', CACHE_TOTAL='pl3d_last_total', INFLIGHT='pl3d_inflight_ts', LS_DAY='pl3d_ls_hit_date';
+
   function isInstagram(){ return /Instagram/i.test(navigator.userAgent); }
   function getCookie(name){
     var parts = document.cookie.split('; ');
-    for (var i=0;i<parts.length;i++){ if (parts[i].indexOf(name+'=')===0) return decodeURIComponent(parts[i].substring(name.length+1)); }
+    for (var i=0;i<parts.length;i++){
+      if (parts[i].indexOf(name+'=')===0) return decodeURIComponent(parts[i].substring(name.length+1));
+    }
     return null;
   }
   function setCookie(name, value, days){
-    var d=new Date(); d.setTime(d.getTime()+days*24*60*60*1000);
-    document.cookie = name+'='+encodeURIComponent(value)+';expires='+d.toUTCString()+';path=/;SameSite=Lax';
+    try{
+      var d=new Date(); d.setTime(d.getTime()+days*24*60*60*1000);
+      document.cookie = name+'='+encodeURIComponent(value)+';expires='+d.toUTCString()+';path=/;SameSite=Lax';
+    }catch(e){}
   }
+  function getLS(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  function setLS(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
   function setCounts(total, today){
     if (typeof total==='number') totalEl.textContent = Number(total).toLocaleString();
     if (typeof today==='number') todayEl.textContent  = 'Hoy: ' + Number(today).toLocaleString();
@@ -1126,68 +1137,86 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
     return new Promise(function(resolve,reject){
       var done=false, s=document.createElement('script');
       s.src = GAS_URL + '?action=' + encodeURIComponent(action) + '&jsonp=1&cb=' + cbName + '&t=' + Date.now();
-      s.async=true; s.onerror=function(){ if(!done){done=true; reject(new Error('onerror'));} };
+      s.async=true;
+      s.onerror=function(){ if(!done){done=true; reject(new Error('onerror'));} };
       var timer=setTimeout(function(){ if(!done){done=true; reject(new Error('timeout'));} }, 5000);
       window[cbName]=function(d){ if(!done){done=true; clearTimeout(timer); resolve(d);} };
       document.body.appendChild(s);
     });
   }
-  var COOKIE_DAY='pl3d_hit_date', CACHE_TOTAL='pl3d_last_total', INFLIGHT='pl3d_inflight_ts';
-  
+
+  function alreadyHitToday(){
+    var c = getCookie(COOKIE_DAY);
+    var l = getLS(LS_DAY);
+    return (c===todayISO) || (l===todayISO);
+  }
+  function markHitToday(){
+    setCookie(COOKIE_DAY, todayISO, 1);
+    setLS(LS_DAY, todayISO);
+  }
+
   function runInstagram(){
     if (igBadge) igBadge.style.display = 'inline';
-
-    // Leer del backend (GET) y pintar. No suma.
     jsonp('get', 'pl3dIG')
       .then(function(d){
         setCounts(d.total, d.today);
-        try { if (typeof d.total === 'number') localStorage.setItem(CACHE_TOTAL, String(d.total)); } catch(e){}
+        if (typeof d.total==='number') setLS(CACHE_TOTAL, String(d.total));
       })
       .catch(function(){
-        // Fallback: si IG bloquea, usamos cache local (puede quedar viejo)
-        try {
-          var cached = localStorage.getItem(CACHE_TOTAL);
-          totalEl.textContent = cached ? Number(cached).toLocaleString() : '—';
-        } catch(e) { totalEl.textContent = '—'; }
+        var cached = getLS(CACHE_TOTAL);
+        totalEl.textContent = cached ? Number(cached).toLocaleString() : '—';
         todayEl.textContent = 'Hoy: —';
       });
-
-    // (Opcional) refrescar cada 60s sin sumar
-    // setInterval(function(){
-    //   jsonp('get','pl3dIGp').then(function(d){ setCounts(d.total, d.today); });
-    // }, 60000);
   }
-}
+
   async function runNormal(){
     if (igBadge) igBadge.style.display='none';
+
+    // Evitar dobles hits rápidos en la misma sesión (10s)
     try{
       var lastTs=Number(sessionStorage.getItem(INFLIGHT)||'0');
       if (Date.now()-lastTs<10000){
-        try{ var d0=await jsonp('get','pl3dCBx'); setCounts(d0.total,d0.today);
-             if (typeof d0.total==='number') localStorage.setItem(CACHE_TOTAL,String(d0.total)); }catch(e){}
+        try{
+          var d0=await jsonp('get','pl3dCBx');
+          setCounts(d0.total,d0.today);
+          if (typeof d0.total==='number') setLS(CACHE_TOTAL,String(d0.total));
+        }catch(e){}
         return;
       }
     }catch(e){}
-    var already = getCookie(COOKIE_DAY)===todayISO;
-    var action  = already ? 'get' : 'hit';
+
+    var doHit = !alreadyHitToday();
+    var action  = doHit ? 'hit' : 'get';
+
     try{ sessionStorage.setItem(INFLIGHT,String(Date.now())); }catch(e){}
+
     for (var i=0;i<2;i++){
       try{
         var data = await jsonp(action,'pl3dCB'+i);
         setCounts(data.total,data.today);
-        if (typeof data.total==='number') localStorage.setItem(CACHE_TOTAL,String(data.total));
-        if (!already) setCookie(COOKIE_DAY,todayISO,1);
+        if (typeof data.total==='number') setLS(CACHE_TOTAL,String(data.total));
+        if (doHit) markHitToday();
         return;
       }catch(e){}
     }
     totalEl.textContent='—'; todayEl.textContent='Hoy: —';
   }
+
   document.addEventListener('DOMContentLoaded', function(){
     if (isInstagram()) { runInstagram(); return; }
     runNormal();
   });
+
+  // Si el navegador usa bfcache en "volver atrás", actualizamos números sin hit
+  window.addEventListener('pageshow', function(e){
+    if (e.persisted){
+      jsonp('get','pl3dBF').then(function(d){ setCounts(d.total,d.today); });
+    }
+  });
 })();
 </script>
+
+
 
 </body>
 </html>
