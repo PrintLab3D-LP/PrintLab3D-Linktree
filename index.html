@@ -630,7 +630,7 @@ h1 {
 }
 
 
-/* Contador Total + Hoy */
+/* Contador Total + Hoy (robusto móvil) */
 #visit-counter{
   display:inline-flex;
   align-items:center;
@@ -645,6 +645,7 @@ h1 {
 #visit-counter .vc-eye{font-size:1.15rem}
 #visit-counter .vc-label{opacity:.7;font-weight:700}
 #visit-counter .vc-number{font-size:1.15rem}
+#visit-counter .vc-number img{height:20px; vertical-align:middle}
 #visit-counter .vc-today{margin-left:6px; opacity:.7; font-size:.9rem}
 @media (max-width:480px){
   #visit-counter{gap:8px;padding:8px 12px}
@@ -669,13 +670,17 @@ h1 {
 </div>
 <main>
 
-<!-- Contador Total + Hoy (JSONP) -->
+<!-- Contador Total + Hoy (robusto móvil) -->
 <div id="visit-counter-wrapper" style="text-align:center; margin:12px 0 6px;">
   <div id="visit-counter" role="status" aria-live="polite" title="Visitas acumuladas y de hoy">
     <span class="vc-eye" aria-hidden="true">👁️</span>
     <span class="vc-label">Visitas:</span>
-    <span class="vc-number" id="vc-total">cargando…</span>
-    <span class="vc-today" id="vc-today" title="Visitas de hoy">Hoy: cargando…</span>
+    <!-- Fallback por imagen para Total -->
+    <span class="vc-number" id="vc-total">
+      <img src="https://hitwebcounter.com/counter/counter.php?page=14931806&style=0006&nbdigits=6&type=ip&initCount=200" alt="total visitas" />
+    </span>
+    <span class="vc-today" id="vc-today" title="Visitas de hoy">Hoy: —</span>
+    <span id="vc-note" style="display:none; font-size:.8rem; opacity:.7; margin-left:6px;">(modo compatibilidad)</span>
   </div>
 </div>
 
@@ -1088,25 +1093,57 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
 
 
 <script>
-// JSONP con tu Apps Script (sin CORS)
-function pl3dCounter(data){
-  try{
-    var totalEl = document.getElementById('vc-total');
-    var todayEl = document.getElementById('vc-today');
-    if (data && typeof data.total === 'number') {
-      totalEl.textContent = data.total.toLocaleString();
-    } else { totalEl.textContent = '—'; }
-    if (data && typeof data.today === 'number') {
-      todayEl.textContent = 'Hoy: ' + data.today.toLocaleString();
-    } else { todayEl.textContent = 'Hoy: —'; }
-  }catch(e){ /* ignore */ }
-}
-document.addEventListener('DOMContentLoaded', function(){
-  var s = document.createElement('script');
-  s.src = "https://script.google.com/macros/s/AKfycbxUpfvVjr6Jr7TKT3_b4U6kmkvXSm6otR16fsJh0z8gFSFTTgLWiUItsqFTO2pnD_LS/exec" + "?action=hit&jsonp=1&cb=pl3dCounter&t=" + Date.now();
-  s.async = true;
-  document.body.appendChild(s);
-});
+(function(){
+  var GAS_URL = "https://script.google.com/macros/s/AKfycbxUpfvVjr6Jr7TKT3_b4U6kmkvXSm6otR16fsJh0z8gFSFTTgLWiUItsqFTO2pnD_LS/exec";
+  var totalEl = document.getElementById('vc-total');
+  var todayEl = document.getElementById('vc-today');
+  var noteEl  = document.getElementById('vc-note');
+
+  function setToday(val){ todayEl.textContent = 'Hoy: ' + (val==null ? '—' : Number(val).toLocaleString()); }
+  function success(data){
+    try{
+      if (data && typeof data.total === 'number') {
+        totalEl.textContent = data.total.toLocaleString();
+      }
+      if (data && typeof data.today === 'number') {
+        setToday(data.today);
+      } else { setToday(null); }
+      if (noteEl) noteEl.style.display = 'none';
+    }catch(e){}
+  }
+
+  function loadJSONP(cbName, onTimeout){
+    return new Promise(function(resolve,reject){
+      var done=false;
+      var s=document.createElement('script');
+      s.src = GAS_URL + '?action=hit&jsonp=1&cb=' + cbName + '&t=' + Date.now();
+      s.async = true;
+      s.onerror = function(){ if(!done){done=true; reject(new Error('onerror'));} };
+      var timer=setTimeout(function(){
+        if(!done){ done=true; onTimeout && onTimeout(); reject(new Error('timeout')); }
+      }, 3500);
+      window[cbName]=function(d){ if(!done){ done=true; clearTimeout(timer); resolve(d); } };
+      document.body.appendChild(s);
+    });
+  }
+
+  async function tryLoad(maxTries){
+    for (var i=0;i<maxTries;i++){
+      try{
+        var data = await loadJSONP('pl3dCB' + i, function(){});
+        success(data);
+        return true;
+      }catch(e){ /* retry */ }
+    }
+    if (noteEl) noteEl.style.display = 'inline';
+    setToday(null);
+    return false;
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){ tryLoad(3); });
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) tryLoad(1); });
+  window.addEventListener('online', function(){ tryLoad(1); });
+})();
 </script>
 
 </body>
