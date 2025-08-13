@@ -1,4 +1,92 @@
 <!DOCTYPE html>
+<!-- Contador en la parte superior -->
+<div id="visit-counter-wrapper" style="text-align:center; margin:12px 0 6px;">
+  <div id="visit-counter" role="status" aria-live="polite" title="Visitas acumuladas y de hoy">
+    <span class="vc-eye" aria-hidden="true">👁️</span>
+    <span class="vc-label">Visitas:</span>
+    <span class="vc-number" id="vc-total">cargando…</span>
+    <span class="vc-today" id="vc-today" title="Visitas de hoy">Hoy: cargando…</span>
+    <span id="vc-note" style="display:none; font-size:.8rem; opacity:.7; margin-left:6px;">(modo Instagram)</span>
+  </div>
+</div>
+
+<style>
+#visit-counter{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:#ffffff;
+  border:2px solid #28a74522;
+  padding:10px 14px;
+  border-radius:14px;
+  box-shadow:0 6px 14px rgba(0,0,0,.06);
+  font-weight:800;
+}
+#visit-counter .vc-eye{font-size:1.15rem}
+#visit-counter .vc-label{opacity:.7;font-weight:700}
+#visit-counter .vc-number{font-size:1.15rem}
+#visit-counter .vc-today{margin-left:6px; opacity:.7; font-size:.9rem}
+@media (max-width:480px){
+  #visit-counter{gap:8px;padding:8px 12px}
+  #visit-counter .vc-label{display:none}
+}
+</style>
+
+<script>
+(function(){
+  const endpoint = "https://script.google.com/macros/s/AKfycbxUpfvVjr6Jr7TKT3_b4U6kmkvXSm6otR16fsJh0z8gFSFTTgLWiUItsqFTO2pnD_LS/exec";
+  const totalEl = document.getElementById('vc-total');
+  const todayEl = document.getElementById('vc-today');
+  const noteEl = document.getElementById('vc-note');
+  const todayKey = 'pl3d-last-hit-date';
+  const todayStr = new Date().toDateString();
+  
+  const inInstagram = /Instagram/i.test(navigator.userAgent);
+
+  function updateDisplay(total, today){
+    totalEl.textContent = total;
+    todayEl.textContent = "Hoy: " + today;
+  }
+
+  function fallbackInstagram(){
+    let todayCount = parseInt(localStorage.getItem('pl3d-today-local') || "0");
+    let lastDate = localStorage.getItem('pl3d-today-date') || "";
+    if(lastDate !== todayStr){
+      todayCount = 1;
+      lastDate = todayStr;
+    } else {
+      todayCount++;
+    }
+    localStorage.setItem('pl3d-today-local', todayCount);
+    localStorage.setItem('pl3d-today-date', lastDate);
+    updateDisplay("—", todayCount);
+    noteEl.style.display = 'inline';
+  }
+
+  if(inInstagram){
+    fallbackInstagram();
+    return;
+  }
+
+  const action = (localStorage.getItem(todayKey) === todayStr) ? 'get' : 'hit';
+  const cbName = 'pl3dCB' + Math.floor(Math.random()*10000);
+
+  window[cbName] = function(data){
+    updateDisplay(data.total, data.today);
+    localStorage.setItem(todayKey, todayStr);
+    delete window[cbName];
+  };
+
+  const s = document.createElement('script');
+  s.src = `${endpoint}?action=${action}&jsonp=1&cb=${cbName}`;
+  s.onerror = function(){
+    totalEl.textContent = "—";
+    todayEl.textContent = "Hoy: —";
+  };
+  document.body.appendChild(s);
+})();
+</script>
+
 
 <html lang="es">
 <head>
@@ -629,28 +717,6 @@ h1 {
   color: white;
 }
 
-
-/* Contador Total + Hoy (con fallback IG) */
-#visit-counter{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  background:#ffffff;
-  border:2px solid #28a74522;
-  padding:10px 14px;
-  border-radius:14px;
-  box-shadow:0 6px 14px rgba(0,0,0,.06);
-  font-weight:800;
-}
-#visit-counter .vc-eye{font-size:1.15rem}
-#visit-counter .vc-label{opacity:.7;font-weight:700}
-#visit-counter .vc-number{font-size:1.15rem}
-#visit-counter .vc-today{margin-left:6px; opacity:.7; font-size:.9rem}
-@media (max-width:480px){
-  #visit-counter{gap:8px;padding:8px 12px}
-  #visit-counter .vc-label{display:none}
-}
-
 </style>
 </head>
 <body>
@@ -668,18 +734,6 @@ h1 {
 <a href="#" onclick="openModal('modalQuienes')">ℹ️ Quiénes somos</a>
 </div>
 <main>
-
-<!-- Contador Total + Hoy (con fallback para Instagram) -->
-<div id="visit-counter-wrapper" style="text-align:center; margin:12px 0 6px;">
-  <div id="visit-counter" role="status" aria-live="polite" title="Visitas acumuladas y de hoy">
-    <span class="vc-eye" aria-hidden="true">👁️</span>
-    <span class="vc-label">Visitas:</span>
-    <span class="vc-number" id="vc-total">cargando…</span>
-    <span class="vc-today" id="vc-today" title="Visitas de hoy">Hoy: cargando…</span>
-    <span id="vc-note" style="display:none; font-size:.8rem; opacity:.7; margin-left:6px;">(modo Instagram)</span>
-  </div>
-</div>
-
 <img alt="PrintLab 3D" class="logo" src="logo.png"/>
 <h1>¡Bienvenidos a PrintLab 3D!</h1>
 <p class="subtitle">Innovación y creatividad en cada impresión</p>
@@ -1085,86 +1139,6 @@ function iniciarContadorPromoDentro() {
   }, 1000);
 }
 document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
-</script>
-
-
-<script>
-(function(){ 
-  var GAS_URL = "https://script.google.com/macros/s/AKfycbxUpfvVjr6Jr7TKT3_b4U6kmkvXSm6otR16fsJh0z8gFSFTTgLWiUItsqFTO2pnD_LS/exec";
-  var totalEl = document.getElementById('vc-total');
-  var todayEl = document.getElementById('vc-today');
-  var noteEl  = document.getElementById('vc-note');
-
-  function isInstagram(){ return /Instagram/i.test(navigator.userAgent); }
-
-  function setTodayLocal(){ 
-    try {
-      var today = new Date().toISOString().slice(0,10); // YYYY-MM-DD
-      var key = 'pl3d_today_' + today;
-      var val = parseInt(localStorage.getItem(key) || '0', 10) + 1;
-      localStorage.setItem(key, String(val));
-      todayEl.textContent = 'Hoy: ' + val.toLocaleString();
-    } catch(e) {
-      todayEl.textContent = 'Hoy: —';
-    }
-  }
-
-  function setTotalImageFallback(){ 
-    // Sin initCount => número real del servicio (no fijo)
-    var img = new Image();
-    img.alt = 'visitas';
-    img.src = 'https://hitwebcounter.com/counter/counter.php?page=14931806&style=0006&nbdigits=6&type=ip';
-    img.onload = function(){ totalEl.textContent = ''; totalEl.appendChild(img); };
-    img.onerror = function(){ totalEl.textContent = '—'; };
-  }
-
-  function useInstagramMode(){ 
-    if (noteEl) noteEl.style.display = 'inline';
-    setTotalImageFallback();
-    setTodayLocal();
-  }
-
-  function loadJSONP(cbName){ 
-    return new Promise(function(resolve, reject){
-      var done=false;
-      var s=document.createElement('script');
-      s.src = GAS_URL + '?action=hit&jsonp=1&cb=' + cbName + '&t=' + Date.now();
-      s.async = true;
-      s.onerror = function(){ if(!done){done=true; reject(new Error('onerror'));} };
-      var timer=setTimeout(function(){ if(!done){ done=true; reject(new Error('timeout')); } }, 3500);
-      window[cbName]=function(d){ if(!done){ done=true; clearTimeout(timer); resolve(d); } };
-      document.body.appendChild(s);
-    });
-  }
-
-  function success(data){
-    try {
-      if (data && typeof data.total === 'number') totalEl.textContent = Number(data.total).toLocaleString();
-      else totalEl.textContent = '—';
-      if (data && typeof data.today === 'number') todayEl.textContent = 'Hoy: ' + Number(data.today).toLocaleString();
-      else todayEl.textContent = 'Hoy: —';
-      if (noteEl) noteEl.style.display = 'none';
-    } catch(e) { /* ignore */ }
-  }
-
-  document.addEventListener('DOMContentLoaded', function(){
-    if (isInstagram()) { 
-      useInstagramMode();
-      return;
-    }
-    // Normal: intentar GAS JSONP con 2 reintentos
-    (async function(){
-      for (var i=0;i<3;i++) {
-        try { var data = await loadJSONP('pl3dCB' + i); success(data); return; }
-        catch(e) { /* retry */ }
-      }
-      // Fallback si falla GAS
-      if (noteEl) noteEl.style.display = 'inline';
-      setTotalImageFallback();
-      setTodayLocal();
-    })();
-  });
-})();
 </script>
 
 </body>
