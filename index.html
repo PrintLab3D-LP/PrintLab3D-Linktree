@@ -653,6 +653,31 @@ h1 {
   #visit-counter .vc-sep{display:none}
 }
 
+
+/* === Contador PrintLab 3D (web style + IG badge) === */
+#visit-counter{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:#ffffff;
+  border:2px solid #28a74522;
+  padding:10px 16px;
+  border-radius:18px;
+  box-shadow:0 8px 18px rgba(0,0,0,.08);
+  font-weight:800;
+}
+#visit-counter .vc-eye{font-size:1.05rem}
+#visit-counter .vc-label{opacity:.8;font-weight:800}
+#visit-counter .vc-number{font-size:1.15rem; min-width:2ch; text-align:center}
+#visit-counter .vc-today{opacity:.85}
+#visit-counter .vc-sep{opacity:.25}
+#visit-counter #ig-badge svg{display:inline-block; vertical-align:middle}
+@media (max-width:480px){
+  #visit-counter{gap:8px;padding:8px 12px}
+  #visit-counter .vc-label{display:none}
+  #visit-counter .vc-sep{display:none}
+}
+
 </style>
 </head>
 <body>
@@ -1266,6 +1291,105 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
     }
 
     // Si falló todo y estaba en hit, revertimos counted para no perder la visita real futura
+    if (getCookie(inflightCookie) === '1') { delCookie(countedCookie); delCookie(inflightCookie); }
+    totalEl.textContent = '—';
+    todayEl.textContent = 'Hoy: —';
+  }
+
+  document.addEventListener('DOMContentLoaded', run);
+})();
+</script>
+
+
+<script>
+(function(){
+  var GAS_URL = "https://script.google.com/macros/s/AKfycbxUpfvVjr6Jr7TKT3_b4U6kmkvXSm6otR16fsJh0z8gFSFTTgLWiUItsqFTO2pnD_LS/exec";
+  var totalEl = document.getElementById('vc-total');
+  var todayEl = document.getElementById('vc-today');
+  var igBadge = document.getElementById('ig-badge');
+
+  var todayISO = new Date().toISOString().slice(0,10); // YYYY-MM-DD
+
+  function isInstagram(){ return /Instagram/i.test(navigator.userAgent); }
+  function setCounts(total, today){
+    if (typeof total === 'number') { totalEl.textContent = total.toLocaleString(); }
+    if (typeof today === 'number') { todayEl.textContent = 'Hoy: ' + today.toLocaleString(); }
+  }
+
+  // ---- Cookie helpers (site-wide) ----
+  function getCookie(name){
+    var m = document.cookie.match('(?:^|; )' + name.replace(/([.$?*|{}()\\[\\]\\\\/+^])/g,'\\$1') + '=([^;]*)');
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+  function setCookie(name, value, days){
+    var d = new Date();
+    d.setTime(d.getTime() + (days*24*60*60*1000));
+    document.cookie = name + '=' + encodeURIComponent(value) + ';expires=' + d.toUTCString() + ';path=/;SameSite=Lax';
+  }
+  function delCookie(name){
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;SameSite=Lax';
+  }
+
+  var countedCookie = 'pl3d_hit_date';
+  var inflightCookie = 'pl3d_hit_inflight';
+  var cacheTotalKey = 'pl3d_last_total'; // para pintar rápido/IG
+
+  function jsonp(action, cbName){
+    return new Promise(function(resolve,reject){
+      var done=false;
+      var s=document.createElement('script');
+      s.src = GAS_URL + '?action=' + encodeURIComponent(action) + '&jsonp=1&cb=' + cbName + '&t=' + Date.now();
+      s.async = true;
+      s.onerror = function(){ if(!done){done=true; reject(new Error('onerror'));} };
+      var timer=setTimeout(function(){ if(!done){ done=true; reject(new Error('timeout')); } }, 3500);
+      window[cbName]=function(d){ if(!done){ done=true; clearTimeout(timer); resolve(d); } };
+      document.body.appendChild(s);
+    });
+  }
+
+  function showIGMode(){
+    // Mostrar badge IG y datos locales/cacheados
+    if (igBadge) igBadge.style.display = 'inline';
+    try{
+      var cachedTotal = localStorage.getItem(cacheTotalKey);
+      if (cachedTotal) totalEl.textContent = Number(cachedTotal).toLocaleString();
+      else totalEl.textContent = '—';
+      var k = 'pl3d_local_today_' + todayISO;
+      var v = parseInt(localStorage.getItem(k) || '0', 10) + 1;
+      localStorage.setItem(k, String(v));
+      todayEl.textContent = 'Hoy: ' + v.toLocaleString();
+    }catch(e){
+      totalEl.textContent = '—';
+      todayEl.textContent = 'Hoy: —';
+    }
+  }
+
+  async function run(){
+    if (isInstagram()) { showIGMode(); return; }
+
+    // Navegadores normales
+    if (igBadge) igBadge.style.display = 'none';
+
+    var action = 'hit';
+    var cookieVal = getCookie(countedCookie);
+    if (cookieVal === todayISO) { action = 'get'; }
+
+    // Anti-duplicado: marcar antes y revertir si falla
+    if (action === 'hit') { setCookie(inflightCookie, '1', 1); setCookie(countedCookie, todayISO, 1); }
+
+    for (var i=0;i<2;i++){
+      try{
+        var data = await jsonp(action, 'pl3dCB' + i);
+        if (data && typeof data.total === 'number') {
+          try{ localStorage.setItem(cacheTotalKey, String(data.total)); }catch(e){}
+        }
+        setCounts(data.total, data.today);
+        delCookie(inflightCookie);
+        return;
+      }catch(e){ /* retry */ }
+    }
+
+    // Falló: revertir counted si estaba en vuelo
     if (getCookie(inflightCookie) === '1') { delCookie(countedCookie); delCookie(inflightCookie); }
     totalEl.textContent = '—';
     todayEl.textContent = 'Hoy: —';
