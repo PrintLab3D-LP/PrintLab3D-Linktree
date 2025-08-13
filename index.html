@@ -1312,13 +1312,13 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
 
   function isInstagram(){ return /Instagram/i.test(navigator.userAgent); }
   function setCounts(total, today){
-    if (typeof total === 'number') { totalEl.textContent = total.toLocaleString(); }
-    if (typeof today === 'number') { todayEl.textContent = 'Hoy: ' + today.toLocaleString(); }
+    if (typeof total === 'number') totalEl.textContent = Number(total).toLocaleString();
+    if (typeof today === 'number') todayEl.textContent = 'Hoy: ' + Number(today).toLocaleString();
   }
 
   // ---- Cookie helpers (site-wide) ----
   function getCookie(name){
-    var m = document.cookie.match('(?:^|; )' + name.replace(/([.$?*|{}()\\[\\]\\\\/+^])/g,'\\$1') + '=([^;]*)');
+    var m = document.cookie.match('(?:^|; )' + name.replace(/([.$?*|{}()\[\]\\/+^])/g,'\\$1') + '=([^;]*)');
     return m ? decodeURIComponent(m[1]) : null;
   }
   function setCookie(name, value, days){
@@ -1330,9 +1330,9 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
     document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;SameSite=Lax';
   }
 
-  var countedCookie = 'pl3d_hit_date';
-  var inflightCookie = 'pl3d_hit_inflight';
-  var cacheTotalKey = 'pl3d_last_total'; // para pintar rápido/IG
+  var countedCookie = 'pl3d_hit_date';       // YYYY-MM-DD si ya contamos hoy
+  var cacheTotalKey  = 'pl3d_last_total';    // para IG/primer pintura
+  var localTodayKey  = 'pl3d_local_today_' + todayISO; // per-device hoy (IG)
 
   function jsonp(action, cbName){
     return new Promise(function(resolve,reject){
@@ -1347,50 +1347,42 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
     });
   }
 
-  function showIGMode(){
-    // Mostrar badge IG y datos locales/cacheados
+  function showIG(){
     if (igBadge) igBadge.style.display = 'inline';
-    try{
+    try {
       var cachedTotal = localStorage.getItem(cacheTotalKey);
-      if (cachedTotal) totalEl.textContent = Number(cachedTotal).toLocaleString();
-      else totalEl.textContent = '—';
-      var k = 'pl3d_local_today_' + todayISO;
-      var v = parseInt(localStorage.getItem(k) || '0', 10) + 1;
-      localStorage.setItem(k, String(v));
+      totalEl.textContent = cachedTotal ? Number(cachedTotal).toLocaleString() : '—';
+
+      // Hoy (local): incrementa solo si aún NO contamos hoy según cookie
+      var already = getCookie(countedCookie) === todayISO;
+      var v = parseInt(localStorage.getItem(localTodayKey) || '0', 10);
+      if (!already) { v = v + 1; localStorage.setItem(localTodayKey, String(v)); setCookie(countedCookie, todayISO, 1); }
       todayEl.textContent = 'Hoy: ' + v.toLocaleString();
-    }catch(e){
+    } catch(e) {
       totalEl.textContent = '—';
       todayEl.textContent = 'Hoy: —';
     }
   }
 
   async function run(){
-    if (isInstagram()) { showIGMode(); return; }
+    if (isInstagram()) { showIG(); return; }
 
-    // Navegadores normales
     if (igBadge) igBadge.style.display = 'none';
 
-    var action = 'hit';
     var cookieVal = getCookie(countedCookie);
-    if (cookieVal === todayISO) { action = 'get'; }
+    var action = (cookieVal === todayISO) ? 'get' : 'hit';
 
-    // Anti-duplicado: marcar antes y revertir si falla
-    if (action === 'hit') { setCookie(inflightCookie, '1', 1); setCookie(countedCookie, todayISO, 1); }
-
-    for (var i=0;i<2;i++){
+    // Do request; if success and it was a hit, set cookie so next pages use GET
+    for (var i=0;i<2;i++) {
       try{
         var data = await jsonp(action, 'pl3dCB' + i);
-        if (data && typeof data.total === 'number') {
-          try{ localStorage.setItem(cacheTotalKey, String(data.total)); }catch(e){}
-        }
         setCounts(data.total, data.today);
-        delCookie(inflightCookie);
+        if (data && typeof data.total === 'number') { try{ localStorage.setItem(cacheTotalKey, String(data.total)); }catch(e){} }
+        if (action === 'hit') setCookie(countedCookie, todayISO, 1);
         return;
       }catch(e){ /* retry */ }
     }
-
-    // Falló: revertir counted si estaba en vuelo
-    if (getCookie(inflightCookie) === '1') { delCookie(countedCookie); delCookie(inflightCookie); }
+    // fail -> leave dashes so next load can try again (cookie not set)
     totalEl.textContent = '—';
     todayEl.textContent = 'Hoy: —';
   }
