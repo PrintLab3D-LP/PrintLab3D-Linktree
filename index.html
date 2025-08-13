@@ -1103,12 +1103,11 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
 <script>
 (function () {
   if (window.__pl3d_lock) return; window.__pl3d_lock = true;
-  var GAS_URL = "https://script.google.com/macros/s/AKfycbxUpfvVjr6Jr7TKT3_b4U6kmkvXSm6otR16fsJh0z8gFSFTTgLWiUItsqFTO2pnD_LS/exec";
+  var GAS_URL = "https://script.google.com/macros/s/AKfycbxSrfGVlYXQRPrguDtvg94P6Yn2WI4RHxDiN7HtBiSfqQ225X0IWinYYKdFTK24dsZO/exec";
   var totalEl = document.getElementById('vc-total');
   var todayEl = document.getElementById('vc-today');
   var igBadge = document.getElementById('ig-badge');
   var todayISO = new Date().toISOString().slice(0, 10);
-
   function isInstagram(){ return /Instagram/i.test(navigator.userAgent); }
   function getCookie(name){
     var parts = document.cookie.split('; ');
@@ -1128,14 +1127,12 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
       var done=false, s=document.createElement('script');
       s.src = GAS_URL + '?action=' + encodeURIComponent(action) + '&jsonp=1&cb=' + cbName + '&t=' + Date.now();
       s.async=true; s.onerror=function(){ if(!done){done=true; reject(new Error('onerror'));} };
-      var timer=setTimeout(function(){ if(!done){done=true; reject(new Error('timeout'));} }, 3500);
+      var timer=setTimeout(function(){ if(!done){done=true; reject(new Error('timeout'));} }, 5000);
       window[cbName]=function(d){ if(!done){done=true; clearTimeout(timer); resolve(d);} };
       document.body.appendChild(s);
     });
   }
-
   var COOKIE_DAY='pl3d_hit_date', CACHE_TOTAL='pl3d_last_total', INFLIGHT='pl3d_inflight_ts';
-
   function runInstagram(){
     if (igBadge) igBadge.style.display='inline';
     try{
@@ -1147,7 +1144,6 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
       todayEl.textContent = 'Hoy: ' + v.toLocaleString();
     }catch(e){ totalEl.textContent='—'; todayEl.textContent='Hoy: —'; }
   }
-
   async function runNormal(){
     if (igBadge) igBadge.style.display='none';
     try{
@@ -1172,7 +1168,6 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
     }
     totalEl.textContent='—'; todayEl.textContent='Hoy: —';
   }
-
   document.addEventListener('DOMContentLoaded', function(){
     if (isInstagram()) { runInstagram(); return; }
     runNormal();
