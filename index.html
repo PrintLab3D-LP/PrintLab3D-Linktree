@@ -630,7 +630,7 @@ h1 {
 }
 
 
-/* Contador moderno de visitas (clave única) */
+/* Contador Total + Hoy */
 #visit-counter{
   display:inline-flex;
   align-items:center;
@@ -669,13 +669,13 @@ h1 {
 </div>
 <main>
 
-<!-- Contador de visitas moderno (Total + Hoy) -->
-<div id="visit-counter-wrapper" style="text-align:center; margin:12px 0 4px;">
+<!-- Contador Total + Hoy (JSONP) -->
+<div id="visit-counter-wrapper" style="text-align:center; margin:12px 0 6px;">
   <div id="visit-counter" role="status" aria-live="polite" title="Visitas acumuladas y de hoy">
     <span class="vc-eye" aria-hidden="true">👁️</span>
     <span class="vc-label">Visitas:</span>
-    <span class="vc-number" id="vc-total">—</span>
-    <span class="vc-today" id="vc-today" title="Visitas de hoy">Hoy: —</span>
+    <span class="vc-number" id="vc-total">cargando…</span>
+    <span class="vc-today" id="vc-today" title="Visitas de hoy">Hoy: cargando…</span>
   </div>
 </div>
 
@@ -1088,81 +1088,24 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
 
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-  const totalEl = document.getElementById('vc-total');
-  const todayEl = document.getElementById('vc-today');
-
-  // >>> Claves únicas (puedes cambiarlas cuando quieras)
-  const NS  = 'printlab3d_counter_guille_20250813';
-  const TOTAL_KEY = 'visitas_total_v1';
-  const todayIso  = new Date().toISOString().slice(0,10); // YYYY-MM-DD
-  const TODAY_KEY = 'hoy_' + todayIso.replace(/-/g,'') + '_v1';
-
-  // Utilidades
-  const endpoints = (path) => [
-    'https://api.countapi.xyz'  + path,
-    'https://countapi.xyz'      + path
-  ];
-
-  function withTimeout(promise, ms=3000){
-    return Promise.race([
-      promise,
-      new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), ms))
-    ]);
-  }
-
-  async function tryFetch(urls, options={}){
-    for(const u of urls){
-      try{
-        const res = await withTimeout(fetch(u, options), 3500);
-        if(!res.ok) continue;
-        const data = await res.json();
-        return data;
-      }catch(e){ /* intenta siguiente */ }
-    }
-    throw new Error('sin_respuesta');
-  }
-
-  // Crea la clave con value=0 si no existe (idempotente)
-  async function ensureKey(namespace, key){
-    const qs = `?namespace=${encodeURIComponent(namespace)}&key=${encodeURIComponent(key)}&value=0`;
-    try{
-      await tryFetch(endpoints('/create' + qs));
-    }catch(e){
-      // Si ya existe o falla /create, seguimos igual
-    }
-  }
-
-  async function hit(namespace, key){
-    const path = `//hit/${encodeURIComponent(namespace)}/${encodeURIComponent(key)}`;
-    const data = await tryFetch(endpoints(path), {cache:'no-store'});
-    if(typeof data.value !== 'number') throw new Error('valor invalido');
-    return data.value;
-  }
-
-  // Total
-  (async () => {
-    try{
-      await ensureKey(NS, TOTAL_KEY);
-      const value = await hit(NS, TOTAL_KEY);
-      totalEl.textContent = Number(value).toLocaleString();
-    }catch(e){
-      totalEl.textContent = '—';
-      console.error('Total visitas:', e);
-    }
-  })();
-
-  // Hoy
-  (async () => {
-    try{
-      await ensureKey(NS, TODAY_KEY);
-      const value = await hit(NS, TODAY_KEY);
-      todayEl.textContent = 'Hoy: ' + Number(value).toLocaleString();
-    }catch(e){
-      todayEl.textContent = 'Hoy: —';
-      console.error('Visitas de hoy:', e);
-    }
-  })();
+// JSONP con tu Apps Script (sin CORS)
+function pl3dCounter(data){
+  try{
+    var totalEl = document.getElementById('vc-total');
+    var todayEl = document.getElementById('vc-today');
+    if (data && typeof data.total === 'number') {
+      totalEl.textContent = data.total.toLocaleString();
+    } else { totalEl.textContent = '—'; }
+    if (data && typeof data.today === 'number') {
+      todayEl.textContent = 'Hoy: ' + data.today.toLocaleString();
+    } else { todayEl.textContent = 'Hoy: —'; }
+  }catch(e){ /* ignore */ }
+}
+document.addEventListener('DOMContentLoaded', function(){
+  var s = document.createElement('script');
+  s.src = "https://script.google.com/macros/s/AKfycbxUpfvVjr6Jr7TKT3_b4U6kmkvXSm6otR16fsJh0z8gFSFTTgLWiUItsqFTO2pnD_LS/exec" + "?action=hit&jsonp=1&cb=pl3dCounter&t=" + Date.now();
+  s.async = true;
+  document.body.appendChild(s);
 });
 </script>
 
