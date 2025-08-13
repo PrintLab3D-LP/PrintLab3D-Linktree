@@ -1133,17 +1133,31 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
     });
   }
   var COOKIE_DAY='pl3d_hit_date', CACHE_TOTAL='pl3d_last_total', INFLIGHT='pl3d_inflight_ts';
+  
   function runInstagram(){
-    if (igBadge) igBadge.style.display='inline';
-    try{
-      var cached=localStorage.getItem(CACHE_TOTAL);
-      totalEl.textContent = cached ? Number(cached).toLocaleString() : '—';
-      var already = getCookie(COOKIE_DAY)===todayISO;
-      var key='pl3d_local_today_'+todayISO, v=parseInt(localStorage.getItem(key)||'0',10);
-      if(!already){ v=v+1; localStorage.setItem(key,String(v)); setCookie(COOKIE_DAY,todayISO,1); }
-      todayEl.textContent = 'Hoy: ' + v.toLocaleString();
-    }catch(e){ totalEl.textContent='—'; todayEl.textContent='Hoy: —'; }
+    if (igBadge) igBadge.style.display = 'inline';
+
+    // Leer del backend (GET) y pintar. No suma.
+    jsonp('get', 'pl3dIG')
+      .then(function(d){
+        setCounts(d.total, d.today);
+        try { if (typeof d.total === 'number') localStorage.setItem(CACHE_TOTAL, String(d.total)); } catch(e){}
+      })
+      .catch(function(){
+        // Fallback: si IG bloquea, usamos cache local (puede quedar viejo)
+        try {
+          var cached = localStorage.getItem(CACHE_TOTAL);
+          totalEl.textContent = cached ? Number(cached).toLocaleString() : '—';
+        } catch(e) { totalEl.textContent = '—'; }
+        todayEl.textContent = 'Hoy: —';
+      });
+
+    // (Opcional) refrescar cada 60s sin sumar
+    // setInterval(function(){
+    //   jsonp('get','pl3dIGp').then(function(d){ setCounts(d.total, d.today); });
+    // }, 60000);
   }
+}
   async function runNormal(){
     if (igBadge) igBadge.style.display='none';
     try{
