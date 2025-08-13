@@ -1,30 +1,641 @@
 <!DOCTYPE html>
+
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>PrintLab 3D</title>
-
-<!-- —— estilos y fuentes que ya tenías (dejé lo tuyo) —— -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="styles.css"/>
-
 <style>
-body{font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;margin:0;background:#eef4ff}
-header{padding:10px 0;text-align:center}
-.logo{width:220px;display:block;margin:0 auto}
+body {margin:0;font-family:'Comic Sans MS',sans-serif;background:#f5f9ff;text-align:center;overflow-x:hidden;}
+canvas {position:fixed;top:0;left:0;z-index:-1;}
+main {max-width:600px;margin:0 auto;padding:20px;}
+.logo {max-width:150px;margin-top:20px;}
+.btn-box {width:100%;margin:1rem auto;}
+.btn {display:block;background:#ffb347;color:#fff;padding:1rem;border-radius:12px;text-decoration:none;font-weight:bold;font-size:1.1rem;box-shadow:0 4px 6px rgba(0,0,0,0.2);transition:all 0.3s ease;}
+.btn:hover {transform:scale(1.05);}
+.pulso {animation:pulse 2s infinite;}
+@keyframes pulse {0%{transform:scale(1);box-shadow:0 0 0 rgba(255,183,77,0.7);}70%{transform:scale(1.05);box-shadow:0 0 15px rgba(255,183,77,0.7);}100%{transform:scale(1);box-shadow:0 0 0 rgba(255,183,77,0.7);}}
+#topBtn {position:fixed;bottom:20px;right:20px;background:#52b788;color:#fff;border:none;border-radius:50%;width:56px;height:56px;font-size:22px;font-weight:bold;display:none;z-index:100;}
+/* Menú hamburguesa */
+.menu-toggle {display:none;position:fixed;top:20px;right:20px;font-size:28px;background:#28a745;color:white;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;z-index:10001;}
+.side-menu {position:fixed;top:0;right:-250px;width:250px;height:100%;background:#28a745;color:white;display:flex;flex-direction:column;padding-top:60px;box-shadow:-2px 0 10px rgba(0,0,0,0.4);transition:right 0.3s ease;z-index:10000;}
+.side-menu a {color:white;text-decoration:none;padding:15px 20px;font-size:1.2rem;border-bottom:1px solid rgba(255,255,255,0.2);}
+.side-menu a:hover {background:rgba(255,255,255,0.1);}
+.side-menu.show {right:0;}
+@media (max-width:600px){.menu-toggle{display:block;}main{padding-top:60px;}}
+/* Modal */
+.modal {display:none;position:fixed;z-index:20000;left:0;top:0;width:100%;height:100%;overflow:auto;background-color:rgba(0,0,0,0.5);}
+.modal-content {background-color:#fff;margin:10% auto;padding:0;border-radius:10px;width:90%;max-width:400px;box-shadow:0 5px 15px rgba(0,0,0,0.3);animation:fadeIn 0.3s ease;}
+.modal-content img {width:100%;border-top-left-radius:10px;border-top-right-radius:10px;}
+.modal-content p {padding:15px;font-size:1rem;color:#333;}
+.close {color:#aaa;float:right;font-size:28px;font-weight:bold;margin:10px;cursor:pointer;}
+.close:hover {color:black;}
+@keyframes fadeIn {from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
 
-/* Estilo del contador */
+/* Animaciones de entrada */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.logo {
+  animation: fadeInDown 1s ease-out;
+}
+.btn-box {
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+}
+.btn-box:nth-child(1) { animation-delay: 0.5s; }
+.btn-box:nth-child(2) { animation-delay: 0.8s; }
+.btn-box:nth-child(3) { animation-delay: 1.1s; }
+.btn-box:nth-child(4) { animation-delay: 1.4s; }
+.btn-box:nth-child(5) { animation-delay: 1.7s; }
+
+
+/* Efecto brillo en botones */
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-20deg);
+}
+.btn:hover::after {
+  animation: shine 0.75s ease-in-out;
+}
+@keyframes shine {
+  0% { left: -75%; }
+  100% { left: 125%; }
+}
+
+
+/* Brillo automático en Promo Día de la Infancia */
+.btn-box.pulso .btn::after {
+  animation: shine 1.5s ease-in-out infinite;
+}
+
+
+/* Efecto rebote en botón promo */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-8px); }
+  60% { transform: translateY(-4px); }
+}
+.btn-box.pulso {
+  animation: bounce 2s infinite;
+}
+
+/* Título pro */
+h1 {
+  font-size: 2rem;
+  color: #333;
+  background: linear-gradient(90deg, #ff6f61, #f7cac9, #92a8d1, #88b04b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: slideIn 1s ease-out;
+  font-weight: bold;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-100px) scale(0.9); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+
+/* Efecto destello periódico en título */
+@keyframes shineText {
+  0%, 100% { background-position: 0 0; }
+  50% { background-position: 200% 0; }
+}
+h1 {
+  background-size: 200% auto;
+  animation: slideIn 1s ease-out, shineText 3s linear infinite;
+}
+
+/* Subtítulo animado */
+.subtitle {
+  font-size: 1.2rem;
+  color: #555;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+  animation-delay: 1.5s;
+}
+
+
+/* Efecto rebote en subtítulo */
+@keyframes bounceSmall {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-5px); }
+  60% { transform: translateY(-3px); }
+}
+.subtitle {
+  animation: fadeInUp 1s ease-out forwards, bounceSmall 2s infinite;
+}
+
+/* Texto adicional */
+.subtitle-extra {
+  font-size: 1rem;
+  color: #444;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+  animation-delay: 2.5s;
+}
+
+
+/* Asegurar que el canvas quede siempre detrás */
+canvas#particles {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1 !important;
+  background: transparent !important;
+}
+
+/* Botón Promo Día de la Infancia visible con halo */
+.btn-box.pulso {
+  position: relative;
+  z-index: 1000;
+}
+.btn-box.pulso .btn {
+  background: #ffb347 !important;
+  color: #fff !important;
+  position: relative;
+  border: 3px solid transparent;
+  border-radius: 12px;
+  animation: haloGlow 2s ease-in-out infinite, bounce 2s infinite;
+}
+
+/* Halo brillante constante */
+@keyframes haloGlow {
+  0%, 100% { box-shadow: 0 0 10px #ffb347, 0 0 20px #ffb347; }
+  50% { box-shadow: 0 0 20px #ffb347, 0 0 40px #ffb347; }
+}
+
+
+/* Forzar visibilidad del botón Promo Día de la Infancia */
+.btn-box.pulso {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  position: relative !important;
+  margin: 15px 0 !important;
+  z-index: 2000 !important;
+}
+.btn-box.pulso .btn {
+  background: #ffb347 !important;
+  color: #fff !important;
+  font-weight: bold !important;
+  border-radius: 12px !important;
+  border: 3px solid transparent !important;
+  animation: haloGlow 2s ease-in-out infinite, bounce 2s infinite !important;
+}
+
+
+/* Título más grueso */
+h1 {
+  font-weight: 900 !important;
+}
+
+
+/* Subtítulo extra más pequeño pero grueso */
+.subtitle-extra {
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+}
+
+
+/* Chatbot flotante con robot verde */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 5px #28a745, 0 0 10px #28a745; }
+  50% { box-shadow: 0 0 15px #28a745, 0 0 25px #28a745; }
+}
+#chatbot-icon {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #28a745 url('https://cdn-icons-png.flaticon.com/512/4712/4712104.png') center/60% no-repeat;
+  cursor: pointer;
+  z-index: 9999;
+  animation: pulseGlow 2s infinite;
+}
+#chatbot-window {
+  position: fixed;
+  bottom: -420px;
+  right: 15px;
+  width: 320px;
+  height: 420px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: bottom 0.4s ease;
+  z-index: 9998;
+}
+#chatbot-header {
+  background: #28a745;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+#chatbot-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  font-size: 0.9rem;
+}
+.chatbot-message {
+  margin-bottom: 8px;
+}
+.bot {
+  color: #333;
+  background: #e5f7ea;
+  padding: 6px 10px;
+  border-radius: 8px;
+  display: inline-block;
+}
+.user {
+  color: white;
+  background: #28a745;
+  padding: 6px 10px;
+  border-radius: 8px;
+  display: inline-block;
+  align-self: flex-end;
+}
+#chatbot-input {
+  display: flex;
+  border-top: 1px solid #ccc;
+}
+#chatbot-input input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  outline: none;
+}
+#chatbot-input button {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 0 15px;
+  cursor: pointer;
+}
+.chatbot-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 5px;
+}
+.chatbot-buttons button {
+  flex: 1;
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+
+/* Animación de balanceo para el robotito */
+#chatbot-icon:hover {
+  animation: wave 0.8s ease-in-out infinite alternate, pulseGlow 2s infinite;
+}
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(10deg); }
+  50% { transform: rotate(-10deg); }
+  75% { transform: rotate(8deg); }
+  100% { transform: rotate(0deg); }
+}
+
+
+#chatbot-window { padding-bottom: 5px; }
+#chatbot-input { margin-bottom: 0; }
+
+.chat-open #chatbot-icon {
+  display: none !important;
+}
+
+@media (max-width: 600px) {
+  #chatbot-icon {
+    bottom: 80px !important; /* lo sube sobre el teclado y campo de texto */
+  }
+}
+
+
+/* Banner de novedades */
+#banner-ofertas {
+  background: #ff6f61;
+  color: white;
+  font-weight: bold;
+  padding: 8px;
+  font-size: 0.95rem;
+  position: sticky;
+  top: 0;
+  z-index: 3000;
+}
+
+/* Buscador rápido */
+#buscador {
+  margin: 15px auto;
+  display: flex;
+  justify-content: center;
+}
+#buscador input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 80%;
+  max-width: 400px;
+}
+
+/* Lista de resultados del buscador */
+#resultados-busqueda {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+#resultados-busqueda li {
+  padding: 6px;
+  background: #f1f1f1;
+  margin: 3px auto;
+  max-width: 400px;
+  border-radius: 6px;
+}
+
+/* Mini carrito decorativo */
+#mini-carrito {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: #28a745;
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  z-index: 2000;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+#mini-carrito:hover {
+  background: #218838;
+}
+
+/* Calendario de eventos */
+#calendario {
+  margin: 20px auto;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  padding: 10px;
+}
+#calendario table {
+  width: 100%;
+  border-collapse: collapse;
+}
+#calendario th, #calendario td {
+  border: 1px solid #ddd;
+  padding: 6px;
+  text-align: center;
+}
+#calendario th {
+  background: #28a745;
+  color: white;
+}
+.evento {
+  background: #ffeb3b;
+  font-weight: bold;
+}
+
+
+/* Mejor estilo para el buscador */
+#buscador {
+  margin: 15px auto;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+#buscador input {
+  padding: 10px 35px 10px 15px;
+  border-radius: 25px;
+  border: 2px solid #28a745;
+  width: 80%;
+  max-width: 400px;
+  outline: none;
+  font-size: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+#buscador::after {
+  content: '🔍';
+  position: absolute;
+  right: calc(50% - 180px);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #28a745;
+}
+#resultados-busqueda li {
+  padding: 8px;
+  background: #e5f7ea;
+  margin: 3px auto;
+  max-width: 400px;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: transform 0.2s ease;
+}
+#resultados-busqueda li:hover {
+  transform: scale(1.05);
+  background: #c8f7d1;
+}
+
+/* Efecto al logo */
+@keyframes logoZoomRotate {
+  0% { transform: scale(0.8) rotate(-10deg); opacity: 0; }
+  50% { transform: scale(1.05) rotate(5deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); }
+}
+.logo {
+  animation: logoZoomRotate 1.2s ease-out;
+}
+
+
+/* Efecto brillante intermitente en el logo */
+@keyframes logoShine {
+  0% { filter: drop-shadow(0 0 0px #28a745); }
+  50% { filter: drop-shadow(0 0 10px #28a745) drop-shadow(0 0 20px #28a745); }
+  100% { filter: drop-shadow(0 0 0px #28a745); }
+}
+.logo {
+  animation: logoZoomRotate 1.2s ease-out, logoShine 2s infinite ease-in-out;
+}
+
+
+/* Mini carrito flotante adaptado */
+#mini-carrito {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #28a745;
+  color: white;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  z-index: 2000;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  animation: carritoFlotante 2s infinite ease-in-out;
+}
+
+@keyframes carritoFlotante {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+#mini-carrito:hover {
+  background: #218838;
+}
+
+/* En pantallas pequeñas moverlo a la izquierda */
+@media (max-width: 768px) {
+  #mini-carrito {
+    right: auto;
+    left: 20px;
+    bottom: 20px;
+  }
+}
+
+
+/* Modal del carrito */
+#modalCarrito {
+  display: none;
+  position: fixed;
+  z-index: 3000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+#modalCarrito .modal-contenido {
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  animation: slideUp 0.4s ease;
+}
+
+#modalCarrito .modal-contenido h2 {
+  margin-top: 0;
+}
+
+#modalCarrito .icono-carrito {
+  font-size: 50px;
+  color: #ffb347;
+  margin-bottom: 10px;
+}
+
+#modalCarrito button {
+  background-color: #ffb347;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+#modalCarrito button:hover {
+  background-color: #e09e3f;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+
+/* Bajar hamburguesa */
+.menu-toggle {
+  top: 85px !important; /* Ajuste bajando más */
+  position: fixed;
+  z-index: 3001;
+}
+
+
+/* Estilo para el contador de la promo */
+#contador-promo {
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffb347;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+#contador-promo .icono-reloj {
+  font-size: 18px;
+}
+
+
+/* Contador dentro del botón */
+#promo-dia-del-niño .contador-en-boton {
+  display: block;
+  font-size: 14px;
+  font-weight: normal;
+  margin-top: 4px;
+  color: white;
+}
+
+
+/* === Estilos del contador (no afecta el resto) === */
 #visit-counter{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  background:#ffffff;
-  border:2px solid #28a74522;
-  padding:10px 16px;
-  border-radius:18px;
-  box-shadow:0 8px 18px rgba(0,0,0,.08);
-  font-weight:800;
+  display:inline-flex; align-items:center; gap:10px;
+  background:#fff; border:2px solid #28a74522;
+  padding:10px 16px; border-radius:18px;
+  box-shadow:0 8px 18px rgba(0,0,0,.08); font-weight:800;
 }
 #visit-counter .vc-eye{font-size:1.05rem}
 #visit-counter .vc-label{opacity:.8;font-weight:800}
@@ -34,14 +645,28 @@ header{padding:10px 0;text-align:center}
 #visit-counter #ig-badge svg{display:inline-block; vertical-align:middle}
 @media (max-width:480px){
   #visit-counter{gap:8px;padding:8px 12px}
-  #visit-counter .vc-label{display:none}
-  #visit-counter .vc-sep{display:none}
+  #visit-counter .vc-label, #visit-counter .vc-sep{display:none}
 }
+
 </style>
 </head>
 <body>
 
-<!-- ======= CONTADOR ======= -->
+<div id="banner-ofertas">
+  <marquee behavior="scroll" direction="left">
+    🎉 ¡Promo Día del niño! Aprovecha descuentos hasta el 17/08 - 🎯 Agregamos nuevos juegos, visita la seccion catalogos / juegos - 🔠 Nueva Seccion Carteles 3D, buscalos en Catalogo / Otros/ Letreros -🚀 Si tenes dudas usa la Nueva herramienta ChatBoot Abajo a la derecha.
+  </marquee>
+</div>
+
+<button class="menu-toggle" onclick="toggleMenu()">☰</button>
+<div class="side-menu" id="sideMenu">
+<a href="#" onclick="openModal('modalImpresora')">🖨️ Impresora que usamos</a>
+<a href="#" onclick="openModal('modalMateriales')">🎨 Materiales que usamos</a>
+<a href="#" onclick="openModal('modalQuienes')">ℹ️ Quiénes somos</a>
+</div>
+<main>
+
+<!-- ===== Contador (Visitas + Hoy) ===== -->
 <div id="visit-counter-wrapper" style="text-align:center; margin:14px 0 10px;">
   <div id="visit-counter" role="status" aria-live="polite" title="Visitas acumuladas y de hoy">
     <span class="vc-eye" aria-hidden="true">👁️</span>
@@ -49,7 +674,7 @@ header{padding:10px 0;text-align:center}
     <span class="vc-number" id="vc-total">—</span>
     <span class="vc-sep">&nbsp;&nbsp;</span>
     <span class="vc-today" id="vc-today" title="Visitas de hoy">Hoy: —</span>
-    <span id="ig-badge" title="Vista desde Instagram" aria-label="Instagram" style="display:none; margin-left:8px; line-height:0;">
+    <span id="ig-badge" title="Instagram" aria-label="Instagram" style="display:none; margin-left:8px; line-height:0;">
       <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
         <defs>
           <linearGradient id="igGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -67,109 +692,488 @@ header{padding:10px 0;text-align:center}
   </div>
 </div>
 
-<header>
-  <img alt="PrintLab 3D" class="logo" src="logo.png"/>
-</header>
+<img alt="PrintLab 3D" class="logo" src="logo.png"/>
+<h1>¡Bienvenidos a PrintLab 3D!</h1>
+<p class="subtitle">Innovación y creatividad en cada impresión</p>
+<p class="subtitle-extra">Te invitamos a conocer nuestros productos</p>
+
+<div id="buscador">
+  <input type="text" id="buscador-input" placeholder="🔍 Buscar producto...">
+</div>
+<ul id="resultados-busqueda"></ul>
+
+
+
+<div class="btn-box"><a class="btn" href="https://wa.me/5492954218753" target="_blank">📲 Pedidos por WhatsApp</a></div>
+<div class="btn-box"><a class="btn" href="https://www.instagram.com/printlab3d.lp" target="_blank">📷 Seguinos en Instagram</a></div>
+<div class="btn-box"><a class="btn" href="catalogo.html">🛍️ Catálogo</a></div>
+<div class="btn-box pulso">
+<a class="btn" id="promo-dia-infancia" href="promo-dia-infancia.html" style="background:#28a745;">🎁 Promo Día del niño             <span class="contador-en-boton"></span></a>
+</div>
+
+<div class="btn-box"><a class="btn" href="#" onclick="salir()">🚪 Salir</a></div>
+</main>
+<button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<!-- Modales -->
+<div class="modal" id="modalImpresora">
+<div class="modal-content">
+<span class="close" onclick="closeModal('modalImpresora')">×</span>
+<img alt="Impresora Bambu Lab A1" src="impresora.jpg"/>
+<p>Trabajamos con la impresora 3D Bambu Lab A1, reconocida por su precisión y velocidad de impresión.</p>
+</div>
+</div>
+<div class="modal" id="modalMateriales">
+<div class="modal-content">
+<span class="close" onclick="closeModal('modalMateriales')">×</span>
+<img alt="Filamentos 3D" src="filamentos.jpg"/>
+<p>Usamos filamentos de alta calidad como PLA y PETG, en una amplia variedad de colores para todo tipo de proyectos.</p>
+</div>
+</div>
+<div class="modal" id="modalQuienes">
+<div class="modal-content">
+<span class="close" onclick="closeModal('modalQuienes')">×</span>
+<img alt="Quiénes somos" src="logo.png"/>
+<p>En PrintLab 3D creamos productos personalizados con impresión 3D, hechos especialmente para vos.</p>
+</div>
+</div>
+<script>
+function toggleMenu(){document.getElementById('sideMenu').classList.toggle('show');}
+function openModal(id){
+  closeMenu();
+  document.getElementById(id).style.display='block';
+}
+function closeModal(id){document.getElementById(id).style.display='none';}
+function closeMenu(){document.getElementById('sideMenu').classList.remove('show');}
+window.onclick=function(event){
+  document.querySelectorAll('.modal').forEach(function(modal){
+    if(event.target==modal){modal.style.display="none";}
+  });
+}
+function salir(){window.open('','_self').close();window.location.href='https://www.instagram.com/printlab3d.lp/';}
+</script>
+<canvas id="particles"></canvas>
+<script>
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particlesArray;
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+window.addEventListener('resize', function(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    init();
+});
+
+class Particle {
+    constructor(x, y, size, speedX, speedY, color){
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.speedX = speedX;
+        this.speedY = speedY;
+        this.color = color;
+    }
+    update(){
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+    }
+    draw(){
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+function init(){
+    particlesArray = [];
+    const colors = ['#ff6f61', '#6b5b95', '#88b04b', '#f7cac9', '#92a8d1', '#f7786b'];
+    for (let i = 0; i < 120; i++){
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
+        const size = Math.random() * 4 + 1;
+        const speedX = (Math.random() - 0.5) * 1.5;
+        const speedY = (Math.random() - 0.5) * 1.5;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        particlesArray.push(new Particle(x, y, size, speedX, speedY, color));
+    }
+}
+
+function connect(){
+    for (let a = 0; a < particlesArray.length; a++){
+        for (let b = a; b < particlesArray.length; b++){
+            let dx = particlesArray[a].x - particlesArray[b].x;
+            let dy = particlesArray[a].y - particlesArray[b].y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < 120){
+                ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                ctx.stroke();
+            }
+        }
+    }
+}
+
+function animate(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < particlesArray.length; i++){
+        particlesArray[i].update();
+        particlesArray[i].draw();
+    }
+    connect();
+    requestAnimationFrame(animate);
+}
+
+init();
+animate();
+</script>
+<div id="chatbot-icon"></div>
+<div id="chatbot-window">
+<div id="chatbot-header">Asistente PrintLab 3D</div>
+<div id="chatbot-messages"></div>
+<div id="chatbot-input">
+<input id="chatbot-text" placeholder="Escribe tu mensaje..." type="text"/>
+<button id="chatbot-send">Enviar</button>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const chatbotIcon = document.getElementById('chatbot-icon');
+  const chatbotWindow = document.getElementById('chatbot-window');
+  const chatbotMessages = document.getElementById('chatbot-messages');
+  const chatbotInput = document.getElementById('chatbot-text');
+  const chatbotSend = document.getElementById('chatbot-send');
+
+  let chatbotOpen = false;
+
+  function chatbotWelcome() {
+    addBotMessage(`👋 ¡Hola! Soy el asistente de <b>PrintLab 3D</b> 🤖<br>
+    Somos un emprendimiento especializado en <b>impresión 3D personalizada</b> 🎨🖨️<br>
+    Creamos:<ul>
+      <li>🔑 Llaveros personalizados</li>
+      <li>🎲 Juegos de mesa y juguetes</li>
+      <li>🎁 Souvenirs y regalos únicos</li>
+      <li>⚙️ Gadgets y piezas funcionales</li>
+      <li>🖌️ Modelos exclusivos a pedido</li>
+    </ul>
+    📦 Trabajamos con <b>PLA y PETG</b> en más de 20 colores.<br>
+    🚚 Hacemos envíos a todo el país.<br>
+    📅 Diseñamos y fabricamos según tus ideas.<br><br>
+    🔗 <a href='catalogo.html'>Ver catálogo completo</a>`);
+
+    addBotMessage('Selecciona una opción o escribime tu consulta:');
+    const btns = document.createElement('div');
+    btns.classList.add('chatbot-buttons');
+    btns.innerHTML = `
+      <button onclick="botReply('envíos')">📦 Métodos de envío</button>
+      <button onclick="botReply('materiales y colores')">🎨 Materiales y colores</button>
+      <button onclick="botReply('formas de pago')">💲 Formas de pago</button>
+      <button onclick="botReply('tiempo de impresión')">⏳ Tiempo de impresión</button>
+      <button onclick="botReply('ubicación')">📍 Ubicación</button>
+      <button onclick="botReply('qué ofrecemos')">🛍️ Qué ofrecemos</button>
+    `;
+    chatbotMessages.appendChild(btns);
+  }
+
+  function toggleChatbot() {
+    chatbotOpen = !chatbotOpen;
+    chatbotWindow.style.bottom = chatbotOpen ? '20px' : '-420px';
+    if (chatbotOpen && chatbotMessages.innerHTML.trim() === '') {
+      chatbotWelcome();
+    }
+  }
+
+  function addUserMessage(text) {
+    document.getElementById('chatbot-user-sound').play();
+    const msg = document.createElement('div');
+    msg.classList.add('chatbot-message', 'user');
+    msg.innerHTML = text;
+    chatbotMessages.appendChild(msg);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  }
+
+  function addBotMessage(text) {
+    document.getElementById('chatbot-sound').play();
+    const msg = document.createElement('div');
+    msg.classList.add('chatbot-message', 'bot');
+    msg.innerHTML = text;
+    chatbotMessages.appendChild(msg);
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+  }
+
+  window.botReply = function(userText) {
+    const text = userText.toLowerCase();
+    addUserMessage(userText);
+
+    if (text.includes('hola') || text.includes('buenas') || text.includes('qué tal') || text.includes('como estas')) {
+      addBotMessage("😊 ¡Hola! Estoy muy bien, gracias por preguntar. Estoy aquí para ayudarte a conocer todo sobre PrintLab 3D. Preguntame lo que quieras.");
+    } else if (text.includes('quiero saber más') || text.includes('más info') || text.includes('informacion')) {
+      addBotMessage("ℹ️ En PrintLab 3D ofrecemos impresión 3D personalizada, trabajamos con PLA y PETG, realizamos envíos a todo el país y diseñamos piezas exclusivas. También hacemos juguetes, souvenirs, gadgets y más.");
+    } else if (text.includes('envío') || text.includes('entrega')) {
+      addBotMessage("📦 Realizamos envíos a todo el país y entregas locales en Santa Rosa, La Pampa.");
+    } else if (text.includes('material') || text.includes('color')) {
+      addBotMessage("🎨 Trabajamos con PLA y PETG de alta calidad en más de 20 colores.");
+    } else if (text.includes('pago')) {
+      addBotMessage("💲 Aceptamos transferencias, Mercado Pago y efectivo.");
+    } else if (text.includes('tiempo')) {
+      addBotMessage("⏳ El tiempo de impresión varía entre unas horas y varios días, según el producto.");
+    } else if (text.includes('ubicación') || text.includes('dónde están')) {
+      addBotMessage("📍 Estamos en Santa Rosa, La Pampa. Hacemos envíos a todo el país.");
+    } else if (text.includes('qué ofrecen') || text.includes('productos')) {
+      addBotMessage("🛍️ En <b>PrintLab 3D</b> ofrecemos: <ul><li>🎲 Juegos</li><li>🔑 Llaveros</li><li>🎁 Souvenirs</li><li>⚙️ Gadgets</li></ul>");
+    } else {
+      addBotMessage("❓ No tengo esa información exacta, pero podés escribirme por WhatsApp: <a href='https://wa.me/5492954218753'>Contactar</a>");
+    }
+  }
+
+  chatbotSend.addEventListener('click', () => {
+    const text = chatbotInput.value.trim();
+    if (text !== '') {
+      botReply(text);
+      chatbotInput.value = '';
+    }
+  });
+
+  chatbotInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      chatbotSend.click();
+    }
+  });
+
+  chatbotIcon.addEventListener('click', toggleChatbot);
+});
+</script>
+<audio id="chatbot-user-sound" preload="auto" src="https://www.soundjay.com/button/sounds/button-3.mp3"></audio>
+<audio id="chatbot-sound" preload="auto" src="https://www.soundjay.com/button/sounds/button-16.mp3"></audio>
+<div id="mini-carrito">🛒</div>
+<script>
+
+// Buscador rápido con redirección a páginas y anclas específicas
+const productos = [
+  {nombre: "Ajedrez enrollable", enlace: "juegos.html#ajedrez"},
+  {nombre: "Metegol", enlace: "juegos.html#metegol"},
+  {nombre: "Mini Pinball de mesa", enlace: "juegos.html#mini-pinball"},
+  {nombre: "Bolos a cohete", enlace: "juegos.html#bolos-cohete"},
+  {nombre: "Hélice voladora", enlace: "juegos.html#helice-voladora"},
+  {nombre: "Tatris balance", enlace: "juegos.html#tatris-balance"},
+  {nombre: "Mini Baloncesto Arcade", enlace: "juegos.html#mini-baloncesto"},
+  {nombre: "Igloo Mania", enlace: "juegos.html#igloo-mania"},
+  {nombre: "Tatetí llavero 3D", enlace: "juegos.html#tateti-llavero-3d"},
+  {nombre: "Laberinto Pac-Man 3D", enlace: "juegos.html#laberinto-pacman-3d"},
+  {nombre: "Mini Air Hockey de mesa", enlace: "juegos.html#mini-air-hockey"},
+  {nombre: "Apunta y dispara", enlace: "juegos.html#apunta-dispara"},
+  {nombre: "Llavero Barbie", enlace: "llaveros.html#llavero-barbie"},
+  {nombre: "Llavero personalizado", enlace: "llaveros.html#llavero-personalizado"},
+  {nombre: "Tapa protectora lata de bebida", enlace: "otros.html#tapa-lata"},
+  {nombre: "Souvenir personalizado", enlace: "otros.html#souvenir"}
+];
+
+document.getElementById("buscador-input").addEventListener("input", function() {
+  const valor = this.value.toLowerCase();
+  const resultados = document.getElementById("resultados-busqueda");
+  resultados.innerHTML = "";
+  if (valor.length > 0) {
+    const filtrados = productos.filter(p => p.nombre.toLowerCase().includes(valor));
+    filtrados.forEach(p => {
+      const li = document.createElement("li");
+      li.innerHTML = `<a href="${p.enlace}">${p.nombre}</a>`;
+      resultados.appendChild(li);
+    });
+  }
+});
+
+// Redirigir si presiona Enter
+document.getElementById("buscador-input").addEventListener("keypress", function(e) {
+  if (e.key === "Enter") {
+    const valor = this.value.toLowerCase();
+    const encontrado = productos.find(p => p.nombre.toLowerCase().includes(valor));
+    if (encontrado) {
+      window.location.href = encontrado.enlace;
+    }
+  }
+});
+
+// Mini carrito decorativo
+document.getElementById("mini-carrito").addEventListener("click", function(){
+  
+});
+document.getElementById("mini-carrito").addEventListener("click", function(){
+  
+});
+document.getElementById("mini-carrito").addEventListener("click", function(){
+  
+});
+document.getElementById("mini-carrito").addEventListener("click", function(){
+  
+});
+
+</script>
+
+<div id="modalCarrito">
+  <div class="modal-contenido">
+    <div class="icono-carrito">🛒</div>
+    <h2>Pronto habilitaremos la sección carrito</h2>
+    <p>para que hagas tus compras de la mejor forma</p>
+    <button onclick="cerrarModalCarrito()">Cerrar</button>
+  </div>
+</div>
+
+
+<script>
+function abrirModalCarrito() {
+  document.getElementById("modalCarrito").style.display = "flex";
+}
+function cerrarModalCarrito() {
+  document.getElementById("modalCarrito").style.display = "none";
+}
+// Asignar evento al botón del carrito
+document.addEventListener("DOMContentLoaded", function() {
+  const btnCarrito = document.getElementById("mini-carrito");
+  if (btnCarrito) {
+    btnCarrito.addEventListener("click", abrirModalCarrito);
+  }
+});
+</script>
+
+
+<script>
+function iniciarContadorPromo() {
+  const fechaObjetivo = new Date("August 16, 2025 23:59:00").getTime();
+  const elemento = document.getElementById("contador-promo");
+
+  const intervalo = setInterval(function() {
+    const ahora = new Date().getTime();
+    const distancia = fechaObjetivo - ahora;
+
+    if (distancia < 0) {
+      clearInterval(intervalo);
+      elemento.innerHTML = "⏳ ¡La promo ha terminado!";
+      return;
+    }
+
+    const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+    elemento.innerHTML = '<span class="icono-reloj">⏳</span>' + dias + "d " + horas + "h " + minutos + "m " + segundos + "s ";
+  }, 1000);
+}
+document.addEventListener("DOMContentLoaded", iniciarContadorPromo);
+</script>
+
+
+<script>
+function iniciarContadorPromoDentro() {
+  const fechaObjetivo = new Date("August 16, 2025 23:59:00").getTime();
+  const boton = document.getElementById("promo-dia-infancia");
+  const elemento = boton.querySelector(".contador-en-boton");
+
+  const intervalo = setInterval(function() {
+    const ahora = new Date().getTime();
+    const distancia = fechaObjetivo - ahora;
+
+    if (distancia < 0) {
+      clearInterval(intervalo);
+      boton.style.backgroundColor = "#777";
+      boton.innerHTML = "🎁 Promo Finalizada";
+      return;
+    }
+
+    const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+    const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+    const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+    elemento.innerHTML = "⏳ " + dias + "d " + horas + "h " + minutos + "m " + segundos + "s ";
+  }, 1000);
+}
+document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
+</script>
+
 
 <script>
 (function () {
-  if (window.__pl3d_lock) return;
-  window.__pl3d_lock = true;
-
+  if (window.__pl3d_lock) return; window.__pl3d_lock = true;
   var GAS_URL = "https://script.google.com/macros/s/AKfycbxUpfvVjr6Jr7TKT3_b4U6kmkvXSm6otR16fsJh0z8gFSFTTgLWiUItsqFTO2pnD_LS/exec";
-
   var totalEl = document.getElementById('vc-total');
   var todayEl = document.getElementById('vc-today');
   var igBadge = document.getElementById('ig-badge');
-
   var todayISO = new Date().toISOString().slice(0, 10);
 
-  function isInstagram() { return /Instagram/i.test(navigator.userAgent); }
-  function getCookie(name) {
+  function isInstagram(){ return /Instagram/i.test(navigator.userAgent); }
+  function getCookie(name){
     var parts = document.cookie.split('; ');
-    for (var i = 0; i < parts.length; i++) {
-      if (parts[i].indexOf(name + '=') === 0) {
-        return decodeURIComponent(parts[i].substring(name.length + 1));
-      }
-    }
+    for (var i=0;i<parts.length;i++){ if (parts[i].indexOf(name+'=')===0) return decodeURIComponent(parts[i].substring(name.length+1)); }
     return null;
   }
-  function setCookie(name, value, days) {
-    var d = new Date();
-    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-    document.cookie = name + '=' + encodeURIComponent(value) +
-      ';expires=' + d.toUTCString() + ';path=/;SameSite=Lax';
+  function setCookie(name, value, days){
+    var d=new Date(); d.setTime(d.getTime()+days*24*60*60*1000);
+    document.cookie = name+'='+encodeURIComponent(value)+';expires='+d.toUTCString()+';path=/;SameSite=Lax';
   }
-  function setCounts(total, today) {
-    if (typeof total === 'number') totalEl.textContent = Number(total).toLocaleString();
-    if (typeof today === 'number') todayEl.textContent = 'Hoy: ' + Number(today).toLocaleString();
+  function setCounts(total, today){
+    if (typeof total==='number') totalEl.textContent = Number(total).toLocaleString();
+    if (typeof today==='number') todayEl.textContent  = 'Hoy: ' + Number(today).toLocaleString();
   }
-  function jsonp(action, cbName) {
-    return new Promise(function (resolve, reject) {
-      var done = false;
-      var s = document.createElement('script');
+  function jsonp(action, cbName){
+    return new Promise(function(resolve,reject){
+      var done=false, s=document.createElement('script');
       s.src = GAS_URL + '?action=' + encodeURIComponent(action) + '&jsonp=1&cb=' + cbName + '&t=' + Date.now();
-      s.async = true;
-      s.onerror = function () { if (!done) { done = true; reject(new Error('onerror')); } };
-      var timer = setTimeout(function () { if (!done) { done = true; reject(new Error('timeout')); } }, 3500);
-      window[cbName] = function (d) { if (!done) { done = true; clearTimeout(timer); resolve(d); } };
+      s.async=true; s.onerror=function(){ if(!done){done=true; reject(new Error('onerror'));} };
+      var timer=setTimeout(function(){ if(!done){done=true; reject(new Error('timeout'));} }, 3500);
+      window[cbName]=function(d){ if(!done){done=true; clearTimeout(timer); resolve(d);} };
       document.body.appendChild(s);
     });
   }
 
-  var COOKIE_DAY   = 'pl3d_hit_date';
-  var CACHE_TOTAL  = 'pl3d_last_total';
-  var INFLIGHT     = 'pl3d_inflight_ts';
+  var COOKIE_DAY='pl3d_hit_date', CACHE_TOTAL='pl3d_last_total', INFLIGHT='pl3d_inflight_ts';
 
-  function runInstagram() {
-    if (igBadge) igBadge.style.display = 'inline';
-    try {
-      var cached = localStorage.getItem(CACHE_TOTAL);
+  function runInstagram(){
+    if (igBadge) igBadge.style.display='inline';
+    try{
+      var cached=localStorage.getItem(CACHE_TOTAL);
       totalEl.textContent = cached ? Number(cached).toLocaleString() : '—';
-
-      var already = getCookie(COOKIE_DAY) === todayISO;
-      var key = 'pl3d_local_today_' + todayISO;
-      var v = parseInt(localStorage.getItem(key) || '0', 10);
-      if (!already) { v = v + 1; localStorage.setItem(key, String(v)); setCookie(COOKIE_DAY, todayISO, 1); }
+      var already = getCookie(COOKIE_DAY)===todayISO;
+      var key='pl3d_local_today_'+todayISO, v=parseInt(localStorage.getItem(key)||'0',10);
+      if(!already){ v=v+1; localStorage.setItem(key,String(v)); setCookie(COOKIE_DAY,todayISO,1); }
       todayEl.textContent = 'Hoy: ' + v.toLocaleString();
-    } catch (e) {
-      totalEl.textContent = '—';
-      todayEl.textContent = 'Hoy: —';
-    }
+    }catch(e){ totalEl.textContent='—'; todayEl.textContent='Hoy: —'; }
   }
 
-  async function runNormal() {
-    if (igBadge) igBadge.style.display = 'none';
-    try {
-      var lastTs = Number(sessionStorage.getItem(INFLIGHT) || '0');
-      if (Date.now() - lastTs < 10000) {
-        try {
-          var d0 = await jsonp('get', 'pl3dCBx');
-          setCounts(d0.total, d0.today);
-          if (typeof d0.total === 'number') localStorage.setItem(CACHE_TOTAL, String(d0.total));
-        } catch (e) {}
+  async function runNormal(){
+    if (igBadge) igBadge.style.display='none';
+    try{
+      var lastTs=Number(sessionStorage.getItem(INFLIGHT)||'0');
+      if (Date.now()-lastTs<10000){
+        try{ var d0=await jsonp('get','pl3dCBx'); setCounts(d0.total,d0.today);
+             if (typeof d0.total==='number') localStorage.setItem(CACHE_TOTAL,String(d0.total)); }catch(e){}
         return;
       }
-    } catch (e) {}
-
-    var already = getCookie(COOKIE_DAY) === todayISO;
+    }catch(e){}
+    var already = getCookie(COOKIE_DAY)===todayISO;
     var action  = already ? 'get' : 'hit';
-    try { sessionStorage.setItem(INFLIGHT, String(Date.now())); } catch (e) {}
-
-    for (var i = 0; i < 2; i++) {
-      try {
-        var data = await jsonp(action, 'pl3dCB' + i);
-        setCounts(data.total, data.today);
-        if (typeof data.total === 'number') localStorage.setItem(CACHE_TOTAL, String(data.total));
-        if (!already) setCookie(COOKIE_DAY, todayISO, 1);
+    try{ sessionStorage.setItem(INFLIGHT,String(Date.now())); }catch(e){}
+    for (var i=0;i<2;i++){
+      try{
+        var data = await jsonp(action,'pl3dCB'+i);
+        setCounts(data.total,data.today);
+        if (typeof data.total==='number') localStorage.setItem(CACHE_TOTAL,String(data.total));
+        if (!already) setCookie(COOKIE_DAY,todayISO,1);
         return;
-      } catch (e) {}
+      }catch(e){}
     }
-    totalEl.textContent = '—';
-    todayEl.textContent = 'Hoy: —';
+    totalEl.textContent='—'; todayEl.textContent='Hoy: —';
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function(){
     if (isInstagram()) { runInstagram(); return; }
     runNormal();
   });
