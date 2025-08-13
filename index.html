@@ -630,7 +630,7 @@ h1 {
 }
 
 
-/* Contador moderno de visitas */
+/* Contador moderno de visitas (instantáneo con caché) */
 #visit-counter{
   display:inline-flex;
   align-items:center;
@@ -671,11 +671,11 @@ h1 {
 
 <!-- Contador de visitas moderno (total + hoy) -->
 <div id="visit-counter-wrapper" style="text-align:center; margin-top:15px;">
-  <div id="visit-counter" aria-live="polite" title="Visitas acumuladas y de hoy">
+  <div id="visit-counter" role="status" aria-live="polite" title="Visitas acumuladas y de hoy">
     <span class="vc-eye" aria-hidden="true">👁️</span>
     <span class="vc-label">Visitas:</span>
-    <span class="vc-number" id="vc-total">—</span>
-    <span class="vc-today" id="vc-today" title="Visitas de hoy">Hoy: —</span>
+    <span class="vc-number" id="vc-total">cargando…</span>
+    <span class="vc-today" id="vc-today" title="Visitas de hoy">Hoy: cargando…</span>
   </div>
 </div>
 
@@ -1091,24 +1091,74 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
 document.addEventListener("DOMContentLoaded", function() {
   const totalEl = document.getElementById('vc-total');
   const todayEl = document.getElementById('vc-today');
+
   const NS = 'printlab3d_counter';
   const TOTAL_KEY = 'visitas_total';
-  const todayKey = 'hoy_' + new Date().toISOString().slice(0,10).replace(/-/g,'');
+  const todayIso = new Date().toISOString().slice(0,10); // YYYY-MM-DD
+  const todayKey = 'hoy_' + todayIso.replace(/-/g,'');
 
-  async function updateCounter(el, url, prefix=''){
-    try {
-      const res = await fetch(url, {cache:'no-store'});
-      if(!res.ok) throw new Error(res.status);
-      const data = await res.json();
-      el.textContent = prefix + Number(data.value).toLocaleString();
-    } catch(e){
-      console.error('Error contador', e);
-      el.textContent = prefix + '—';
-    }
+  const LS_TOTAL = 'pl3d_total';
+  const LS_TODAY_PREFIX = 'pl3d_today_'; // + YYYY-MM-DD
+
+  // 1) Mostrar al instante desde cache si existe
+  try {
+    const cachedTotal = localStorage.getItem(LS_TOTAL);
+    if (cachedTotal) totalEl.textContent = Number(cachedTotal).toLocaleString();
+    const cachedToday = localStorage.getItem(LS_TODAY_PREFIX + todayIso);
+    if (cachedToday) todayEl.textContent = 'Hoy: ' + Number(cachedToday).toLocaleString();
+  } catch (e) { /* ignore */ }
+
+  // Helper: fetch con timeout
+  function withTimeout(promise, ms=2500) {
+    return Promise.race([
+      promise,
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms))
+    ]);
   }
 
-  updateCounter(totalEl, `https://api.countapi.xyz/hit/${NS}/${TOTAL_KEY}`);
-  updateCounter(todayEl, `https://api.countapi.xyz/hit/${NS}/${todayKey}`, 'Hoy: ');
+  async function hitCount(endpoints) {
+    for (const url of endpoints) {
+      try {
+        const res = await withTimeout(fetch(url, {cache:'no-store'}));
+        if (!res.ok) continue;
+        const data = await res.json();
+        if (typeof data.value === 'number') return data.value;
+      } catch (e) {
+        // intenta siguiente
+      }
+    }
+    throw new Error('sin_respuesta');
+  }
+
+  // 2) Actualizar Total
+  (async () => {
+    const endpoints = [
+      `https://api.countapi.xyz/hit/${NS}/${TOTAL_KEY}`,
+      `https://countapi.xyz/hit/${NS}/${TOTAL_KEY}`
+    ];
+    try {
+      const value = await hitCount(endpoints);
+      totalEl.textContent = Number(value).toLocaleString();
+      try { localStorage.setItem(LS_TOTAL, String(value)); } catch(e){}
+    } catch(e) {
+      // conserva lo que haya (caché o "cargando…")
+    }
+  })();
+
+  // 3) Actualizar Hoy
+  (async () => {
+    const endpoints = [
+      `https://api.countapi.xyz/hit/${NS}/${todayKey}`,
+      `https://countapi.xyz/hit/${NS}/${todayKey}`
+    ];
+    try {
+      const value = await hitCount(endpoints);
+      todayEl.textContent = 'Hoy: ' + Number(value).toLocaleString();
+      try { localStorage.setItem(LS_TODAY_PREFIX + todayIso, String(value)); } catch(e){}
+    } catch(e) {
+      // conserva lo que haya (caché o "cargando…")
+    }
+  })();
 });
 </script>
 
