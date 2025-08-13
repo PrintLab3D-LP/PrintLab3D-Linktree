@@ -632,7 +632,7 @@ h1 {
 
 /* Contador moderno de visitas */
 #visit-counter{
-  margin:14px auto 6px;
+  margin:10px auto 2px;
   display:inline-flex;
   align-items:center;
   gap:10px;
@@ -651,6 +651,7 @@ h1 {
   #visit-counter{gap:8px;padding:8px 12px}
   #visit-counter .vc-label{display:none}
 }
+
 </style>
 </head>
 <body>
@@ -668,18 +669,19 @@ h1 {
 <a href="#" onclick="openModal('modalQuienes')">ℹ️ Quiénes somos</a>
 </div>
 <main>
-<img alt="PrintLab 3D" class="logo" src="logo.png"/>
-<h1>¡Bienvenidos a PrintLab 3D!</h1>
-<p class="subtitle">Innovación y creatividad en cada impresión</p>
-<p class="subtitle-extra">Te invitamos a conocer nuestros productos</p>
-<!-- Contador de visitas moderno -->
-<div id="visit-counter" aria-live="polite" title="Visitas acumuladas">
+
+<!-- Contador de visitas moderno (total + hoy) -->
+<div id="visit-counter" aria-live="polite" title="Visitas acumuladas y de hoy">
   <span class="vc-eye" aria-hidden="true">👁️</span>
   <span class="vc-label">Visitas:</span>
   <span class="vc-number" id="vc-total">—</span>
   <span class="vc-today" id="vc-today" title="Visitas de hoy">Hoy: —</span>
 </div>
 
+<img alt="PrintLab 3D" class="logo" src="logo.png"/>
+<h1>¡Bienvenidos a PrintLab 3D!</h1>
+<p class="subtitle">Innovación y creatividad en cada impresión</p>
+<p class="subtitle-extra">Te invitamos a conocer nuestros productos</p>
 
 <div id="buscador">
   <input type="text" id="buscador-input" placeholder="🔍 Buscar producto...">
@@ -1088,30 +1090,62 @@ document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
 document.addEventListener("DOMContentLoaded", function() {
   const totalEl = document.getElementById('vc-total');
   const todayEl = document.getElementById('vc-today');
-  const todayKey = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
 
-  // Contador acumulado
-  fetch('https://api.countapi.xyz/hit/printlab3d.com/visitas')
-    .then(res => res.json())
-    .then(data => {
-      totalEl.textContent = data.value.toLocaleString();
-    })
-    .catch(err => {
-      totalEl.textContent = 'Error';
-      console.error('Error total visitas:', err);
-    });
+  // Namespace y claves seguras (solo letras/números/guiones-bajos)
+  const NS = 'printlab3d_counter';
+  const TOTAL_KEY = 'visitas_total';
+  const todayKey = 'hoy_' + new Date().toISOString().slice(0,10).replace(/-/g,'');
 
-  // Contador de hoy (incrementa)
-  fetch('https://api.countapi.xyz/hit/printlab3d.com/' + todayKey)
-    .then(res => res.json())
-    .then(data => {
-      todayEl.textContent = 'Hoy: ' + data.value;
-    })
-    .catch(err => {
-      todayEl.textContent = 'Hoy: Error';
-      console.error('Error visitas de hoy:', err);
-    });
+  async function hit(url){
+    try {
+      const res = await fetch(url, {cache:'no-store'});
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      return await res.json();
+    } catch(e){
+      throw e;
+    }
+  }
+
+  async function updateTotal(){
+    const endpoints = [
+      `https://api.countapi.xyz/hit/${NS}/${TOTAL_KEY}`,
+      `https://countapi.xyz/hit/${NS}/${TOTAL_KEY}`
+    ];
+    for (const u of endpoints){
+      try {
+        const data = await hit(u);
+        totalEl.textContent = Number(data.value).toLocaleString();
+        return;
+      } catch(e){
+        // intenta siguiente
+      }
+    }
+    totalEl.textContent = '—';
+    console.error('No se pudo actualizar visitas totales.');
+  }
+
+  async function updateToday(){
+    const endpoints = [
+      `https://api.countapi.xyz/hit/${NS}/${todayKey}`,
+      `https://countapi.xyz/hit/${NS}/${todayKey}`
+    ];
+    for (const u of endpoints){
+      try {
+        const data = await hit(u);
+        todayEl.textContent = 'Hoy: ' + Number(data.value).toLocaleString();
+        return;
+      } catch(e){
+        // intenta siguiente
+      }
+    }
+    todayEl.textContent = 'Hoy: —';
+    console.error('No se pudo actualizar visitas de hoy.');
+  }
+
+  updateTotal();
+  updateToday();
 });
 </script>
+
 </body>
 </html>
