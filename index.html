@@ -629,6 +629,28 @@ h1 {
   color: white;
 }
 
+
+/* Contador moderno de visitas */
+#visit-counter{
+  margin:14px auto 6px;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:#ffffff;
+  border:2px solid #28a74522;
+  padding:10px 14px;
+  border-radius:14px;
+  box-shadow:0 6px 14px rgba(0,0,0,.06);
+  font-weight:800;
+}
+#visit-counter .vc-eye{font-size:1.15rem}
+#visit-counter .vc-label{opacity:.7;font-weight:700}
+#visit-counter .vc-number{font-size:1.15rem}
+#visit-counter .vc-today{margin-left:6px; opacity:.7; font-size:.9rem}
+@media (max-width:480px){
+  #visit-counter{gap:8px;padding:8px 12px}
+  #visit-counter .vc-label{display:none}
+}
 </style>
 </head>
 <body>
@@ -650,6 +672,14 @@ h1 {
 <h1>¡Bienvenidos a PrintLab 3D!</h1>
 <p class="subtitle">Innovación y creatividad en cada impresión</p>
 <p class="subtitle-extra">Te invitamos a conocer nuestros productos</p>
+<!-- Contador de visitas moderno -->
+<div id="visit-counter" aria-live="polite" title="Visitas acumuladas">
+  <span class="vc-eye" aria-hidden="true">👁️</span>
+  <span class="vc-label">Visitas:</span>
+  <span class="vc-number" id="vc-total">—</span>
+  <span class="vc-today" id="vc-today" title="Visitas de hoy">Hoy: —</span>
+</div>
+
 
 <div id="buscador">
   <input type="text" id="buscador-input" placeholder="🔍 Buscar producto...">
@@ -1053,5 +1083,35 @@ function iniciarContadorPromoDentro() {
 document.addEventListener("DOMContentLoaded", iniciarContadorPromoDentro);
 </script>
 
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const totalEl = document.getElementById('vc-total');
+  const todayEl = document.getElementById('vc-today');
+  const todayKey = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+
+  // Contador acumulado
+  fetch('https://api.countapi.xyz/hit/printlab3d.com/visitas')
+    .then(res => res.json())
+    .then(data => {
+      totalEl.textContent = data.value.toLocaleString();
+    })
+    .catch(err => {
+      totalEl.textContent = 'Error';
+      console.error('Error total visitas:', err);
+    });
+
+  // Contador de hoy (incrementa)
+  fetch('https://api.countapi.xyz/hit/printlab3d.com/' + todayKey)
+    .then(res => res.json())
+    .then(data => {
+      todayEl.textContent = 'Hoy: ' + data.value;
+    })
+    .catch(err => {
+      todayEl.textContent = 'Hoy: Error';
+      console.error('Error visitas de hoy:', err);
+    });
+});
+</script>
 </body>
 </html>
