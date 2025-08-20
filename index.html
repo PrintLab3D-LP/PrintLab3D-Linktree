@@ -96,7 +96,10 @@ h1 { font-weight: 900 !important; }
 
 /* Chatbot flotante con robot verde */
 @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 5px #28a745, 0 0 10px #28a745; } 50% { box-shadow: 0 0 15px #28a745, 0 0 25px #28a745; } }
-#chatbot-icon { position: fixed; bottom: 15px; right: 15px; width: 60px; height: 60px; border-radius: 50%; background: #28a745; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10050; animation: pulseGlow 2s infinite; }
+#chatbot-icon { position: fixed; bottom: 15px; right: 15px; width: 60px; height: 60px; border-radius: 50%; background: #28a745; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 10050; animation: pulseGlow 2s infinite; overflow:hidden; }
+#chatbot-icon::before, #chatbot-icon::after { content: none !important; }
+#chatbot-icon img { width: 38px; height: 38px; display:block; }
+#chatbot-icon img { width: 36px; height: 36px; display:block; }
 #chatbot-icon img { width: 36px; height: 36px; display:block; }
 #chatbot-window { position: fixed; bottom: -420px; right: 15px; width: 320px; height: 420px; background: #ffffff; border-radius: 12px; box-shadow: 0 0 15px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; transition: bottom 0.4s ease; z-index: 9998; }
 #chatbot-header { background: #28a745; color: white; padding: 10px; font-weight: bold; text-align: center; }
@@ -194,6 +197,48 @@ h1 { font-weight: 900 !important; }
   <a href="#" onclick="openModal('modalMateriales')">🎨 Materiales que usamos</a>
   <a href="#" onclick="openModal('modalQuienes')">ℹ️ Quiénes somos</a>
 </div>
+
+<!-- Control del menú lateral y modales -->
+<script>
+  function toggleMenu(){
+    document.getElementById('sideMenu').classList.toggle('show');
+  }
+  function closeMenu(){
+    document.getElementById('sideMenu').classList.remove('show');
+  }
+  function openModal(id){
+    closeMenu();
+    const m = document.getElementById(id);
+    if(m) m.style.display = 'block';
+  }
+  function closeModal(id){
+    const m = document.getElementById(id);
+    if(m) m.style.display = 'none';
+  }
+  // Cerrar menú si se hace click fuera y prevenir navegación de los enlaces del menú
+  document.addEventListener('click', (e)=>{
+    const menu = document.getElementById('sideMenu');
+    if(menu.classList.contains('show')){
+      const clickToggle = e.target.closest('.menu-toggle');
+      const clickInside = e.target.closest('#sideMenu');
+      if(!clickToggle && !clickInside){ closeMenu(); }
+    }
+  });
+  document.getElementById('sideMenu').addEventListener('click', (e)=>{
+    if(e.target.closest('a')) e.preventDefault();
+  });
+  // Cerrar modales al hacer click fuera o con Escape
+  window.addEventListener('click', (e)=>{
+    document.querySelectorAll('.modal').forEach(m=>{ if(e.target===m){ m.style.display='none'; } });
+  });
+  window.addEventListener('keydown', (e)=>{
+    if(e.key==='Escape'){
+      document.querySelectorAll('.modal').forEach(m=> m.style.display='none');
+      closeMenu();
+    }
+  });
+</script>
+
 <main>
   <!-- ===== Contador (Visitas + Hoy) ===== -->
   <div id="visit-counter-wrapper" style="text-align:center; margin:14px 0 10px;">
@@ -309,8 +354,8 @@ h1 { font-weight: 900 !important; }
 <!-- Canvas de partículas -->
 <canvas id="particles"></canvas>
 
-<div id="chatbot-icon">
-  <img src="https://cdn-icons-png.flaticon.com/512/4712/4712104.png" alt="Chatbot" />
+<div id="chatbot-icon" title="Abrir chat">
+  <img src="robot.png" alt="Chatbot" />
 </div>
 <div id="chatbot-window">
   <div id="chatbot-header">Asistente PrintLab 3D</div>
