@@ -178,12 +178,27 @@ h1 { font-weight: 900 !important; }
 /* Asegurar visibilidad del robot del chat */
 #chatbot-icon { z-index: 10050; display:grid; place-items:center; }
 #chatbot-window { z-index: 10049; }
-
-/* --- Centrado de meta (contador + promedio) debajo del título --- */
-.reviews-title{ margin-bottom: 4px; }
-.reviews-meta{ display:flex; justify-content:center; align-items:center; gap:10px; font-size:.95rem; }
-
 </style>
+
+  <!-- === SEO básico === -->
+  <meta name="description" content="Impresiones 3D personalizadas: llaveros, juegos, carteles y más. Hecho en La Pampa 🇦🇷" />
+<!-- === Open Graph (Facebook / Instagram / WhatsApp) === -->
+  <meta property="og:title" content="PrintLab 3D" />
+  <meta property="og:description" content="Impresiones 3D personalizadas: llaveros, juegos, carteles y más." />
+  <meta property="og:type" content="website" />
+<meta property="og:site_name" content="PrintLab 3D" />
+  <meta property="og:locale" content="es_AR" />
+
+  <!-- === Twitter Card === -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PrintLab 3D" />
+  <meta name="twitter:description" content="Impresiones 3D personalizadas: llaveros, juegos, carteles y más." />
+<!-- Reemplazá https://TU-DOMINIO y /og-image.jpg por tu dominio real e imagen absoluta (1200x630px recomendado) -->
+
+  <link rel="canonical" href="https://printlab3d-lp.github.io/PrintLab3D-Linktree/" />
+  <meta property="og:url" content="https://printlab3d-lp.github.io/PrintLab3D-Linktree/" />
+  <meta property="og:image" content="https://printlab3d-lp.github.io/PrintLab3D-Linktree/logo.png" />
+  <meta name="twitter:image" content="https://printlab3d-lp.github.io/PrintLab3D-Linktree/logo.png" />
 </head>
 <body>
 
@@ -287,11 +302,7 @@ h1 { font-weight: 900 !important; }
 
   <!-- === Testimonios === -->
   <section id="testimonios">
-    <h2 class="reviews-title">Lo que dicen nuestros clientes</h2>
-<div id="rev-meta" class="reviews-meta" style="margin-top:2px;">
-  <span id="rev-badge" style="font-size:.9rem;color:#666;margin-left:6px;"></span>
-  <span id="rev-avg" style="font-size:.95rem;color:#444;margin-left:10px;"></span>
-</div>
+    <h2>Lo que dicen nuestros clientes <span id="rev-badge" style="font-size:.9rem;color:#666;margin-left:6px;"></span></h2>
     <div id="rev-filters" style="margin:8px 0;">
   <label for="star-filter" style="font-size:.9rem;color:#666;margin-right:6px;">Filtrar:</label>
   <select id="star-filter">
@@ -462,7 +473,7 @@ buscadorInput.addEventListener("keypress", function(e){ if(e.key==="Enter"){ con
     var doHit = !alreadyHitToday(); var action = doHit ? 'hit' : 'get'; try{ sessionStorage.setItem(INFLIGHT,String(Date.now())); }catch(e){}
     for (var i=0;i<2;i++){ try{ var data = await jsonp(action,'pl3dCB'+i); setCounts(data.total,data.today); if (typeof data.total==='number') setLS(CACHE_TOTAL,String(data.total)); if (doHit) markHitToday(); return; }catch(e){} }
     totalEl.textContent='—'; todayEl.textContent='Hoy: —'; }
-  document.addEventListener('DOMContentLoaded', function(){ runNormal(); });
+  document.addEventListener('DOMContentLoaded', function(){ if (isInstagram()) { runInstagram(); return; } runNormal(); });
   window.addEventListener('pageshow', function(e){ if (e.persisted){ jsonp('get','pl3dBF').then(function(d){ setCounts(d.total,d.today); }); } });
 })();
 </script>
@@ -509,20 +520,7 @@ init(); animate();
     empty.style.display = hasAny ? 'none' : 'block';
     if (loadMoreBtn) loadMoreBtn.style.display = hasAny && (shown < CURRENT_DATA.length) ? 'block' : 'none';
   }
-  
-  // Promedio global de estrellas (todas las reseñas en REV_DATA)
-  function updateAverage(){
-    const avgEl = document.getElementById('rev-avg');
-    if (!avgEl) return;
-    const arr = Array.isArray(REV_DATA) ? REV_DATA : [];
-    const n = arr.length;
-    if (!n){ avgEl.textContent = '⭐ 0.0 (0 opiniones)'; return; }
-    let sum = 0;
-    for (let i=0;i<n;i++){ sum += Number(arr[i]?.stars || 0); }
-    const avg = sum / n;
-    avgEl.textContent = `⭐ ${avg.toFixed(1)} (${n} ${n===1 ? 'opinión' : 'opiniones'})`;
-  }
-function passesFilter(item){
+  function passesFilter(item){
     const sel = FILTER_SELECT?.value || 'all';
     const s = Number(item?.stars || 0);
     if (sel === 'all') return true;
@@ -618,7 +616,6 @@ function jsonp(action, params, cbName){
       shown = 0;
       box.innerHTML = '';
       renderNextBatch(); // primera tanda
-      updateAverage();
     } else {
       throw new Error('respuesta inválida');
     }
@@ -643,7 +640,7 @@ function jsonp(action, params, cbName){
         // Si NO querés que se borre lo escrito, comentá la línea siguiente:
         form.reset();
         document.getElementById('star1').checked=true;
-        updateCounter(); updateEmptyState(); updateAverage(); alert('✅ ¡Gracias por tu opinión!');
+        updateCounter(); updateEmptyState(); alert('✅ ¡Gracias por tu opinión!');
       } else {
         alert('❌ No se pudo guardar. ' + (res && res.error ? res.error : ''));
       }
