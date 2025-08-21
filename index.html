@@ -283,7 +283,23 @@ h1 { font-weight: 900 !important; }
   <!-- === Testimonios === -->
   <section id="testimonios">
     <h2>Lo que dicen nuestros clientes <span id="rev-badge" style="font-size:.9rem;color:#666;margin-left:6px;"></span></h2>
-    <div class="testi-container"></div>
+    <div id="rev-filters" style="margin:8px 0;">
+  <label for="star-filter" style="font-size:.9rem;color:#666;margin-right:6px;">Filtrar:</label>
+  <select id="star-filter">
+    <option value="all">Todas</option>
+    <option value="eq5">Solo ★5</option>
+    <option value="eq4">Solo ★4</option>
+    <option value="eq3">Solo ★3</option>
+    <option value="eq2">Solo ★2</option>
+    <option value="eq1">Solo ★1</option>
+    <option value="4+">★4 o más</option>
+    <option value="3+">★3 o más</option>
+    <option value="2+">★2 o más</option>
+    <option value="1+">★1 o más</option>
+  </select>
+</div>
+<div class="testi-container"></div>
+  <div id="no-reviews" style="display:none;color:#888;margin:8px 0;">Aún no hay opiniones.</div>
   <button id="load-more" class="btn" style="margin:10px auto; max-width:260px; display:none">Ver más opiniones</button>
   </section>
 
@@ -468,32 +484,76 @@ init(); animate();
 
   
   const loadMoreBtn = document.getElementById('load-more');
-  const PAGE_SIZE = 8;          // cuántas mostrar por tanda
-  let REV_DATA = [];            // reseñas del backend
-  let shown = 0;                // cuántas ya renderizamos
+  const PAGE_SIZE = 8;
+  let REV_DATA = [];
+  let CURRENT_DATA = [];
+  let shown = 0;
+  const FILTER_SELECT = document.getElementById('star-filter');
 
   function updateCounter(){
     const badge = document.getElementById('rev-badge');
     if (!badge) return;
-    badge.textContent = (REV_DATA.length > 0)
-      ? `(${Math.min(shown, REV_DATA.length)} de ${REV_DATA.length})`
+    badge.textContent = (CURRENT_DATA.length > 0)
+      ? `(${Math.min(shown, CURRENT_DATA.length)} de ${CURRENT_DATA.length})`
       : `(0)`;
   }
+  function updateEmptyState(){
+    const empty = document.getElementById('no-reviews');
+    if (!empty) return;
+    const hasAny = (CURRENT_DATA.length > 0);
+    empty.style.display = hasAny ? 'none' : 'block';
+    if (loadMoreBtn) loadMoreBtn.style.display = hasAny && (shown < CURRENT_DATA.length) ? 'block' : 'none';
+  }
+  function passesFilter(item){
+    const sel = FILTER_SELECT?.value || 'all';
+    const s = Number(item?.stars || 0);
+    if (sel === 'all') return true;
 
+    // Exactos: eq1..eq5
+    if (sel.startsWith('eq')) {
+      const n = Number(sel.slice(2)) || 0;
+      return s === n;
+    }
+
+    // Rangos: 1+,2+,3+,4+
+    if (sel.endsWith('+')) {
+      const plus = Number(sel.replace('+','')) || 0;
+      return s >= plus;
+    }
+
+    // Fallback (por si queda '5' viejo)
+    if (!isNaN(Number(sel))) {
+      return s === Number(sel);
+    }
+    return true;
+  }
+  function recomputeCurrent(){
+    try { CURRENT_DATA = REV_DATA.filter(passesFilter); }
+    catch(e){ CURRENT_DATA = REV_DATA.slice(); }
+  }
   function renderNextBatch(){
-    const slice = REV_DATA.slice(shown, shown + PAGE_SIZE);
+    const slice = CURRENT_DATA.slice(shown, shown + PAGE_SIZE);
     slice.forEach(item => renderOne(item, 'append'));
     shown += slice.length;
-  updateCounter();
-  if (loadMoreBtn) {
-    const restantes = Math.max(REV_DATA.length - shown, 0);
-    loadMoreBtn.textContent = restantes > 0
-      ? `Ver más opiniones (${restantes} restantes)`
-      : `Ver más opiniones`;
-  }
-    if (loadMoreBtn) loadMoreBtn.style.display = (shown < REV_DATA.length) ? 'block' : 'none';
+    updateCounter();
+    if (loadMoreBtn) {
+      const restantes = Math.max(CURRENT_DATA.length - shown, 0);
+      loadMoreBtn.textContent = restantes > 0
+        ? `Ver más opiniones (${restantes} restantes)`
+        : `Ver más opiniones`;
+      loadMoreBtn.style.display = (shown < CURRENT_DATA.length) ? 'block' : 'none';
+    }
+    updateEmptyState();
   }
   loadMoreBtn?.addEventListener('click', renderNextBatch);
+  FILTER_SELECT?.addEventListener('change', () => {
+    shown = 0;
+    recomputeCurrent();
+    if (box) box.innerHTML = '';
+    renderNextBatch();
+    updateCounter();
+    updateEmptyState();
+  });
 function jsonp(action, params, cbName){
     return new Promise(function(resolve,reject){
       const name = cbName || ('pl3dREV_' + Math.random().toString(36).slice(2));
@@ -502,7 +562,7 @@ function jsonp(action, params, cbName){
       s.src = GAS_URL + '?' + qs;
       s.async = true;
       let done = false;
-      const timer = setTimeout(function(){ if(!done){done=true; cleanup(); reject(new Error('timeout')); }}, 8000);
+      const timer = setTimeout(function(){ if(!done){done=true; cleanup(); reject(new Error('timeout')); }}, 12000);
       function cleanup(){ try{ delete window[name]; }catch(e){} s.remove(); clearTimeout(timer); }
       window[name] = function(d){ if(!done){ done=true; cleanup(); resolve(d);} };
       s.onerror = function(){ if(!done){ done=true; cleanup(); reject(new Error('onerror')); } };
@@ -536,12 +596,14 @@ function jsonp(action, params, cbName){
   jsonp('get', {}, 'pl3dREVget').then(res=>{
     if(res && res.ok && Array.isArray(res.data)){
       REV_DATA = res.data;
+      recomputeCurrent();
       shown = 0;
       box.innerHTML = '';
       renderNextBatch(); // primera tanda
-      updateCounter();
+    } else {
+      throw new Error('respuesta inválida');
     }
-  }).catch(()=>{ /* opcional: mostrar aviso */ });
+  }).catch(()=>{ alert('❌ Error de conexión'); });
 
   // Enviar nueva reseña
   const form = document.getElementById('form-review');
@@ -556,13 +618,13 @@ function jsonp(action, params, cbName){
     jsonp('add', { name, text, stars, ua }, 'pl3dREVadd').then(res=>{
       if(res && res.ok){
         // pintar con referencia real si viene, si no con fecha local
-        renderOne({ id: res.id, timestamp: res.timestamp, name, text, stars });
-        try { REV_DATA.unshift({ id: res.id, timestamp: res.timestamp, name, text, stars }); shown++; } catch(e) {}
-        updateCounter();
+        const newItem = { id: res.id, timestamp: res.timestamp, name, text, stars };
+        try { REV_DATA.unshift(newItem); } catch(e) {}
+        if (passesFilter(newItem)) { renderOne(newItem); shown++; }
         // Si NO querés que se borre lo escrito, comentá la línea siguiente:
         form.reset();
         document.getElementById('star1').checked=true;
-        alert('✅ ¡Gracias por tu opinión!');
+        updateCounter(); updateEmptyState(); alert('✅ ¡Gracias por tu opinión!');
       } else {
         alert('❌ No se pudo guardar. ' + (res && res.error ? res.error : ''));
       }
