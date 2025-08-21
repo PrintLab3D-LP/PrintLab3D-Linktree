@@ -282,7 +282,7 @@ h1 { font-weight: 900 !important; }
 
   <!-- === Testimonios === -->
   <section id="testimonios">
-    <h2>Lo que dicen nuestros clientes</h2>
+    <h2>Lo que dicen nuestros clientes <span id="rev-badge" style="font-size:.9rem;color:#666;margin-left:6px;"></span></h2>
     <div class="testi-container"></div>
   <button id="load-more" class="btn" style="margin:10px auto; max-width:260px; display:none">Ver más opiniones</button>
   </section>
@@ -468,14 +468,29 @@ init(); animate();
 
   
   const loadMoreBtn = document.getElementById('load-more');
-  const PAGE_SIZE = 5;          // cuántas mostrar por tanda
+  const PAGE_SIZE = 8;          // cuántas mostrar por tanda
   let REV_DATA = [];            // reseñas del backend
   let shown = 0;                // cuántas ya renderizamos
+
+  function updateCounter(){
+    const badge = document.getElementById('rev-badge');
+    if (!badge) return;
+    badge.textContent = (REV_DATA.length > 0)
+      ? `(${Math.min(shown, REV_DATA.length)} de ${REV_DATA.length})`
+      : `(0)`;
+  }
 
   function renderNextBatch(){
     const slice = REV_DATA.slice(shown, shown + PAGE_SIZE);
     slice.forEach(item => renderOne(item, 'append'));
     shown += slice.length;
+  updateCounter();
+  if (loadMoreBtn) {
+    const restantes = Math.max(REV_DATA.length - shown, 0);
+    loadMoreBtn.textContent = restantes > 0
+      ? `Ver más opiniones (${restantes} restantes)`
+      : `Ver más opiniones`;
+  }
     if (loadMoreBtn) loadMoreBtn.style.display = (shown < REV_DATA.length) ? 'block' : 'none';
   }
   loadMoreBtn?.addEventListener('click', renderNextBatch);
@@ -524,6 +539,7 @@ function jsonp(action, params, cbName){
       shown = 0;
       box.innerHTML = '';
       renderNextBatch(); // primera tanda
+      updateCounter();
     }
   }).catch(()=>{ /* opcional: mostrar aviso */ });
 
@@ -542,6 +558,7 @@ function jsonp(action, params, cbName){
         // pintar con referencia real si viene, si no con fecha local
         renderOne({ id: res.id, timestamp: res.timestamp, name, text, stars });
         try { REV_DATA.unshift({ id: res.id, timestamp: res.timestamp, name, text, stars }); shown++; } catch(e) {}
+        updateCounter();
         // Si NO querés que se borre lo escrito, comentá la línea siguiente:
         form.reset();
         document.getElementById('star1').checked=true;
