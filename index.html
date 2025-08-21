@@ -284,6 +284,7 @@ h1 { font-weight: 900 !important; }
   <section id="testimonios">
     <h2>Lo que dicen nuestros clientes</h2>
     <div class="testi-container"></div>
+  <button id="load-more" class="btn" style="margin:10px auto; max-width:260px; display:none">Ver más opiniones</button>
   </section>
 
 <!-- Formulario para dejar nueva reseña -->
@@ -465,7 +466,20 @@ init(); animate();
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbx3C5jQcrNxvqXOV_PO046vkI438uLh28e7Oex1lF3GFEKeERXtm5CDRz4vcBHioEA/exec';
     const box = document.querySelector('#testimonios .testi-container');
 
-  function jsonp(action, params, cbName){
+  
+  const loadMoreBtn = document.getElementById('load-more');
+  const PAGE_SIZE = 5;          // cuántas mostrar por tanda
+  let REV_DATA = [];            // reseñas del backend
+  let shown = 0;                // cuántas ya renderizamos
+
+  function renderNextBatch(){
+    const slice = REV_DATA.slice(shown, shown + PAGE_SIZE);
+    slice.forEach(item => renderOne(item, 'append'));
+    shown += slice.length;
+    if (loadMoreBtn) loadMoreBtn.style.display = (shown < REV_DATA.length) ? 'block' : 'none';
+  }
+  loadMoreBtn?.addEventListener('click', renderNextBatch);
+function jsonp(action, params, cbName){
     return new Promise(function(resolve,reject){
       const name = cbName || ('pl3dREV_' + Math.random().toString(36).slice(2));
       const s = document.createElement('script');
@@ -481,7 +495,7 @@ init(); animate();
     });
   }
 
-  function renderOne({id, timestamp, name, text, stars}){
+  function renderOne({id, timestamp, name, text, stars}, place='prepend'){
     const safeText = String(text || '').replace(/</g,'&lt;');
     const safeName = String(name || 'Cliente').replace(/</g,'&lt;');
     const s = Math.max(1, Math.min(5, Number(stars||5)));
@@ -500,13 +514,16 @@ init(); animate();
       <span>— ${safeName}</span><br>
       <small style="color:#888">${fechaStr}${typeof id==='number' ? ' · #'+id : ''}</small>
     `;
-    box?.prepend(el);
+    if (place === 'append') { box?.appendChild(el); } else { box?.prepend(el); }
   }
 
   // Cargar reseñas
   jsonp('get', {}, 'pl3dREVget').then(res=>{
     if(res && res.ok && Array.isArray(res.data)){
-      res.data.forEach(r => renderOne(r));
+      REV_DATA = res.data;
+      shown = 0;
+      box.innerHTML = '';
+      renderNextBatch(); // primera tanda
     }
   }).catch(()=>{ /* opcional: mostrar aviso */ });
 
@@ -524,6 +541,7 @@ init(); animate();
       if(res && res.ok){
         // pintar con referencia real si viene, si no con fecha local
         renderOne({ id: res.id, timestamp: res.timestamp, name, text, stars });
+        try { REV_DATA.unshift({ id: res.id, timestamp: res.timestamp, name, text, stars }); shown++; } catch(e) {}
         // Si NO querés que se borre lo escrito, comentá la línea siguiente:
         form.reset();
         document.getElementById('star1').checked=true;
