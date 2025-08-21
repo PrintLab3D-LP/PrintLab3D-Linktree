@@ -462,7 +462,7 @@ buscadorInput.addEventListener("keypress", function(e){ if(e.key==="Enter"){ con
     var doHit = !alreadyHitToday(); var action = doHit ? 'hit' : 'get'; try{ sessionStorage.setItem(INFLIGHT,String(Date.now())); }catch(e){}
     for (var i=0;i<2;i++){ try{ var data = await jsonp(action,'pl3dCB'+i); setCounts(data.total,data.today); if (typeof data.total==='number') setLS(CACHE_TOTAL,String(data.total)); if (doHit) markHitToday(); return; }catch(e){} }
     totalEl.textContent='—'; todayEl.textContent='Hoy: —'; }
-  document.addEventListener('DOMContentLoaded', function(){ if (isInstagram()) { runInstagram(); return; } runNormal(); });
+  document.addEventListener('DOMContentLoaded', function(){ runNormal(); });
   window.addEventListener('pageshow', function(e){ if (e.persisted){ jsonp('get','pl3dBF').then(function(d){ setCounts(d.total,d.today); }); } });
 })();
 </script>
