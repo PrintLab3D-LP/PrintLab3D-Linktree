@@ -92,51 +92,23 @@
 
 <script>
 const POSTS = [
-  {
-    id: "igloo-mania",
-    titulo: "Preparación en Bambu Studio: juego Igloo Mania",
-    fecha: "2025-07-26",
-    tags: ["video","bambu studio","igloo mania","slice","PLA"],
-    excerpt: "Paso a paso preparando el juego Igloo Mania en Bambu Studio: orientación, soportes y parámetros de impresión.",
-    contenido: `
-      <p>En este video muestro cómo preparo el <strong>juego Igloo Mania</strong> en <strong>Bambu Studio</strong>: orientación de piezas, soportes, paredes para resistencia y un g-code optimizado.</p>
-      <div class="video-embed">
-        <video controls preload="metadata" poster="assets/poster-igloo.jpg">
-          <source src="WhatsApp Video 2025-07-26 at 10.15.54.mp4" type="video/mp4">
-        </video>
-      </div>
-    `
-  },
-  {
-    id: "llaveros-emma",
-    titulo: "Producción real: llaveros “caritas felices” para el cumple de Emma (4)",
-    fecha: "2025-08-22",
-    tags: ["video","llaveros","cumple","personalizado"],
-    excerpt: "Proceso completo de llaveros personalizados con caritas felices para souvenirs del cumple de 4 años de Emma.",
-    contenido: `
-      <p>Producción de los llaveros “caritas felices” para el cumple de <strong>Emma (4)</strong>. Diseños con variantes de ojos (<em>corazón</em>, <em>rayo</em>, etc.) como souvenirs resistentes y coloridos.</p>
-      <div class="video-embed">
-        <video controls preload="metadata" poster="assets/poster-emma.jpg">
-          <source src="WhatsApp Video 2025-08-22 at 13.43.45.mp4" type="video/mp4">
-        </video>
-      </div>
-    `
-  },
-  {
-    id: "capibara-timelapse",
-    titulo: "Timelapse: Porta palitos de olor en forma de capibara 🦫",
-    fecha: "2025-07-13",
-    tags: ["video","timelapse","capibara","decoración"],
-    excerpt: "Impresión completa en timelapse de un porta palitos de olor con forma de capibara para baño u hogar.",
-    contenido: `
-      <p>Timelapse de la impresión de un <strong>porta palitos de olor</strong> con forma de <strong>capibara</strong>. Ideal como objeto decorativo para el baño o cualquier ambiente.</p>
-      <div class="video-embed">
-        <video controls preload="metadata" poster="assets/poster-capibara.jpg">
-          <source src="video_2025-07-13_22-31-56 (1).mp4" type="video/mp4">
-        </video>
-      </div>
-    `
-  }
+  // Igloo Mania
+  { id: "igloo-mania", titulo: "Preparación en Bambu Studio: juego Igloo Mania", fecha: "2025-07-26", tags: ["video","bambu studio","igloo mania"], excerpt: "Paso a paso preparando el juego Igloo Mania en Bambu Studio.", contenido: `<div class="video-embed"><video controls preload="metadata"><source src="videos/WhatsApp-Video-2025-07-26.mp4" type="video/mp4"></video></div>` },
+  // Llavero Emma
+  { id: "llaveros-emma", titulo: "Producción de llaveros para el cumple de Emma (4 años)", fecha: "2025-08-22", tags: ["video","llaveros","cumple"], excerpt: "Producción de llaveros caritas felices con distintas formas de ojos.", contenido: `<div class="video-embed"><video controls preload="metadata"><source src="videos/WhatsApp-Video-2025-08-22.mp4" type="video/mp4"></video></div>` },
+  // Capibara
+  { id: "capibara", titulo: "Timelapse: Porta palitos de olor capibara", fecha: "2025-07-13", tags: ["video","timelapse","capibara"], excerpt: "Un porta palitos de olor con forma de capibara.", contenido: `<div class="video-embed"><video controls preload="metadata"><source src="videos/video_2025-07-13_22-31-56.mp4" type="video/mp4"></video></div>` },
+  // Recolector de polvo
+  { id: "recolector-polvo", titulo: "Timelapse: Recolector de polvo para taladro", fecha: "2025-08-25", tags: ["video","timelapse","herramientas"], excerpt: "Accesorio impreso en 3D para atrapar polvo al perforar.", contenido: `<div class="video-embed"><video controls preload="metadata"><source src="videos/timelapse-recolector-polvo.mp4" type="video/mp4"></video></div>` },
+  // Recipiente filamento
+  { id: "recipiente-filamento", titulo: "Timelapse: Recipiente para desperdicio de filamento (Bambu Lab A1)", fecha: "2025-08-25", tags: ["video","timelapse","bambu lab"], excerpt: "Recipiente para juntar los pedacitos de filamento de la A1.", contenido: `<div class="video-embed"><video controls preload="metadata"><source src="videos/timelapse-desecho-filamento.mp4" type="video/mp4"></video></div>` },
+  // Porta isopos
+  { id: "porta-isopos", titulo: "Timelapse: Porta isopos impreso en 3D", fecha: "2025-08-25", tags: ["video","timelapse","hogar"], excerpt: "Un porta isopos práctico y elegante.", contenido: `<div class="video-embed"><video controls preload="metadata"><source src="videos/timelapse-porta-isopos.mp4" type="video/mp4"></video></div>` },
+  // Muñeco de nieve (3 videos)
+  { id: "muneco-nieve", titulo: "Timelapse: Muñeco de nieve con resorte (3 versiones)", fecha: "2025-08-25", tags: ["video","timelapse","navidad"], excerpt: "Tres timelapse mostrando el muñeco de nieve con resorte.", contenido: `
+    <div class="video-embed"><video controls preload="metadata"><source src="videos/timelapse-muneco-nieve-1.mp4" type="video/mp4"></video></div>
+    <div class="video-embed"><video controls preload="metadata"><source src="videos/timelapse-muneco-nieve-2.mp4" type="video/mp4"></video></div>
+    <div class="video-embed"><video controls preload="metadata"><source src="videos/timelapse-muneco-nieve-3.mp4" type="video/mp4"></video></div>` }
 ];
 
 const state = { q:"", tag:null, page:1, perPage:6 };
@@ -146,30 +118,11 @@ const emptyEl = document.getElementById('empty');
 const paginationEl = document.getElementById('pagination');
 
 function uniqueTags(){ const set=new Set(); POSTS.forEach(p=>p.tags.forEach(t=>set.add(t))); return Array.from(set).sort(); }
-function buildChips(){
-  chipsEl.innerHTML='';
-  const all=document.createElement('button'); all.className='chip'+(!state.tag?' active':''); all.textContent='Todos'; all.onclick=()=>{state.tag=null;state.page=1;render();}; chipsEl.appendChild(all);
-  uniqueTags().forEach(t=>{ const b=document.createElement('button'); b.className='chip'+(state.tag===t?' active':''); b.textContent=t; b.onclick=()=>{state.tag=t;state.page=1;render();}; chipsEl.appendChild(b); });
-}
-function filterPosts(){
-  let list=POSTS.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha));
-  if(state.tag) list=list.filter(p=>p.tags.includes(state.tag));
-  if(state.q){ const q=state.q.toLowerCase(); list=list.filter(p=>p.titulo.toLowerCase().includes(q)||p.excerpt.toLowerCase().includes(q)); }
-  return list;
-}
+function buildChips(){ chipsEl.innerHTML=''; const all=document.createElement('button'); all.className='chip'+(!state.tag?' active':''); all.textContent='Todos'; all.onclick=()=>{state.tag=null;state.page=1;render();}; chipsEl.appendChild(all); uniqueTags().forEach(t=>{ const b=document.createElement('button'); b.className='chip'+(state.tag===t?' active':''); b.textContent=t; b.onclick=()=>{state.tag=t;state.page=1;render();}; chipsEl.appendChild(b); }); }
+function filterPosts(){ let list=POSTS.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha)); if(state.tag) list=list.filter(p=>p.tags.includes(state.tag)); if(state.q){ const q=state.q.toLowerCase(); list=list.filter(p=>p.titulo.toLowerCase().includes(q)||p.excerpt.toLowerCase().includes(q)); } return list; }
 function paginate(list){ const start=(state.page-1)*state.perPage; return list.slice(start,start+state.perPage); }
-function card(p){
-  const el=document.createElement('article'); el.className='card';
-  el.innerHTML=`<h3>${p.titulo}</h3><div class="meta">${new Date(p.fecha).toLocaleDateString('es-AR')}</div><div class="excerpt">${p.excerpt}</div><div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div><div class="actions"><button class="btn" onclick="openModal('${p.id}')">Leer más</button></div>`;
-  return el;
-}
-function render(){
-  const list=filterPosts(); const pageCount=Math.max(1,Math.ceil(list.length/state.perPage));
-  if(state.page>pageCount) state.page=pageCount;
-  const pageItems=paginate(list); gridEl.innerHTML=''; pageItems.forEach(p=>gridEl.appendChild(card(p)));
-  emptyEl.style.display=list.length?'none':'block'; paginationEl.innerHTML='';
-  for(let i=1;i<=pageCount;i++){ const b=document.createElement('button'); b.textContent=i; b.className='chip'+(i===state.page?' active':''); b.onclick=()=>{state.page=i;render();}; paginationEl.appendChild(b); }
-}
+function card(p){ const el=document.createElement('article'); el.className='card'; el.innerHTML=`<h3>${p.titulo}</h3><div class="meta">${new Date(p.fecha).toLocaleDateString('es-AR')}</div><div class="excerpt">${p.excerpt}</div><div class="tags">${p.tags.map(t=>`<span class='tag'>${t}</span>`).join('')}</div><div class="actions"><button class='btn' onclick="openModal('${p.id}')">Leer más</button></div>`; return el; }
+function render(){ const list=filterPosts(); const pageCount=Math.max(1,Math.ceil(list.length/state.perPage)); if(state.page>pageCount) state.page=pageCount; const pageItems=paginate(list); gridEl.innerHTML=''; pageItems.forEach(p=>gridEl.appendChild(card(p))); emptyEl.style.display=list.length?'none':'block'; paginationEl.innerHTML=''; for(let i=1;i<=pageCount;i++){ const b=document.createElement('button'); b.textContent=i; b.className='chip'+(i===state.page?' active':''); b.onclick=()=>{state.page=i;render();}; paginationEl.appendChild(b); } }
 function openModal(id){ const p=POSTS.find(x=>x.id===id); document.getElementById('modalTitle').textContent=p.titulo; document.getElementById('modalContent').innerHTML=p.contenido; document.getElementById('backdrop').style.display='flex'; }
 function closeModal(){ document.getElementById('backdrop').style.display='none'; }
 
@@ -179,4 +132,3 @@ buildChips(); render();
 </script>
 </body>
 </html>
-
