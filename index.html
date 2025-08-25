@@ -182,6 +182,25 @@ h1 { font-weight: 900 !important; }
 /* --- Meta de reseñas centrada (contador + promedio) --- */
 .reviews-title{ margin-bottom: 4px; }
 .reviews-meta{ display:flex; justify-content:center; align-items:center; gap:10px; font-size:.95rem; }
+.btn-tile{
+  display:block;
+  width:100%;
+  text-align:center;
+  padding:16px 20px;
+  margin:10px 0;
+  font-weight:700;
+  font-size:18px;
+  color:#2b1900;              /* texto oscuro legible */
+  background:linear-gradient(180deg,#ffcc72,#ffa83a);
+  border-radius:18px;
+  box-shadow:0 10px 24px rgba(255,168,58,.35);
+  border:1px solid rgba(255,168,58,.4);
+  text-decoration:none;
+  transition:transform .12s ease, box-shadow .2s ease, filter .2s ease;
+}
+.btn-tile:hover{ transform:translateY(-1px); filter:brightness(1.02); }
+.btn-tile:active{ transform:translateY(0); filter:brightness(.98); }
+.btn-tile:focus{ outline:3px solid rgba(255,168,58,.5); outline-offset:2px; }
 
 </style>
 </head>
@@ -282,7 +301,10 @@ h1 { font-weight: 900 !important; }
   <div class="btn-box pulso">
     <a class="btn" id="promo-dia-infancia" href="promo-dia-infancia.html" style="background:#28a745;">🎁 Promo Día del niño <span class="contador-en-boton"></span></a>
   </div>
-  <a href="/PrintLab3D-Linktree/blog.html">Blog</a>
+  <a class="btn-tile btn-blog" href="/PrintLab3D-Linktree/blog.html">
+  📚 Blog
+</a>
+
 
   <div class="btn-box"><a class="btn" href="#" onclick="salir()">🚪 Salir</a></div>
 
