@@ -3,101 +3,57 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Blog de PrintLab 3D — Tips, Novedades, Guías y Videos</title>
-  <meta name="description" content="Blog de PrintLab 3D: tips, guías, novedades y videos de impresión 3D. Mantenimiento Bambu Lab A1, acabados pro, elección de filamentos y más." />
-  <meta property="og:title" content="Blog de PrintLab 3D" />
-  <meta property="og:description" content="Tips, guías y videos del mundo 3D: acabados, mantenimiento y mejores prácticas." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://printlab3d-lp.github.io/PrintLab3D-Linktree/assets/og-printlab3d.png" />
+  <title>Blog de PrintLab 3D — Tips, Guías, Novedades y Videos</title>
+  <meta name="description" content="Blog de PrintLab 3D: tips, guías, novedades y videos de impresión 3D." />
   <meta name="theme-color" content="#ffa83a" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #fff7f0;          /* Fondo claro con toque cálido */
-      --card: #fff;           /* Tarjetas */
-      --muted: #5c5c5c;       /* Texto secundario */
-      --text: #2b1900;        /* Texto principal oscuro */
-      --brand: #ffa83a;       /* Naranja principal */
-      --brand-2: #ffcc72;     /* Amarillo cálido */
-      --chip: #fff4e2;        /* Chips */
-      --border: #ffe0a6;      /* Bordes sutiles */
-      --shadow: 0 8px 20px rgba(255,168,58,.35);
-      --radius: 18px;
-    }
-    * { box-sizing: border-box; }
-    html, body { margin:0; padding:0; background:var(--bg); color:var(--text); font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; }
-    a { color: var(--brand); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    .container { max-width:1100px; margin:0 auto; padding:24px; }
-    header.nav { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 24px; position:sticky; top:0; background:var(--brand); color:#fff; border-bottom:3px solid var(--brand-2); z-index:50; border-radius:0 0 18px 18px; }
-    .logo { display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.4px; font-size:18px; }
-    .logo-dot { width:14px; height:14px; border-radius:50%; background:#fff; box-shadow:0 0 0 3px rgba(255,255,255,.4); }
-    .nav-links a { color:#fff; font-weight:600; padding:8px 12px; border-radius:12px; }
-    .nav-links a:hover { background:rgba(255,255,255,.2); }
-
-    .hero { padding:36px 0 8px; display:grid; gap:10px; text-align:center; }
-    .hero h1 { font-size: clamp(28px, 4vw, 42px); line-height:1.05; margin:0; font-weight:800; color:var(--text); }
-    .hero p { margin:8px auto 0; color:var(--muted); max-width:800px; font-size:16px; }
-
-    .toolbar { margin:22px 0 8px; display:grid; grid-template-columns:1fr; gap:12px; }
-    @media (min-width: 760px) { .toolbar { grid-template-columns: 1fr auto; align-items:center; } }
-    .search { display:flex; gap:10px; align-items:center; background:var(--card); border:2px solid var(--border); border-radius:999px; padding:10px 14px; box-shadow:var(--shadow); }
-    .search input { background:transparent; border:0; outline:0; color:var(--text); width:100%; font-size:15px; }
-    .chips { display:flex; gap:8px; flex-wrap:wrap; }
-    .chip { border:2px solid var(--border); background:var(--chip); padding:8px 12px; border-radius:999px; font-size:13px; color:var(--text); cursor:pointer; font-weight:600; }
-    .chip.active { border-color:var(--brand); background:var(--brand-2); }
-
-    .grid { display:grid; gap:16px; grid-template-columns:1fr; margin-top:16px; }
-    @media (min-width:720px){ .grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
-    @media (min-width:1060px){ .grid { grid-template-columns: repeat(3, minmax(0,1fr)); } }
-
-    .card { background:var(--card); border:2px solid var(--border); border-radius:var(--radius); padding:18px; display:flex; flex-direction:column; gap:10px; box-shadow:var(--shadow); transition: transform .15s ease; }
-    .card:hover { transform: translateY(-2px); }
-    .card h3 { margin:0; font-size:18px; color:var(--text); }
-    .meta { color:var(--muted); font-size:12px; display:flex; gap:10px; flex-wrap:wrap; }
-    .excerpt { color:var(--text); opacity:.9; font-size:14px; line-height:1.55; }
-    .tags { display:flex; gap:6px; flex-wrap:wrap; }
-    .tag { font-size:12px; color:var(--brand); background:var(--chip); border:1px solid var(--brand-2); padding:6px 10px; border-radius:999px; font-weight:600; }
-
-    .card .actions { display:flex; gap:8px; margin-top:auto; }
-    .btn { display:inline-flex; align-items:center; gap:6px; padding:10px 14px; border-radius:12px; font-weight:600; cursor:pointer; background:linear-gradient(180deg,var(--brand-2),var(--brand)); color:#fff; border:none; box-shadow:var(--shadow); }
-    .btn:hover { filter:brightness(1.05); }
-    .btn-ghost { background:#fff; border:2px solid var(--brand); color:var(--brand); }
-    .btn-ghost:hover { background:var(--brand-2); color:#2b1900; }
-
-    .empty { text-align:center; opacity:.8; padding:50px 10px; }
-
-    .pagination { display:flex; gap:8px; justify-content:center; margin:20px 0 40px; }
-    .page { padding:8px 12px; border:2px solid var(--border); border-radius:10px; background:var(--chip); cursor:pointer; font-weight:600; }
-    .page.active { background:var(--brand); color:#fff; border-color:var(--brand); }
-
-    footer { border-top:3px solid var(--brand-2); margin-top:30px; background:var(--brand); color:#fff; border-radius:18px 18px 0 0; }
-    .footer-inner { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:22px 20px; font-size:13px; flex-wrap:wrap; }
-    .footer-inner a { color:#fff; font-weight:600; }
-
-    /* Modal */
-    .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; z-index:100; padding:16px; }
-    .modal { width:min(920px, 100%); background:var(--card); border:2px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); max-height:90vh; overflow:auto; }
-    .modal header { padding:18px; border-bottom:2px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--brand); color:#fff; border-radius:18px 18px 0 0; }
-    .modal .content { padding:18px; line-height:1.65; color:var(--text); }
-    .modal .content h4 { margin:22px 0 8px; }
-    .modal .content p { margin:8px 0; }
-    .x { background:#fff; border:2px solid var(--brand); border-radius:10px; padding:8px 10px; color:var(--brand); cursor:pointer; font-weight:600; }
-
-    /* Video embed responsivo */
-    .video-embed { position:relative; padding-top:56.25%; border-radius:12px; overflow:hidden; border:2px solid var(--border); box-shadow:var(--shadow); margin:12px 0; }
-    .video-embed iframe, .video-embed video { position:absolute; inset:0; width:100%; height:100%; border:0; display:block; }
+    :root { --bg:#fff7f0; --card:#fff; --muted:#5c5c5c; --text:#2b1900; --brand:#ffa83a; --brand-2:#ffcc72; --chip:#fff4e2; --border:#ffe0a6; --shadow:0 8px 20px rgba(255,168,58,.35); --radius:18px; }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    header.nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 24px;position:sticky;top:0;background:var(--brand);color:#fff;border-bottom:3px solid var(--brand-2);z-index:50;border-radius:0 0 18px 18px}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+    .logo-dot{width:14px;height:14px;border-radius:50%;background:#fff}
+    .nav-links a{color:#fff;font-weight:600;padding:8px 12px;border-radius:12px}
+    .nav-links a:hover{background:rgba(255,255,255,.2)}
+    .hero{text-align:center;padding:36px 0 8px}
+    .hero h1{font-size:clamp(28px,4vw,42px);margin:0;font-weight:800}
+    .hero p{margin:8px auto 0;color:var(--muted);max-width:800px;font-size:16px}
+    .toolbar{margin:22px 0 8px;display:grid;gap:12px}
+    .search{display:flex;gap:10px;align-items:center;background:var(--card);border:2px solid var(--border);border-radius:999px;padding:10px 14px;box-shadow:var(--shadow)}
+    .search input{border:0;outline:0;width:100%;font-size:15px}
+    .chips{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{border:2px solid var(--border);background:var(--chip);padding:8px 12px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer}
+    .chip.active{border-color:var(--brand);background:var(--brand-2)}
+    .grid{display:grid;gap:16px;margin-top:16px}
+    @media(min-width:720px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1060px){.grid{grid-template-columns:repeat(3,1fr)}}
+    .card{background:var(--card);border:2px solid var(--border);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px}
+    .card h3{margin:0;font-size:18px}
+    .meta{color:var(--muted);font-size:12px}
+    .excerpt{font-size:14px;line-height:1.55}
+    .tags{display:flex;gap:6px;flex-wrap:wrap}
+    .tag{font-size:12px;color:var(--brand);background:var(--chip);border:1px solid var(--brand-2);padding:6px 10px;border-radius:999px}
+    .actions{margin-top:auto}
+    .btn{padding:10px 14px;border-radius:12px;font-weight:600;cursor:pointer;background:linear-gradient(180deg,var(--brand-2),var(--brand));color:#fff;border:none}
+    .btn:hover{filter:brightness(1.05)}
+    footer{border-top:3px solid var(--brand-2);margin-top:30px;background:var(--brand);color:#fff;border-radius:18px 18px 0 0}
+    .footer-inner{display:flex;justify-content:space-between;gap:12px;padding:22px 20px;font-size:13px;flex-wrap:wrap}
+    .video-embed{position:relative;padding-top:56.25%;border-radius:12px;overflow:hidden;border:2px solid var(--border);box-shadow:var(--shadow);margin:12px 0}
+    .video-embed video{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:100}
+    .modal{width:min(900px,95%);background:var(--card);border:2px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);max-height:90vh;overflow:auto}
+    .modal header{padding:18px;border-bottom:2px solid var(--border);background:var(--brand);color:#fff;display:flex;justify-content:space-between}
+    .modal .content{padding:18px;line-height:1.65}
+    .x{background:#fff;border:2px solid var(--brand);border-radius:10px;padding:6px 10px;color:var(--brand);cursor:pointer}
   </style>
 </head>
 <body>
   <header class="nav container">
-    <div class="logo">
-      <span class="logo-dot"></span>
-      <span>PRINTLAB 3D</span>
-    </div>
+    <div class="logo"><span class="logo-dot"></span><span>PRINTLAB 3D</span></div>
     <nav class="nav-links">
       <a href="/PrintLab3D-Linktree/">Inicio</a>
       <a href="/PrintLab3D-Linktree/catalogo.html">Catálogo</a>
@@ -107,189 +63,119 @@
   <main class="container">
     <section class="hero">
       <h1>Blog de PrintLab 3D</h1>
-      <p>Tips, novedades, guías y <strong>videos</strong> para que tus impresiones salgan pro. Desde acabados perfectos hasta mantenimiento de tu Bambu Lab A1.</p>
+      <p>Tips, guías, novedades y <strong>videos</strong> sobre nuestros productos y procesos de impresión.</p>
     </section>
 
     <section class="toolbar">
-      <div class="search" role="search">
-        <input id="q" placeholder="🔍 Buscar: PLA, acabado, Bambu, llaveros…" autocomplete="off" />
-      </div>
+      <div class="search"><input id="q" placeholder="🔍 Buscar en el blog..." /></div>
       <div class="chips" id="chips"></div>
     </section>
 
-    <section id="grid" class="grid" aria-live="polite"></section>
-    <div id="empty" class="empty" style="display:none">No encontramos resultados. Probá con otras palabras o quitá filtros.</div>
-
+    <section id="grid" class="grid"></section>
+    <div id="empty" style="display:none;text-align:center;padding:40px">No encontramos resultados.</div>
     <nav id="pagination" class="pagination"></nav>
   </main>
 
   <footer class="container">
     <div class="footer-inner">
       <span>© <span id="year"></span> PrintLab 3D — Hecho en 3D, hecho para vos.</span>
-      <a href="https://www.instagram.com/printlab3d.lp" target="_blank" rel="noopener">@printlab3d.lp</a>
+      <a href="https://www.instagram.com/printlab3d.lp" target="_blank">@printlab3d.lp</a>
     </div>
   </footer>
 
-  <!-- Modal para "Leer más" -->
-  <div id="backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
-    <article class="modal" role="document">
-      <header>
-        <h3 id="modalTitle" style="margin:0"></h3>
-        <button class="x" onclick="closeModal()">Cerrar ✕</button>
-      </header>
+  <div id="backdrop" class="modal-backdrop">
+    <article class="modal">
+      <header><h3 id="modalTitle"></h3><button class="x" onclick="closeModal()">✕</button></header>
       <div class="content" id="modalContent"></div>
     </article>
   </div>
 
-  <script>
-    const POSTS = [
-      {
-        id: "video-acabado-llaveros",
-        tipo: "post",
-        titulo: "VIDEO: Acabado PRO para llaveros planos (sin piel de salmón)",
-        fecha: "2025-08-24",
-        tags: ["video","acabado","llaveros"],
-        excerpt: "Paso a paso en video: altura de capa, top layers, perímetros y 'ironing' sólo en la última capa.",
-        contenido: `
-          <p>En este video te muestro la configuración que uso para frentes bien lisos en PLA, ideal para llaveros planos.</p>
-          <div class="video-embed">
-            <iframe src="https://www.youtube.com/watch?v=Q7yKovVKWXw" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
-          <h4>Checklist rápido</h4>
-          <ul>
-            <li>Altura de capa 0.16–0.20 mm; top layers ≥ 6.</li>
-            <li>Perímetros antes que el relleno; Surface Monotonic si tu slicer lo tiene.</li>
-            <li>Velocidad de capas superiores 20–35 mm/s y ventilador alto en PLA.</li>
-            <li>Activá <em>ironing</em> sólo en la última capa si necesitás espejo.</li>
-          </ul>
-        `
-      },
-      {
-        id: "video-mantenimiento-a1",
-        tipo: "post",
-        titulo: "VIDEO: Mantenimiento rápido Bambu Lab A1 (10 minutos)",
-        fecha: "2025-08-22",
-        tags: ["video","bambu","mantenimiento"],
-        excerpt: "Rutina express en video: boquilla, correas, guiado del filamento, lubricación y cama.",
-        contenido: `
-          <p>Te dejo un repaso visual de la rutina que hago cada 1–2 semanas para mantener la A1 al 100%.</p>
-          <div class="video-embed">
-            <iframe src="https://www.youtube.com/watch?v=N6_IBcM-nbc" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
-          <ol>
-            <li>Limpieza de boquilla en caliente con cepillo de latón.</li>
-            <li>Chequeo de tensión de correas.</li>
-            <li>Guiado del filamento (sin roces) y limpieza de limaduras.</li>
-            <li>Lubricación leve de ejes lineales.</li>
-            <li>Revisión de la superficie de cama y nivelación.</li>
-          </ol>
-        `
-      },
-      {
-        id: "pla-vs-petg",
-        tipo: "post",
-        titulo: "PLA vs PETG: ¿qué filamento me conviene?",
-        fecha: "2025-08-20",
-        tags: ["filamento","materiales","principiantes"],
-        excerpt: "Cuándo elegir PLA para detalles finos y colores sólidos, y cuándo PETG para piezas más resistentes al calor.",
-        contenido: `
-          <p><strong>PLA</strong> es ideal para <em>prototipos, llaveros, figuras y piezas decorativas</em>. Es fácil de imprimir y con colores brillantes. Temperaturas típicas: boquilla 200–215 °C, cama 50–60 °C.</p>
-          <p><strong>PETG</strong> suma <em>resistencia al impacto</em> y algo más de <em>temperatura</em> de servicio. Perfecto para tapas, gadgets y piezas al sol. Boquilla 230–245 °C, cama 70–85 °C.</p>
-        `
-      },
-      {
-        id: "manuales-y-qr",
-        tipo: "post",
-        titulo: "Manuales con QR para tus productos: ahorrá tiempo en consultas",
-        fecha: "2025-08-10",
-        tags: ["packaging","qr","clientes"],
-        excerpt: "Armá un PDF con instrucciones + QR al manual online y reducís preguntas repetidas.",
-        contenido: `
-          <p>Usá un A4 con <strong>paso a paso</strong>, tips de seguridad y FAQs. Subilo a tu sitio y generá un QR con enlace directo.</p>
-          <p>Extra: añadí bloque de <em>solución de problemas</em> y un WhatsApp para soporte.</p>
-        `
-      }
-    ];
+<script>
+const POSTS = [
+  {
+    id: "igloo-mania",
+    titulo: "Preparación en Bambu Studio: juego Igloo Mania",
+    fecha: "2025-07-26",
+    tags: ["video","bambu studio","igloo mania","slice","PLA"],
+    excerpt: "Paso a paso preparando el juego Igloo Mania en Bambu Studio: orientación, soportes y parámetros de impresión.",
+    contenido: `
+      <p>En este video muestro cómo preparo el <strong>juego Igloo Mania</strong> en <strong>Bambu Studio</strong>: orientación de piezas, soportes, paredes para resistencia y un g-code optimizado.</p>
+      <div class="video-embed">
+        <video controls preload="metadata" poster="assets/poster-igloo.jpg">
+          <source src="videos/WhatsApp-Video-2025-07-26.mp4" type="video/mp4">
+        </video>
+      </div>
+    `
+  },
+  {
+    id: "llaveros-emma",
+    titulo: "Producción real: llaveros “caritas felices” para el cumple de Emma (4)",
+    fecha: "2025-08-22",
+    tags: ["video","llaveros","cumple","personalizado"],
+    excerpt: "Proceso completo de llaveros personalizados con caritas felices para souvenirs del cumple de 4 años de Emma.",
+    contenido: `
+      <p>Producción de los llaveros “caritas felices” para el cumple de <strong>Emma (4)</strong>. Diseños con variantes de ojos (<em>corazón</em>, <em>rayo</em>, etc.) como souvenirs resistentes y coloridos.</p>
+      <div class="video-embed">
+        <video controls preload="metadata" poster="assets/poster-emma.jpg">
+          <source src="videos/WhatsApp-Video-2025-08-22.mp4" type="video/mp4">
+        </video>
+      </div>
+    `
+  },
+  {
+    id: "capibara-timelapse",
+    titulo: "Timelapse: Porta palitos de olor en forma de capibara 🦫",
+    fecha: "2025-07-13",
+    tags: ["video","timelapse","capibara","decoración"],
+    excerpt: "Impresión completa en timelapse de un porta palitos de olor con forma de capibara para baño u hogar.",
+    contenido: `
+      <p>Timelapse de la impresión de un <strong>porta palitos de olor</strong> con forma de <strong>capibara</strong>. Ideal como objeto decorativo para el baño o cualquier ambiente.</p>
+      <div class="video-embed">
+        <video controls preload="metadata" poster="assets/poster-capibara.jpg">
+          <source src="videos/video_2025-07-13_22-31-56.mp4" type="video/mp4">
+        </video>
+      </div>
+    `
+  }
+];
 
-    const state = { q: "", tag: null, page: 1, perPage: 6 };
+const state = { q:"", tag:null, page:1, perPage:6 };
+const chipsEl = document.getElementById('chips');
+const gridEl = document.getElementById('grid');
+const emptyEl = document.getElementById('empty');
+const paginationEl = document.getElementById('pagination');
 
-    const chipsEl = document.getElementById('chips');
-    const gridEl = document.getElementById('grid');
-    const emptyEl = document.getElementById('empty');
-    const paginationEl = document.getElementById('pagination');
+function uniqueTags(){ const set=new Set(); POSTS.forEach(p=>p.tags.forEach(t=>set.add(t))); return Array.from(set).sort(); }
+function buildChips(){
+  chipsEl.innerHTML='';
+  const all=document.createElement('button'); all.className='chip'+(!state.tag?' active':''); all.textContent='Todos'; all.onclick=()=>{state.tag=null;state.page=1;render();}; chipsEl.appendChild(all);
+  uniqueTags().forEach(t=>{ const b=document.createElement('button'); b.className='chip'+(state.tag===t?' active':''); b.textContent=t; b.onclick=()=>{state.tag=t;state.page=1;render();}; chipsEl.appendChild(b); });
+}
+function filterPosts(){
+  let list=POSTS.slice().sort((a,b)=>b.fecha.localeCompare(a.fecha));
+  if(state.tag) list=list.filter(p=>p.tags.includes(state.tag));
+  if(state.q){ const q=state.q.toLowerCase(); list=list.filter(p=>p.titulo.toLowerCase().includes(q)||p.excerpt.toLowerCase().includes(q)); }
+  return list;
+}
+function paginate(list){ const start=(state.page-1)*state.perPage; return list.slice(start,start+state.perPage); }
+function card(p){
+  const el=document.createElement('article'); el.className='card';
+  el.innerHTML=`<h3>${p.titulo}</h3><div class="meta">${new Date(p.fecha).toLocaleDateString('es-AR')}</div><div class="excerpt">${p.excerpt}</div><div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div><div class="actions"><button class="btn" onclick="openModal('${p.id}')">Leer más</button></div>`;
+  return el;
+}
+function render(){
+  const list=filterPosts(); const pageCount=Math.max(1,Math.ceil(list.length/state.perPage));
+  if(state.page>pageCount) state.page=pageCount;
+  const pageItems=paginate(list); gridEl.innerHTML=''; pageItems.forEach(p=>gridEl.appendChild(card(p)));
+  emptyEl.style.display=list.length?'none':'block'; paginationEl.innerHTML='';
+  for(let i=1;i<=pageCount;i++){ const b=document.createElement('button'); b.textContent=i; b.className='chip'+(i===state.page?' active':''); b.onclick=()=>{state.page=i;render();}; paginationEl.appendChild(b); }
+}
+function openModal(id){ const p=POSTS.find(x=>x.id===id); document.getElementById('modalTitle').textContent=p.titulo; document.getElementById('modalContent').innerHTML=p.contenido; document.getElementById('backdrop').style.display='flex'; }
+function closeModal(){ document.getElementById('backdrop').style.display='none'; }
 
-    function uniqueTags(){ const set = new Set(); POSTS.forEach(p=>p.tags.forEach(t=>set.add(t))); return Array.from(set).sort(); }
-
-    function buildChips(){
-      const tags = uniqueTags(); chipsEl.innerHTML = '';
-      const all = document.createElement('button'); all.className = 'chip' + (!state.tag ? ' active' : ''); all.textContent = 'Todos'; all.onclick = ()=>{ state.tag=null; state.page=1; render(); }; chipsEl.appendChild(all);
-      tags.forEach(t=>{ const b=document.createElement('button'); b.className='chip'+(state.tag===t?' active':''); b.textContent = t; b.onclick=()=>{ state.tag=t; state.page=1; render(); }; chipsEl.appendChild(b); });
-    }
-
-    function normalize(s){ return (s||'').toString().toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu,''); }
-
-    function filterPosts(){
-      const nq = normalize(state.q);
-      let list = POSTS.slice().sort((a,b)=> b.fecha.localeCompare(a.fecha));
-      if(state.tag){ list = list.filter(p=>p.tags.includes(state.tag)); }
-      if(nq){
-        list = list.filter(p=> normalize(p.titulo).includes(nq) || normalize(p.excerpt).includes(nq) || p.tags.some(t=>normalize(t).includes(nq)) || normalize(p.contenido).includes(nq) );
-      }
-      return list;
-    }
-
-    function paginate(list){ const start = (state.page-1)*state.perPage; return list.slice(start, start+state.perPage); }
-
-    function estimateReadTime(html){ const tmp = document.createElement('div'); tmp.innerHTML = html; const words = (tmp.textContent||'').trim().split(/\s+/).filter(Boolean); const min = Math.max(1, Math.round(words.length / 200)); return `${min} min`; }
-
-    function card(p){
-      const el = document.createElement('article'); el.className='card';
-      const meta = document.createElement('div'); meta.className='meta';
-      const rt = estimateReadTime(p.contenido);
-      meta.innerHTML = `<span>${new Date(p.fecha).toLocaleDateString('es-AR')}</span> · <span>${rt} de lectura</span>`;
-      const h3=document.createElement('h3'); h3.textContent=p.titulo;
-      const ex=document.createElement('div'); ex.className='excerpt'; ex.textContent=p.excerpt;
-      const tagRow=document.createElement('div'); tagRow.className='tags'; p.tags.forEach(t=>{ const s=document.createElement('span'); s.className='tag'; s.textContent=t; tagRow.appendChild(s); });
-      const actions=document.createElement('div'); actions.className='actions';
-      const leer=document.createElement('button'); leer.className='btn'; leer.textContent='Leer más'; leer.onclick=()=>openModal(p);
-      const compartir=document.createElement('button'); compartir.className='btn btn-ghost'; compartir.textContent='Copiar enlace'; compartir.onclick=()=>copyLink(p);
-      actions.append(leer, compartir);
-      el.append(h3, meta, ex, tagRow, actions);
-      return el;
-    }
-
-    function render(){
-      const list = filterPosts();
-      const pageCount = Math.max(1, Math.ceil(list.length/state.perPage));
-      if(state.page>pageCount) state.page=pageCount;
-      const pageItems = paginate(list);
-      gridEl.innerHTML = '';
-      pageItems.forEach(p=> gridEl.appendChild(card(p)));
-      emptyEl.style.display = list.length? 'none':'block';
-      // pagination
-      paginationEl.innerHTML = '';
-      for(let i=1;i<=pageCount;i++){
-        const b=document.createElement('button'); b.className='page'+(i===state.page?' active':''); b.textContent=i; b.onclick=()=>{ state.page=i; render(); }; paginationEl.appendChild(b);
-      }
-    }
-
-    function copyLink(p){ const url = location.origin + location.pathname + `#${p.id}`; navigator.clipboard.writeText(url).then(()=> alert('Enlace copiado')); }
-    function openModal(p){ document.getElementById('modalTitle').textContent = p.titulo; document.getElementById('modalContent').innerHTML = p.contenido; const b = document.getElementById('backdrop'); b.style.display='flex'; b.setAttribute('aria-hidden','false'); history.replaceState(null, '', `#${p.id}`); }
-    function closeModal(){ const b = document.getElementById('backdrop'); b.style.display='none'; b.setAttribute('aria-hidden','true'); history.replaceState(null, '', location.pathname); }
-
-    document.getElementById('q').addEventListener('input', (e)=>{ state.q=e.target.value; state.page=1; render(); });
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    buildChips();
-    render();
-
-    // Abrir modal si viene con hash (enlace directo a un post)
-    window.addEventListener('load', ()=>{ if(location.hash){ const id = location.hash.slice(1); const p = POSTS.find(x=>x.id===id); if(p) openModal(p); } });
-    // Cerrar modal clic fuera o Esc
-    document.getElementById('backdrop').addEventListener('click', (e)=>{ if(e.target.id==='backdrop') closeModal(); });
-    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeModal(); });
-  </script>
+document.getElementById('q').addEventListener('input',e=>{state.q=e.target.value;state.page=1;render();});
+document.getElementById('year').textContent=new Date().getFullYear();
+buildChips(); render();
+</script>
 </body>
 </html>
-
-
