@@ -64,6 +64,18 @@
     .modal header{padding:18px;border-bottom:2px solid var(--border);background:var(--brand);color:#fff;display:flex;justify-content:space-between;align-items:center}
     .modal .content{padding:18px;line-height:1.65}
     .x{background:#fff;border:2px solid var(--brand);border-radius:10px;padding:6px 10px;color:var(--brand);cursor:pointer}
+
+    /* --- Galería simple horizontal --- */
+    .gallery { display:flex; gap:8px; overflow-x:auto; padding:4px 0; }
+    .gallery img { height:120px; border-radius:12px; flex-shrink:0; border:2px solid var(--border); }
+
+    /* --- Miniatura en la card --- */
+    .card .thumb { width:100%; border-radius:12px; margin:8px 0; border:2px solid var(--border); }
+
+    /* --- Grupo de acciones multimedia --- */
+    .media-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+    a.btn-link { display:inline-block; padding:10px 14px; border-radius:12px; font-weight:600; background:linear-gradient(180deg,var(--brand-2),var(--brand)); color:#fff; text-decoration:none; }
+    a.btn-link:hover{ filter:brightness(1.05); }
   </style>
 </head>
 <body>
@@ -153,11 +165,29 @@ const POSTS = [
     tags: ["video","llaveros","cumple","personalizado","PLA"],
     excerpt: "Souvenirs personalizados: caritas felices con ojos corazón, rayo y más para el cumple de 4.",
     contenido: `
-      <p>Producción real de <strong>llaveros caritas felices</strong> para el cumple de <strong>Emma (4)</strong>, con variantes de ojos para un look súper divertido.</p>
+      <p>Producción real de <strong>llaveros caritas felices</strong> para el cumple de <strong>Emma (4)</strong>, con variantes de ojos para un look súper divertido. Abajo te dejo <em>galería de fotos</em>, el <em>video</em> y descargas.</p>
+
+      <!-- Galería de imágenes (colocá tus archivos en la misma carpeta del HTML) -->
+      <div class="gallery">
+        <img src="llavero_emma_1.jpg" alt="Llavero Emma vista 1">
+        <img src="llavero_emma_2.jpg" alt="Llavero Emma vista 2">
+        <img src="llavero_emma_3.jpg" alt="Llavero Emma vista 3">
+        <img src="llavero_emma_4.jpg" alt="Llavero Emma vista 4">
+      </div>
+
+      <!-- Video principal -->
       <div class="video-embed">
         <video controls preload="metadata" poster="${makePoster('Llavero Emma (4)')}">
           <source src="WhatsApp Video 2025-08-22 at 13.43.45.mp4" type="video/mp4">
         </video>
+      </div>
+
+      <!-- Acciones (descargas / enlaces externos) -->
+      <div class="media-actions">
+        <a class="btn-link" href="llavero_emma.stl" download>⬇ Descargar STL</a>
+        <a class="btn-link" href="llavero_emma.3mf" download>⬇ Descargar 3MF</a>
+        <!-- Opcional: link a MakerWorld si lo subís allí -->
+        <!-- <a class="btn-link" href="https://makerworld.com/..." target="_blank" rel="noopener">🌐 Ver en MakerWorld</a> -->
       </div>
     `
   },
@@ -274,9 +304,10 @@ function card(p){
   el.innerHTML = `
     <h3>${p.titulo}</h3>
     <div class="meta">${new Date(p.fecha).toLocaleDateString('es-AR')}</div>
+    <img class="thumb" src="${makePoster(p.titulo)}" alt="preview de ${p.titulo}">
     <div class="excerpt">${p.excerpt}</div>
     <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-    <div class="actions"><button class="btn" onclick="openModal('${p.id}')">Leer más</button></div>
+    <div class="actions"><button class="btn" onclick="openModal('${p.id}')">▶ Ver detalle</button></div>
   `;
   return el;
 }
