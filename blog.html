@@ -70,7 +70,7 @@
     .gallery img { height:120px; border-radius:12px; flex-shrink:0; border:2px solid var(--border); }
 
     /* --- Miniatura en la card --- */
-    .card .thumb { width:100%; border-radius:12px; margin:8px 0; border:2px solid var(--border); }
+    .card .thumb { width:100%; border-radius:12px; margin:8px 0; border:2px solid var(--border); object-fit:cover; aspect-ratio:16/9; }
 
     /* --- Grupo de acciones multimedia --- */
     .media-actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
@@ -125,9 +125,9 @@
 <script>
 /* ========== Posters embebidos (SVG inline) ========== */
 function makePoster(label){
-  const bg   = '#fff8f0';   // fondo claro
-  const band = '#FFA83A';   // naranja PrintLab
-  const txt  = '#2B1900';   // texto
+  const bg   = '#fff8f0';
+  const band = '#FFA83A';
+  const txt  = '#2B1900';
   const esc = s => encodeURIComponent(s).replace(/'/g,"%27").replace(/"/g,"%22");
   const svg =
     `<svg xmlns='http://www.w3.org/2000/svg' width='960' height='540'>
@@ -147,6 +147,7 @@ const POSTS = [
     id: "igloo-mania",
     titulo: "Preparación en Bambu Studio: juego Igloo Mania",
     fecha: "2025-07-26",
+    thumbnail: "igloo_mania_thumb.jpg",
     tags: ["video","bambu studio","igloo mania","slice","PLA"],
     excerpt: "Paso a paso preparando el juego Igloo Mania en Bambu Studio: orientación, soportes y parámetros.",
     contenido: `
@@ -162,32 +163,25 @@ const POSTS = [
     id: "llaveros-emma",
     titulo: "Producción real: llaveros “caritas felices” para el cumple de Emma (4)",
     fecha: "2025-08-22",
+    thumbnail: "llavero_emma_thumb.jpg",
     tags: ["video","llaveros","cumple","personalizado","PLA"],
     excerpt: "Souvenirs personalizados: caritas felices con ojos corazón, rayo y más para el cumple de 4.",
     contenido: `
       <p>Producción real de <strong>llaveros caritas felices</strong> para el cumple de <strong>Emma (4)</strong>, con variantes de ojos para un look súper divertido. Abajo te dejo <em>galería de fotos</em>, el <em>video</em> y descargas.</p>
-
-      <!-- Galería de imágenes (colocá tus archivos en la misma carpeta del HTML) -->
       <div class="gallery">
         <img src="llavero_emma_1.jpg" alt="Llavero Emma vista 1">
         <img src="llavero_emma_2.jpg" alt="Llavero Emma vista 2">
         <img src="llavero_emma_3.jpg" alt="Llavero Emma vista 3">
         <img src="llavero_emma_4.jpg" alt="Llavero Emma vista 4">
       </div>
-
-      <!-- Video principal -->
       <div class="video-embed">
         <video controls preload="metadata" poster="${makePoster('Llavero Emma (4)')}">
           <source src="WhatsApp Video 2025-08-22 at 13.43.45.mp4" type="video/mp4">
         </video>
       </div>
-
-      <!-- Acciones (descargas / enlaces externos) -->
       <div class="media-actions">
         <a class="btn-link" href="llavero_emma.stl" download>⬇ Descargar STL</a>
         <a class="btn-link" href="llavero_emma.3mf" download>⬇ Descargar 3MF</a>
-        <!-- Opcional: link a MakerWorld si lo subís allí -->
-        <!-- <a class="btn-link" href="https://makerworld.com/..." target="_blank" rel="noopener">🌐 Ver en MakerWorld</a> -->
       </div>
     `
   },
@@ -195,6 +189,7 @@ const POSTS = [
     id: "capibara-timelapse",
     titulo: "Timelapse: Porta palitos de olor en forma de capibara 🦫",
     fecha: "2025-07-13",
+    thumbnail: "capibara_thumb.jpg",
     tags: ["video","timelapse","capibara","decoración","hogar","PLA"],
     excerpt: "Un porta palitos de olor con forma de capibara, ideal para baño u hogar.",
     contenido: `
@@ -210,14 +205,25 @@ const POSTS = [
     id: "recolector-polvo",
     titulo: "Timelapse: Recolector de polvo para taladro",
     fecha: "2025-08-25",
+    thumbnail: "recolector_thumb.jpg",
     tags: ["video","timelapse","herramientas","DIY"],
     excerpt: "Accesorio impreso en 3D para atrapar el polvo al perforar con taladro.",
     contenido: `
-      <p>Impresión de un <strong>recolector de polvo</strong> para taladro: práctico, económico y hecho en 3D para trabajos de bricolaje.</p>
+      <p>Impresión y prueba de un <strong>recolector de polvo para taladro</strong>. Diseño práctico y fácil de imprimir. Abajo tenés <em>galería de fotos</em>, el <em>video</em> y, si querés, <em>descargas</em>.</p>
+      <div class="gallery">
+        <img src="recolector_1.jpg" alt="Recolector de polvo: vista 1">
+        <img src="recolector_2.jpg" alt="Recolector de polvo: vista 2">
+        <img src="recolector_3.jpg" alt="Recolector de polvo: detalle de la boquilla">
+        <img src="recolector_4.jpg" alt="Recolector de polvo: montaje en taladro">
+      </div>
       <div class="video-embed">
         <video controls preload="metadata" poster="${makePoster('Recolector de polvo (taladro)')}">
           <source src="recolector_polvo.mp4" type="video/mp4">
         </video>
+      </div>
+      <div class="media-actions">
+        <a class="btn-link" href="recolector_polvo.stl" download>⬇ Descargar STL</a>
+        <a class="btn-link" href="recolector_polvo.3mf" download>⬇ Descargar 3MF</a>
       </div>
     `
   },
@@ -225,6 +231,7 @@ const POSTS = [
     id: "recipiente-filamento",
     titulo: "Timelapse: Recipiente para desperdicio de filamento (Bambu Lab A1)",
     fecha: "2025-08-25",
+    thumbnail: "recipiente_a1_thumb.jpg",
     tags: ["video","timelapse","bambu lab","accesorios","impresora"],
     excerpt: "Recipiente pensado para juntar los pedacitos de filamento que descarta la A1.",
     contenido: `
@@ -234,12 +241,17 @@ const POSTS = [
           <source src="porta_caca_bambu.mp4" type="video/mp4">
         </video>
       </div>
+      <div class="media-actions">
+        <a class="btn-link" href="recipiente_a1.stl" download>⬇ Descargar STL</a>
+        <a class="btn-link" href="recipiente_a1.3mf" download>⬇ Descargar 3MF</a>
+      </div>
     `
   },
   {
     id: "porta-isopos",
     titulo: "Timelapse: Porta isopos impreso en 3D",
     fecha: "2025-08-25",
+    thumbnail: "porta_isopos_thumb.jpg",
     tags: ["video","timelapse","hogar","organización","baño"],
     excerpt: "Un porta isopos práctico y elegante para el baño o tocador.",
     contenido: `
@@ -255,11 +267,11 @@ const POSTS = [
     id: "muneco-nieve",
     titulo: "Timelapse: Muñeco de nieve con resorte (3 versiones)",
     fecha: "2025-08-25",
+    thumbnail: "muneco_nieve_thumb.jpg",
     tags: ["video","timelapse","navidad","juguete","decoración"],
     excerpt: "Tres timelapse mostrando la impresión del muñeco de nieve con resorte.",
     contenido: `
       <p>Tres versiones del <strong>muñeco de nieve con resorte</strong> que cobra vida con cada movimiento. Ideal para Navidad o escritorio.</p>
-
       <div class="video-embed">
         <video controls preload="metadata" poster="${makePoster('Muñeco de nieve (1)')}">
           <source src="muñeco_nieve.mp4" type="video/mp4">
@@ -300,11 +312,12 @@ function filterPosts(){
 }
 function paginate(list){ const start=(state.page-1)*state.perPage; return list.slice(start,start+state.perPage); }
 function card(p){
+  const thumb = p.thumbnail ? p.thumbnail : 'logo.png';
   const el=document.createElement('article'); el.className='card';
   el.innerHTML = `
     <h3>${p.titulo}</h3>
     <div class="meta">${new Date(p.fecha).toLocaleDateString('es-AR')}</div>
-    <img class="thumb" src="${makePoster(p.titulo)}" alt="preview de ${p.titulo}">
+    <img class="thumb" src="${thumb}" alt="preview de ${p.titulo}">
     <div class="excerpt">${p.excerpt}</div>
     <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
     <div class="actions"><button class="btn" onclick="openModal('${p.id}')">▶ Ver detalle</button></div>
