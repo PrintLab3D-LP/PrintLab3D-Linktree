@@ -21,14 +21,21 @@
     .hero{padding:36px 0 8px}
     .hero p{margin:8px auto 0;color:var(--muted);max-width:800px;font-size:16px;text-align:center}
 
-    /* ---- Título con logos a los lados (responsivo) ---- */
+    /* ---- Título con logos a los lados (centrado y responsivo) ---- */
     .hero-title{
       display:flex; align-items:center; justify-content:center;
       gap:12px; flex-wrap:wrap; margin:0;
       font-size:clamp(28px,4vw,42px); line-height:1.05; font-weight:800; text-align:center;
     }
-    .hero-title img{ height:50px; width:auto; filter:drop-shadow(0 1px 0 rgba(0,0,0,.05)); }
-    @media (max-width:520px){ .hero-title img{ height:36px; } }
+    .hero-title img {
+      height: 50px;
+      width: auto;
+      filter: drop-shadow(0 1px 0 rgba(0,0,0,.05));
+    }
+    @media (max-width:520px){
+      .hero-title img{ height:28px; }
+      .hero-title span{ font-size:22px; }
+    }
 
     .toolbar{margin:22px 0 8px;display:grid;gap:12px}
     .search{display:flex;gap:10px;align-items:center;background:var(--card);border:2px solid var(--border);border-radius:999px;padding:10px 14px;box-shadow:var(--shadow)}
@@ -69,12 +76,12 @@
   </header>
 
   <main class="container">
-    <!-- HERO corregido: una sola sección, título con dos logos -->
+    <!-- HERO: título centrado con dos logos -->
     <section class="hero">
       <h1 class="hero-title">
-        <img src="logo.png" alt=>
-          Blog de PrintLab 3D
-        <img src="logo.png" alt=>
+        <img src="logo.png" alt="Logo PrintLab 3D izquierda">
+        <span>Blog de PrintLab 3D</span>
+        <img src="logo.png" alt="Logo PrintLab 3D derecha">
       </h1>
       <p>Tips, guías, novedades y <strong>videos</strong> sobre nuestros productos y procesos de impresión.</p>
     </section>
@@ -300,6 +307,3 @@ buildChips(); render();
 </script>
 </body>
 </html>
-
-
-
