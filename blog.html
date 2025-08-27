@@ -21,7 +21,6 @@
     .hero{padding:36px 0 8px}
     .hero p{margin:8px auto 0;color:var(--muted);max-width:800px;font-size:16px;text-align:center}
 
-    /* ---- Título con logos a los lados (responsivo) ---- */
     .hero-title{
       display:flex; align-items:center; justify-content:center;
       gap:12px; flex-wrap:wrap; margin:0;
@@ -59,9 +58,8 @@
     .modal{width:min(900px,95%);background:var(--card);border:2px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);max-height:90vh;overflow:auto}
     .modal header{padding:18px;border-bottom:2px solid var(--border);background:var(--brand);color:#fff;display:flex;justify-content:space-between;align-items:center}
     .modal .content{padding:18px;line-height:1.65}
-    .x{background:#fff;border:2px solid var(--brand);border-radius:10px;padding:6px 10px;color:var(--brand);cursor:pointer}
+    .x{background:#fff;border:2px solid var(--brand);border-radius:10px;padding:6px 10px;color:#FFA83A;cursor:pointer}
 
-    /* ---- NUEVO: miniaturas y galería ---- */
     .card .thumb{ width:100%; border-radius:12px; margin:8px 0; border:2px solid var(--border); object-fit:cover; aspect-ratio:16/9; }
     .gallery{ display:flex; gap:8px; overflow-x:auto; padding:4px 0; }
     .gallery img{ height:120px; border-radius:12px; flex-shrink:0; border:2px solid var(--border); }
@@ -80,7 +78,6 @@
   </header>
 
   <main class="container">
-    <!-- HERO con logos a los lados -->
     <section class="hero">
       <h1 class="hero-title">
         <img src="logo.png" alt="Logo PrintLab 3D (izquierda)">
@@ -115,11 +112,10 @@
   </div>
 
 <script>
-/* ========== Posters embebidos (SVG inline) ========== */
 function makePoster(label){
-  const bg   = '#fff8f0';   // fondo claro
-  const band = '#FFA83A';   // naranja PrintLab
-  const txt  = '#2B1900';   // texto
+  const bg   = '#fff8f0';
+  const band = '#FFA83A';
+  const txt  = '#2B1900';
   const esc = s => encodeURIComponent(s).replace(/'/g,"%27").replace(/"/g,"%22");
   const svg =
     `<svg xmlns='http://www.w3.org/2000/svg' width='960' height='540'>
@@ -133,8 +129,39 @@ function makePoster(label){
   return `data:image/svg+xml;utf8,${esc(svg)}`;
 }
 
-/* ========== Posts con descargas unificadas ========== */
 const POSTS = [
+  {
+    id: "porta-control-remoto-doble",
+    titulo: "Porta control remoto doble (pared/sofá)",
+    fecha: "2025-08-27",
+    thumbnail: "porta_control_doble_thumb.jpg",
+    tags: ["organización","hogar","soporte","impresión 3D"],
+    excerpt: "Soporte doble para controles remotos: versión pared y versión sofá.",
+    contenido: `
+      <p>Diseñé un <strong>porta control remoto doble</strong> para tener los mandos siempre a mano. Tiene versión para <em>pegar a la pared</em> con cinta o tarugos y otra para <em>apoyar en el apoyabrazos del sofá</em>.</p>
+
+      <div class="gallery">
+        <img src="porta_control_doble_1.jpg" alt="Porta control remoto doble — vista frontal" loading="lazy">
+        <img src="porta_control_doble_2.jpg" alt="Porta control remoto doble — vista lateral" loading="lazy">
+        <img src="porta_control_doble_3.jpg" alt="Porta control remoto doble — en pared" loading="lazy">
+        <img src="porta_control_doble_4.jpg" alt="Porta control remoto doble — en sofá" loading="lazy">
+      </div>
+
+      <div class="video-embed">
+        <video controls preload="metadata" poster="${makePoster('Porta control remoto doble')}">
+          <source src="porta_control_doble.mp4" type="video/mp4">
+        </video>
+      </div>
+
+      <div class="media-actions">
+        <a class="btn-link" href="modelos/porta_control_doble.stl" download>⬇ Descargar STL</a>
+        <a class="btn-link" href="modelos/porta_control_doble.3mf" download>⬇ Descargar 3MF</a>
+      </div>
+
+      <p class="meta">Sugerencia: PLA 0.2 mm, 3 paredes, 15–20% infill. Para pared, reforzar con 4 pernos/adhesivo según superficie.</p>
+    `
+  },
+
   {
     id: "igloo-mania",
     titulo: "Preparación en Bambu Studio: juego Igloo Mania",
@@ -302,7 +329,6 @@ const POSTS = [
   }
 ];
 
-/* ========== Motor del blog (igual, con miniatura + lazy) ========== */
 const state = { q:"", tag:null, page:1, perPage:6 };
 const chipsEl = document.getElementById('chips');
 const gridEl = document.getElementById('grid');
