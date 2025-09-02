@@ -459,7 +459,7 @@ buscadorInput.addEventListener("input", function(){ const valor=this.value.toLow
 buscadorInput.addEventListener("keypress", function(e){ if(e.key==="Enter"){ const valor=this.value.toLowerCase(); const encontrado=productos.find(p=>p.nombre.toLowerCase().includes(valor)); if(encontrado){ window.location.href=encontrado.enlace; } } });
 </script>
 
-<!-- Contador de visitas (Google Apps Script) -->
+<!-- Contador de visitas (Google Apps Script) CORREGIDO PARA INSTAGRAM -->
 <script>
 (function () {
   if (window.__pl3d_lock) return; window.__pl3d_lock = true;
@@ -478,11 +478,21 @@ buscadorInput.addEventListener("keypress", function(e){ if(e.key==="Enter"){ con
   function jsonp(action, cbName){ return new Promise(function(resolve,reject){ var done=false, s=document.createElement('script'); s.src = GAS_URL + '?action=' + encodeURIComponent(action) + '&jsonp=1&cb=' + cbName + '&t=' + Date.now(); s.async=true; s.onerror=function(){ if(!done){done=true; reject(new Error('onerror'));} }; var timer=setTimeout(function(){ if(!done){done=true; reject(new Error('timeout'));} }, 5000); window[cbName]=function(d){ if(!done){done=true; clearTimeout(timer); resolve(d);} }; document.body.appendChild(s); }); }
   function alreadyHitToday(){ var c=getCookie(COOKIE_DAY); var l=getLS(LS_DAY); return (c===todayISO) || (l===todayISO); }
   function markHitToday(){ setCookie(COOKIE_DAY, todayISO, 1); setLS(LS_DAY, todayISO); }
-  function runInstagram(){ if (igBadge) igBadge.style.display = 'inline'; jsonp('get', 'pl3dIG').then(function(d){ setCounts(d.total, d.today); if (typeof d.total==='number') setLS(CACHE_TOTAL, String(d.total)); }).catch(function(){ var cached = getLS(CACHE_TOTAL); totalEl.textContent = cached ? Number(cached).toLocaleString() : '—'; todayEl.textContent = 'Hoy: —'; }); }
+
+  async function runInstagram(){
+    if (igBadge) igBadge.style.display = 'inline';
+    try{ var lastTs=Number(sessionStorage.getItem(INFLIGHT)||'0'); if (Date.now()-lastTs<10000){ try{ var d0=await jsonp('get','pl3dIGx'); setCounts(d0.total,d0.today); if (typeof d0.total==='number') setLS(CACHE_TOTAL,String(d0.total)); }catch(e){} return; } }catch(e){}
+    var doHit = !alreadyHitToday(); var action = doHit ? 'hit' : 'get';
+    try{ sessionStorage.setItem(INFLIGHT,String(Date.now())); }catch(e){}
+    for (var i=0;i<2;i++){ try{ var data = await jsonp(action,'pl3dIG'+i); setCounts(data.total,data.today); if (typeof data.total==='number') setLS(CACHE_TOTAL,String(data.total)); if (doHit) markHitToday(); return; }catch(e){} }
+    totalEl.textContent='—'; todayEl.textContent='Hoy: —';
+  }
+
   async function runNormal(){ if (igBadge) igBadge.style.display='none'; try{ var lastTs=Number(sessionStorage.getItem(INFLIGHT)||'0'); if (Date.now()-lastTs<10000){ try{ var d0=await jsonp('get','pl3dCBx'); setCounts(d0.total,d0.today); if (typeof d0.total==='number') setLS(CACHE_TOTAL,String(d0.total)); }catch(e){} return; } }catch(e){}
     var doHit = !alreadyHitToday(); var action = doHit ? 'hit' : 'get'; try{ sessionStorage.setItem(INFLIGHT,String(Date.now())); }catch(e){}
     for (var i=0;i<2;i++){ try{ var data = await jsonp(action,'pl3dCB'+i); setCounts(data.total,data.today); if (typeof data.total==='number') setLS(CACHE_TOTAL,String(data.total)); if (doHit) markHitToday(); return; }catch(e){} }
     totalEl.textContent='—'; todayEl.textContent='Hoy: —'; }
+
   document.addEventListener('DOMContentLoaded', function(){ if (isInstagram()) { runInstagram(); return; } runNormal(); });
   window.addEventListener('pageshow', function(e){ if (e.persisted){ jsonp('get','pl3dBF').then(function(d){ setCounts(d.total,d.today); }); } });
 })();
