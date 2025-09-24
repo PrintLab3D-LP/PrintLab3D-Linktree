@@ -304,7 +304,7 @@ h1 { font-weight: 900 !important; }
   <div class="btn-box"><a class="btn" href="/PrintLab3D-Linktree/blog.html">📚 Blog</a></div>
 
 
-  <div class="btn-box"><a class="btn" href="#" onclick="salir()">🚪 Salir</a></div>
+  <div class="btn-box"><a class="btn" href="javascript:void(0)" onclick="salir()">🚪 Salir</a></div>
 
   <!-- === Testimonios === -->
   <section id="testimonios">
@@ -683,5 +683,14 @@ function jsonp(action, params, cbName){
 })();
 </script>
 
+<script>
+  function salir() {
+    if (document.referrer) {
+      history.back();
+      return;
+    }
+    window.location.href = "https://www.instagram.com/printlab3d.lp/";
+  }
+</script>
 </body>
 </html>
